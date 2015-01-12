@@ -1,0 +1,62 @@
+#{extends 'main.html' /}
+#{set title:'重設密碼' /}
+
+<style>
+
+.divisions .division {
+	padding: 40px;
+}
+
+</style>
+
+<link href="/public/stylesheets/member.css" rel="stylesheet">
+<form method="post" action="/login" name="loginForm">
+	<div class="span8 offset2 logindiv divisions">
+		<h3 class="title01">重設密碼</h3>
+		<dl class="division">
+			<dt>說明</dt><dd>請填入您當初註冊之E-Mail，系統將會寄發暫時的密碼到您的信箱，請使用該密碼登入後重新設定您的密碼。</dd>
+			<dt>電子郵件</dt><dd>
+			<input class="span6" type="text" placeholder="請輸入您的註冊電子信箱" name="email" id="email" /></dd>
+		    <p>
+		    	<span class="pull-right">		    		
+		    		<a class="btn" href="/resetPwd" onClick="forgotPassword()">送出</a>
+		    	</span>
+		    </p>
+		</dl>
+	</div>
+</form>
+
+<script>
+
+	function forgotPassword() {
+		var email = document.getElementById("email").value;
+		if(validEmail(email)) {
+			if (confirm("是否確定重設 "+ email + " 的密碼？系統將重設您的密碼，並寄至您的Email信箱中")) {
+				alert("已準備進行重新設定密碼工作，請稍後於您的Email信箱進行確認");
+				jQuery.ajax({
+					  url: '/member/forgotPassword',
+					  type: 'POST',
+					  async: false,
+					  data: {
+					  	email:email
+					  },
+					  success: function(data) {
+						alert("發送成功，請檢查您的信箱");
+					  },
+					  error: function(xhr, textStatus, errorThrown) {}
+					});				
+			}
+		} else {
+			alert("請輸入正確的email信箱");
+		}
+	}
+	
+	function validEmail(emailtoCheck) {
+		var regExp = /^[^@^\s]+@[^\.@^\s]+(\.[^\.@^\s]+)+$/;
+		if ( emailtoCheck.match(regExp) )
+			return true;
+		else
+			return false;
+	}
+
+</script>

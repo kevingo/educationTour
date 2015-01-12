@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>404:Page Not found</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=${_response_encoding}"/>    
+		<link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/MozillaFirefox/template.css'}" media="screen" />
+    	<link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/MozillaFirefox/content.css'}" media="screen" />
+    	<link rel="shortcut icon" type="image/png" href="/public/images/favicon.png">	
+		<link href="@{'/public/stylesheets/bootstrap.min.css'}" >
+		<link href="@{'/public/stylesheets/bootstrap.css'}" rel="stylesheet">
+		<link href="@{'/public/stylesheets/font-awesome.css'}" rel="stylesheet">
+		<link href="@{'/public/stylesheets/font-awesome-ie7.css'}" rel="stylesheet">
+		<link href="@{'/public/stylesheets/main.css'}" rel="stylesheet">
+		<link href="@{'/public/stylesheets/index.css'}" rel="stylesheet">
+	</head>
+	<body>
+	<a href="@{Application.index()}"><img src="@{'/public/images/logo.png'}" width="295" height="128" alt="FunnyTrip放學趣"/></a>
+	#{if play.mode.name() == 'DEV'}
+        	<!-- 欲show的頁面 -->
+            <div id="main-feature">
+			    <h2>Hmmm, we’re having trouble finding that one.</h2>
+			</div>
+			
+			<div id="content">
+				<div id="error-reasons">
+				    <h3>We hate to say it, but we couldn’t find that page or file you’re looking for.</h3>		
+				    <ul class="spaced">
+				        <li>If you typed in the address, try double-checking the spelling.</li>
+				        <li>If you followed a link from somewhere, please let us know at <em>webmaster at <a href="/">FunnyTrip</a></em>. Be sure to tell us where you came from and what you were looking for, and we’ll do our best to fix it.</li>
+				    </ul>
+				</div>
+			</div>
+        #{/if}
+        #{else}
+            <h1>Not found</h1>
+            <p>
+                ${result.message}
+            </p>
+        #{/else}
+	
+	<footer>
+		<div class="container">
+			<div id="copyright" class="pull-left">
+				<p>版權所有 2013@ FunnyTrip i慢玩聯盟</p>
+				<p id="footer_fn">|<a href="@{Application.index()}">首頁</a>|<a href="/about">關於</a>|<a href="/license">隱私權與安全</a>|<!-- <a href="#">常見問題</a> |--><a href="/contactUs">建議與回報</a>|<a href="/quanta/admin">廣達專區</a>|</p>
+				<!-- 
+				<p>
+					<a href="/parent/login">Parent</a>
+					<a href="/student/login">Student</a>
+					<a href="/teacher/login">Teacher</a>
+					<a href="/admin/login">Admin</a>
+				</p>
+				 -->
+			</div>
+			<div id="social" class="pull-right">
+				<a id="share_fb"  onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent('www.funnytrip.net'),'facebook-share-dialog','width=626,height=436');return false;">Facebook</a>
+				<!-- <a id="share_tw" href="#">Twitter</a> -->
+				<a id="share_go" onclick="window.open('https://plus.google.com/share?url=http://www.funnytrip.net')">Google+</a>
+			</div>
+		</div>
+	</footer>
+
+	</body>
+</html>

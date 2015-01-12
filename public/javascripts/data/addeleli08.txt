@@ -1,0 +1,27 @@
+﻿<div class="toolkit_item toolkit_resume">
+    <div class="toolkit_number"></div><input type="hidden" name="seq[]" class="seqno"/>
+    <div class="toolkit_content"><input type="hidden" name="res_id[]" class="ele_id"/>
+        <p class="toolkit_title">
+            <span class="toolkit_type">老師簡歷</span>
+            <input type="text" class="span7 require title" placeholder="自定欄位名稱" name="res_fieldname[]"></input>
+            <span class="toolkit_function">
+                <a class="btn btn-mini btn-warning upup"><i class="icon-chevron-sign-up"></i>上移</a><a class="btn btn-mini btn-warning downdown"><i class="icon-chevron-sign-down"></i>下移</a><a class="btn btn-mini btn-danger delete"><i class="icon-remove-circle"></i>刪除</a>
+            </span>
+        </p>
+        <div class="toolkit_detail"><!--欄位類型差異-->
+            <p><span class="tool_ele_title span2">老師姓名</span><input type="text" class="span10 require tname" placeholder="請輸入老師姓名" name="res_name[]"></input></p>
+            <p>
+                <span class="tool_ele_title span2">上傳照片</span>
+                <input type="file" class="image options" name="res_pic_file[]"/>
+                <div class="input-append" style='display:none;'>
+                    <input type="text" class="fileName" name="res_pic_filename[]" readonly>
+                    <a class="btn fileTrigger">選擇檔案</a>
+                </div>
+            </p>
+           <p class='dy'><span class="tool_ele_title span2">學經歷</span><input type="text" class="span9 require" placeholder="請輸入老師學經歷" name="res_grad[]"></input><a class="btn btn-mini resume_btn add_res"><i class="icon-plus-sign-alt"></i></a><a class="btn btn-mini resume_btn del_res"><i class="icon-remove-sign"></i></a></p>
+            <p><span class="tool_ele_title span2">履歷說明</span><textarea class="span10 memo" placeholder="請輸入簡短說明文字" name="res_content[]"></textarea></p>
+            <p class="share_option"><span class="tool_ele_title span2">分享設定</span><select name="res_share[]"><option value="yes">分享此項目</option><option value="no">不分享此項目</option></select></p>
+            <input type="hidden" name="res_count[]" class='counts' value='1'/>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,136 @@
+#{extends 'main.html' /} 
+#{set title:'廣達志工服務場次詳細資料' /}
+
+
+<script type="text/javascript">
+	$(document).ready(function() {	
+		var msg = $("#msg").val();
+		
+		if(msg!=""&&msg!=null){
+			alert(msg);
+		}
+		
+	});
+	
+	
+	function checkSelectedApplyFile(){
+		var filename = $("#applyFileName").html();
+		if(filename==""||filename==null){
+				alert("請選擇檔案");		
+			}
+		else if(filename.search(".csv")<0){
+			alert("請選擇正確的檔案(*.csv)");
+		}
+		else{
+			applyForm.submit();
+		}
+	}
+
+</script>
+<div class="container" >
+		<input type="hidden" id="msg" value="${msg}" >
+#{if session.contains("email")}	
+	#{deadbolt.restrict roles:[['q_admin']]}
+		
+		<div class="span6">
+			<h2>${vs.sessionName}</h2>
+			<h5><i class="icon-map-marker"></i> 地點：${vs.sessionName}</h5>
+			<h5><i class="icon-bookmark"></i> 序號：${vs.serialNumber}</h5>
+			<h5><i class="icon-time"></i> 活動日期：${vs.date}</h5>												
+		</div>
+		<div class="row">
+		<div id="content" class="span12">
+			<div class="row span12">
+		        <div class="tabbable">
+					<ul class="nav nav-tabs" id="myTab">
+					    <li class="active"><a href="#volunteer" data-toggle="tab">參與人員名單</a></li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active" id="volunteer">
+							<table class="table table-hover">
+    							<thead>
+									<tr>
+										<th>#</th>
+										<th>帳號</th>	
+										<th>姓名</th>			
+										<th>報到時間</th>
+										<th>離開時間</th>
+										<th>總時數(小時)</th>
+										<th>狀態</th>
+									</tr>
+    							</thead> 	    
+	   							 <tbody>
+		    						#{list items:listApplies, as:'apply'}
+										<tr>						
+											<td><span class="label label-important">${apply_index}</td>
+											<td>${apply.member.email}</td>		
+											<td>${apply.member.username}</td>								
+											<td>${apply.checkinTime}</span></td>
+											<td>${apply.checkoutTime}</td>	
+											<td>${apply.totalTime}</td>		
+											#{if apply.checkinTime==null}
+												<td><span class="label">尚未報到</td>	
+											#{/if}
+											#{else}
+												#{if apply.checkoutTime==null}
+													<td><span class="label label-important">尚未簽退</td>	
+												#{/if}
+												#{else}
+													<td><span class="label label-success">已完成</td>
+												#{/else}
+											#{/else}
+			      						</tr>
+		      						#{/list}
+	    						</tbody>	    
+							</table>
+						</div>
+														
+					</div><!-- end of tab-content -->						
+				</div> <!-- end of tabble -->
+				<a href="#selectVolunteerApply" class="btn btn-primary" data-toggle="modal" >上傳應參與人員名單(CSV格式)</a> 
+		<!-- select Account File to upload modal -->
+				<div class="modal hide fade" id="selectVolunteerApply" tabindex="-1">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">×</button>
+						<h3 id="myModalLabel">上傳參與名單：請選擇上傳檔案(*.csv)</h3>
+					</div>
+					<div class="modal-body" id="accountFile"  style="height:150px;">
+					  	<form name="applyForm" action="/quanta/volunteer/uploadApply" method="POST"  enctype="multipart/form-data">
+								<input type="hidden" name="sid" value="${vs.id}" >
+				  				<div class="control-group">
+									<label class="control-label">上傳檔案</label>
+									<div class="controls">
+										<div class="input-prepend input-append">
+											<div class="fileupload fileupload-new" data-provides="fileupload">
+											 	<div class="input-append">
+													<div class="uneditable-input span2"><i class="icon-file fileupload-exists"></i><span class="fileupload-preview" id="applyFileName"></span></div>
+														<span class="btn btn-file">
+															<span class="fileupload-new">選擇檔案</span>
+															<span class="fileupload-exists">改變檔案</span>
+															
+															<input type="file" name="files">
+													    </span>
+														<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">			
+									<input type="button" class="btn btn-primary" value="送出" id="uploadApplySubmit" onClick="checkSelectedApplyFile()">
+									<button class="btn" data-dismiss="modal">關閉</button>
+								</div>				
+					  	</form>
+					  	
+					</div>		
+				</div>
+			</div>
+		</div>
+	</div>
+	#{/deadbolt.restrict}		
+#{/if}
+#{else}
+	<a href="/quanta/admin" class="btn-block btn btn-danger" >請先登入</a> 
+#{/else}
+</div>
+

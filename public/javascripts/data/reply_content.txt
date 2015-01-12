@@ -1,0 +1,19 @@
+<tr class="replydetail">
+	<td colspan="7">
+		<div class="replyin">
+			<div class="reply_status">
+				<span>處理狀態</span><select id="replyContactStatus"><option>處理中</option><option>已處理</option><option>未處理</option></select><span class="pull-right"><button class="btn btn-mini btn-google" onClick="replyContact()">確定送出</button> <button class="btn btn-mini btn-danger" onClick="cancelReply()">取消</button></span>
+			</div>
+			<div class="reply_content">
+				<div class="user_reply">
+					<span>使用者意見</span>
+					<div></div>
+				</div>
+				<div class="admin_reply">
+					<span>管理者回覆</span>
+					<div class='toolkit_detail'><textarea class='editor' name="testID"></textarea></div>
+				</div>
+			</div>
+		</div>
+	</td>
+</tr>

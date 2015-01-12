@@ -1,0 +1,29 @@
+﻿var school = {
+	ele:[
+{city_id:'21',area_id:'891',name:'縣立金湖國小'},
+{city_id:'21',area_id:'892',name:'縣立金寧國(中)小'},
+{city_id:'21',area_id:'893',name:'縣立中正國小'},
+{city_id:'21',area_id:'893',name:'縣立賢庵國小'},
+{city_id:'21',area_id:'893',name:'縣立古城國小'},
+{city_id:'21',area_id:'891',name:'縣立開瑄國小'},
+{city_id:'21',area_id:'891',name:'縣立柏村國小'},
+{city_id:'21',area_id:'891',name:'縣立多年國小'},
+{city_id:'21',area_id:'890',name:'縣立金沙國小'},
+{city_id:'21',area_id:'890',name:'縣立何浦國小'},
+{city_id:'21',area_id:'890',name:'縣立安瀾國小'},
+{city_id:'21',area_id:'890',name:'縣立述美國小'},
+{city_id:'21',area_id:'892',name:'縣立古寧國小'},
+{city_id:'21',area_id:'892',name:'縣立金鼎國小'},
+{city_id:'21',area_id:'894',name:'縣立卓環國小'},
+{city_id:'21',area_id:'894',name:'縣立上岐國小'},
+{city_id:'21',area_id:'892',name:'縣立湖埔國小'},
+{city_id:'21',area_id:'891',name:'縣立正義國小'},
+{city_id:'21',area_id:'894',name:'縣立西口國小'}
+
+],
+    jun:[{city_id:'21',area_id:'893',name:'縣立金城國中'},
+{city_id:'21',area_id:'891',name:'縣立金湖國中'},
+{city_id:'21',area_id:'892',name:'縣立金寧國中(小)'},
+{city_id:'21',area_id:'890',name:'縣立金沙國中'},
+{city_id:'21',area_id:'894',name:'縣立烈嶼國中'}]
+};

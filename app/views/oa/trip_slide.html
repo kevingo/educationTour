@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>FunnyTrip Slide</title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="chrome=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<link rel="stylesheet" media="all" href="/public/GoogleIO/theme/css/default.css">
+		<link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="/public/GoogleIO/theme/css/phone.css">
+		<base target="_blank">
+		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+		<script data-main="/public/GoogleIO/js/slides" src="/public/GoogleIO/js/require-1.0.8.min.js"></script>
+		<!-- 
+		<script src="@{'/public/javascripts/jquery-1.8.0.min.js'}" type="text/javascript" charset="utf-8"></script>
+		<script src="@{'/public/javascripts/jquery.nailthumb.1.1.js'}" type="text/javascript" charset="utf-8"></script>
+		-->
+	</head>
+
+	<body style="opacity: 0">
+		<slides class="layout-widescreen">
+			
+			${basicInfo.raw()}
+			${outlineInfo.raw()}
+			${detailInfo.raw()}
+			
+			<slide hidden>Hidden slides are left out of the presentation.</slide>
+			<slide class="segue dark nobackground">
+			  <aside class="gdbar"><img style="width: 80%; height: 80%;" src="@{'/public/images/logo.png'}"></aside>
+			  <hgroup class="auto-fadein">
+			    <h2>The End</h2>
+			    <h3>By <a href="/member/profile/${oa.creator.id}">${oa?.creator.username}</a> 老師</h3>
+			  </hgroup>
+			</slide>	  
+			<slide class="backdrop"></slide>
+		</slides>
+
+
+<!-- Google Analysis
+<script>
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-XXXXXXXX-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+
+<script>
+$(function(){
+    $('.nc800x530').nailthumb({width:800,height:530});
+});
+</script>
+-->
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+	</body>
+</html>
+

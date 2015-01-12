@@ -1,0 +1,136 @@
+#{extends 'main.html' /} 
+#{set title:'展品管理' /}
+
+
+
+<script type="text/javascript">
+	$(document).ready(function() {	
+		var msg = $("#message").val();
+	
+	});
+
+	function deleteShowpiece(id){
+		if(confirm("是否確定要刪除這筆展品資料？")) {
+			jQuery.ajax({
+				  url: '/quanta/admin/showpiece/deleteShowpiece',
+				  type: 'POST',
+				  async: false,
+				  data: {
+				  	id:id
+				  },
+				  success: function(data) {
+						  	alert(data);		  
+				  },
+				  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+				});
+		}
+	}
+	
+	function getShowpiece(id){
+		
+		alert(id);
+		
+		jQuery.ajax({
+			  url: '/quanta/admin/showpiece/getShowpiece',
+			  type: 'GET',
+			  async: false,
+			  data: {
+			  	id:id
+			  },
+			  success: function(data) {
+					  	alert(data);		  
+			  },
+			  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+			});
+		
+	}
+
+</script>
+
+<div class="container">
+	<input type="hidden" id="message" value="${message}" >
+#{if session.contains("email")}	
+	#{deadbolt.restrict roles:[['q_admin']]}
+	<div class="row">
+		<div id="content" class="span12">
+			<div class="row span12">
+			        <div class="tabbable">
+						<ul class="nav nav-tabs" id="myTab">
+						    <li class="active"><a href="#showpiece" data-toggle="tab">查詢游於藝展品資訊</a></li>
+						</ul>
+						
+						<div class="tab-content">
+							<div class="tab-pane active" id="show">
+								<table class="table table-hover">
+	    							<thead>
+										<tr>
+											<th>#</th>
+											<th>展覽名稱</th>
+											<th>展品名稱</th>	
+											<th>狀態</th>
+											<th>目前位置</th>
+											<th>資訊</th>			
+											<th>序號</th>
+											<th></th>
+											<th></th>
+											<th>動作</th>
+										</tr>
+	    							</thead> 	    
+	   							 <tbody>
+		    						#{list items:listShowpieces, as:'showpiece'}
+										<tr>						
+											<td><span class="label label-important">${showpiece_index}</td>										
+											<td>${showpiece.show.showName}</span></td>
+											<td>${showpiece.showpieceName}</td>
+											<td>${showpiece.status}</td>
+											<td>${showpiece?.reciever?.schoolName}</td>	
+											<td>${showpiece.information}</td>	
+											<td>${showpiece.serialNumber}</td>	
+											<td><a href="/public/quanta/showpiece/qrcode/showpiece/${showpiece.serialNumber}.jpg">下載QRCode</a></td>
+											<td><a href="/quanta/admin/showpiece/${showpiece.id}">查閱展品歷程</a></td>
+											<td>
+												<a href="/quanta/admin/showpiece/getShowpiece/${showpiece.id}" class="btn btn-primary">編輯</a>
+												<a href="" class="btn btn-danger" onClick="deleteShowpiece(${showpiece.id})">刪除</a>
+											</td>	
+			      						</tr>
+		      						#{/list}
+	    						</tbody>	    
+							</table>
+						</div>
+														
+					</div><!-- end of tab-content -->						
+				</div> <!-- end of tabble -->
+			</div>
+		</div>
+	</div>
+	
+	<!-- select Account File to upload modal -->
+	<div class="modal hide fade" id="editShowpiece" tabindex="-1">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">×</button>
+			<h3 id="myModalLabel">編輯展品：${showpiece.showpieceName}</h3>
+		</div>
+		<div class="modal-body" id="accountFile"  style="height:150px;">
+		  	<form name="myForm" action="/quanta/showpiece/editShowpiece" method="POST"  enctype="multipart/form-data">
+
+	  				<div class="control-group">
+						<label class="control-label">展覽名稱：${showpiece.show.showName}</label>
+						<div class="controls">
+							
+						</div>
+					</div>
+					<div class="modal-footer">			
+						<input type="button" class="btn btn-primary" value="送出" id="uploadAccountSubmit" onClick="checkSelectedAccountFile()">
+						<button class="btn" data-dismiss="modal">關閉</button>
+					</div>				
+		  	</form>
+		  	
+		</div>		
+	</div>
+	
+	#{/deadbolt.restrict}		
+#{/if}
+#{else}
+<a href="/quanta/admin" class="btn-block  btn btn-danger" >請先登入</a> 
+#{/else}
+</div>

@@ -1,0 +1,78 @@
+#{extends 'main.html' /} 
+#{set title:'廣達志工服務專區' /}
+
+
+<script type="text/javascript">
+$(document).ready(function() {	
+	var msg = $("#message").val();
+	if(msg!="")
+		alert(msg);
+
+});
+
+
+</script>
+
+<div class="container">
+	<input type="hidden" id="message" value="${message}" >
+#{if session.contains("email")}	
+	#{deadbolt.restrict roles:[['q_volunteer']]}
+	<div class="row">
+		<div id="content" class="span12">
+			<div class="row span12">
+			        <div class="tabbable">
+						<ul class="nav nav-tabs" id="myTab">
+						    <li class="active"><a href="#volunteer" data-toggle="tab">查詢我的志工服務資訊</a></li>
+						</ul>
+						
+						<div class="tab-content">
+							<div class="tab-pane active" id="volunteer">
+								<table class="table table-hover">
+	    							<thead>
+										<tr>
+											<th>#</th>
+											<th>服務活動名稱</th>				
+											<th>日期</th>
+											<th>報到時間</th>
+											<th>簽退時間</th>
+											<th>總時數</th>
+											<th>狀態</th>
+										</tr>
+	    							</thead> 	    
+	   							 <tbody>
+		    						#{list items:listApplys, as:'apply'}
+										<tr>						
+											<td><span class="label label-important">${apply_index}</td>
+											<td>${apply.session.sessionName}</td>										
+											<td>${apply.session.date}</span></td>
+											<td>${apply.checkinTime}</td>					
+											<td>${apply.checkoutTime}</td>
+											<td><span class="badge badge-info">${apply.totalTime}</span></td>
+											#{if apply.checkinTime==null}
+												<td><span class="label">尚未報到</td>	
+											#{/if}
+											#{else}
+												#{if apply.checkoutTime==null}
+													<td><span class="label label-important">尚未簽退</td>	
+												#{/if}
+												#{else}
+													<td><span class="label label-success">已完成</td>
+												#{/else}
+											#{/else}
+			      						</tr>
+		      						#{/list}
+	    						</tbody>	    
+							</table>
+						</div>
+														
+					</div><!-- end of tab-content -->						
+				</div> <!-- end of tabble -->
+			</div>
+		</div>
+	</div>
+	#{/deadbolt.restrict}		
+#{/if}
+#{else}
+<a href="/quanta/admin" class="btn-block  btn btn-danger" >請先登入</a> 
+#{/else}
+</div>

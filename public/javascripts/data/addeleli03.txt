@@ -1,0 +1,24 @@
+﻿<div class="toolkit_item toolkit_pic">
+    <div class="toolkit_number"></div><input type="hidden" name="seq[]" class="seqno"/>
+    <div class="toolkit_content"><input type="hidden" name="pic_id[]" class="ele_id"/>
+        <p class="toolkit_title">
+            <span class="toolkit_type">上傳圖片</span>
+            <input type="text" class="span7 require title" placeholder="自定欄位名稱" name="pic_fieldname[]"></input>
+            <span class="toolkit_function">
+                <a class="btn btn-mini btn-warning upup"><i class="icon-chevron-sign-up"></i>上移</a><a class="btn btn-mini btn-warning downdown"><i class="icon-chevron-sign-down"></i>下移</a><a class="btn btn-mini btn-danger delete"><i class="icon-remove-circle"></i>刪除</a>
+            </span>
+        </p>
+        <div class="toolkit_detail"><!--欄位類型差異-->
+            <p>
+                <span class="tool_ele_title span2">上傳檔案</span>
+                <input type="file" name="pic_file[]"/>
+                <div class="input-append" style="display:none;">
+                    <input type="text" class="fileName require" readonly name="pic_filename[]">
+                    <a class="btn fileTrigger">選擇檔案</a>
+                </div>
+            </p>
+            <p><span class="tool_ele_title span2">圖片說明</span><textarea class="span10 memo" placeholder="請輸入圖片說明" name="pic_memo[]"></textarea></p>
+            <p class="share_option"><span class="tool_ele_title span2">分享設定</span><select name='pic_share[]' class='share'><option value='yes'>分享此項目</option><option value='no'>不分享此項目</option></select></p>
+        </div>
+    </div>
+</div>

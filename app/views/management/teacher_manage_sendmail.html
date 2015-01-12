@@ -1,0 +1,89 @@
+#{extends 'main.html' /}
+#{set title:'發送信函' /}
+
+<link href="/public/stylesheets/control.css" rel="stylesheet">
+<link href="/public/stylesheets/admin.css" rel="stylesheet">
+<script src="/public/javascripts/tinymce/tinymce.min.js"></script>
+<script src='/public/javascripts/effect13.js'></script>
+<div class="span10 offset1 control divisions">
+	<h3 class="title03">發送信函</h3>
+	<div class="control_content division manage_sendmail">
+		<div class="alert">
+			<ul>
+				<p>您可以在此發出電子郵件，您的學生將可收到通知</p>
+				<p>如果學生已設定好家長資訊，您也可選擇同時寄給家長</p>
+			</ul>
+		</div>
+		<form name="myForm" id="myForm" action="/memberGroup/sendMail" method="POST" enctype="multipart/form-data">
+			<dl>
+				<dt>收件人</dt>
+				<dd>
+					<p>您可以點選「選擇學生名單」進行選取，也可以自行輸入完整Email</p>
+					<input class="span5" type="text" placeholder="請輸入您要寄送的EMAIL" id='manual_mail_addr'/>用分隔符號區隔(,空白) <button class="btn btn-mini btn-info" href="#selectsend" role="button" type="button" data-toggle="modal">選擇學生名單</button>
+					<ul class="send_mail_list"></ul>
+				</dd>
+				<dt>標題</dt>
+				<dd><input class="span7 mail_subject" type="text" placeholder="請輸入信件標題" name="title"/></dd>
+				<dt>內容</dt>
+				<dd><div class="htmleditor"><textarea name='mail_content' id="mail_content"></textarea></div><p><input type="checkbox" name="Parents" value="1"> 同時寄送給學生及學生家長</p></dd>
+			</dl>
+		</form>
+		<div class="center"><button class="btn btn-success" role="button" type="button" data-toggle="modal" id="double_check">送出</button> <button class="btn btn-danger" href="#nosend" role="button" type="button" data-toggle="modal">取消</button></div>
+	</div>
+</div>
+
+<div id="sendconfirm" class="modal hide fade">
+	<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h3>確定要發送信函</h3>
+	</div>
+	<div class="modal-body">
+	<p>本信函即將發出給<span class='mail_counts'></span>位同學，確定要寄出嗎？</p>
+	</div>
+	<div class="modal-footer">
+	<a href="#" class="btn btn-primary submit">確定寄出</a>
+	<a href="#" class="btn" data-dismiss="modal" aria-hidden="true">取消</a>
+	</div>
+</div>
+
+<div id="nosend" class="modal hide fade">
+	<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h3>取消寄出</h3>
+	</div>
+	<div class="modal-body">
+	<p>是否確定要捨棄本信函？</p>
+	</div>
+	<div class="modal-footer">
+	<a href="#" class="btn btn-danger without_saving">確定捨棄</a>
+	<a href="#" class="btn" data-dismiss="modal" aria-hidden="true">取消</a>
+	</div>
+</div>
+
+<div id="selectsend" class="modal hide fade">
+	<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h3>選擇學生</h3>
+	</div>
+	<div class="modal-body">
+	<p>請選擇要發送信函的對象：</p>
+		<div class="row-fluid">
+			<div class="span3 class_list">
+				<h4>班群列表</h4>
+				<ul></ul>
+			</div>
+			<div class="span9">
+				<table class="table">
+					<thead>
+						<tr><td class="mc_td1"><input type="checkbox" class='select_all'></td><td class="mc_td2">學生姓名</td><td class="mc_td3">學生Email</td></tr>
+					</thead>
+					<tbody id="member_list"><td colspan='7'>No Data</td></tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+	<a href="#" class="btn btn-primary ok">加入</a>
+	<a href="#" class="btn" data-dismiss="modal" aria-hidden="true" id="btnCancelList">取消</a>
+	</div>
+</div>

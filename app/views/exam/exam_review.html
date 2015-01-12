@@ -1,0 +1,30 @@
+#{extends 'main.html' /}
+#{set title:'評量結果與閱卷' /}
+<link href="/public/stylesheets/exam.css" rel="stylesheet">
+<script src="/public/javascripts/effect16.js"></script>
+<div class="exam_review">
+	<input type="hidden" id="ansId" value="${answer.id}">
+	<h3 class="exam_review_title"></h3>
+	<div class="row-fluid">
+		<div class="span9 er_info">
+			<p><span class="er_info_title">活動名稱</span>${answer.examine.title}</p>
+			<p><span class="er_info_title">命題老師</span>${answer.examine.creator.username} 老師</p>
+			<p><span class="er_info_title">答題學生</span>${answer.apply.username} 同學</p>
+			<p><span class="er_info_title">繳卷日期</span>${answer.responseTime}</p>
+			<p><span class="er_info_title">答後說明</span></p>
+			<div style="border:1px solid #ccc;padding: 10px;">
+				${answer.examine?.illustration.raw()}
+			</div>
+			
+		</div>
+		<div class="span3 er_score">
+			<span class="er_score_title">得分</span><span class="er_score_result"></span>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="er_exams"></div>
+		</div>
+	</div>
+	<p class="center"><a class="btn btn-large btn-success" onClick="finishExamine()">完成!</a></p>
+</div>

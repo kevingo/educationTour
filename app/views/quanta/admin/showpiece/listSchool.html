@@ -1,0 +1,125 @@
+#{extends 'main.html' /} 
+#{set title:'管理學校帳號' /}
+
+
+<script type="text/javascript">
+	function deleteMember(m_id){
+		if(confirm("是否確定要刪除這筆學校帳號？")) {
+			jQuery.ajax({
+				  url: '/quanta/admin/showpiece/deleteSchool',
+				  type: 'POST',
+				  async: false,
+				  data: {
+				  	m_id:m_id
+				  },
+				  success: function(data) {
+						  	alert(data);		  
+				  },
+				  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+				});
+		}
+	}
+	
+	function disableMember(m_id){
+		if(confirm("是否確定要關閉這筆學校帳號？")) {
+			jQuery.ajax({
+				  url: '/quanta/admin/showpiece/disableSchool',
+				  type: 'POST',
+				  async: false,
+				  data: {
+				  	m_id:m_id
+				  },
+				  success: function(data) {
+						  	alert(data);		  
+				  },
+				  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+				});
+		}
+	}
+	
+	function enableMember(m_id){
+		if(confirm("是否確定要啟用這筆學校帳號？")) {
+			jQuery.ajax({
+				  url: '/quanta/admin/showpiece/enableSchool',
+				  type: 'POST',
+				  async: false,
+				  data: {
+				  	m_id:m_id
+				  },
+				  success: function(data) {
+						  	alert(data);		  
+				  },
+				  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+				});
+		}
+	}
+</script>
+
+
+<div class="container">
+#{if session.contains("email")}	
+	#{deadbolt.restrict roles:[['q_admin']]}
+	<div class="row">
+		<div id="content" class="span12">
+			<div class="row span12">
+			        <div class="tabbable">
+						<ul class="nav nav-tabs" id="myTab">
+						    <li class="active"><a href="#volunteer" data-toggle="tab">查詢 / 新增 學校帳號</a></li>
+						</ul>
+						
+						<a href="/quanta/admin/showpiece/newSchool" class="btn btn-info">新增  學校帳號</a>
+						<div class="tab-content">
+							<div class="tab-pane active" id="volunteer">
+								<table class="table table-hover">
+	    							<thead>
+										<tr>
+											<th>#</th>
+											<th>帳號</th>
+											<th>密碼</th>				
+											<th>使用者名稱</th>
+											<th>狀態</th>
+											<th>動作</th>
+										</tr>
+	    							</thead> 	    
+	   							 <tbody>
+		    						#{list items:listMembers, as:'member'}
+										<tr>						
+											<td><span class="label label-important">${member_index}</span></td>									
+											<td>${member.email}</span></td>
+											<td>${member.password}</span></td>
+											<td>${member.schoolName}</td>
+											#{if member.enable}
+												<td><span class="label label-success">啟用中</span></td>	
+											#{/if}	
+											#{else}
+												<td><span class="label">已關閉</span></td>	
+											#{/else}
+												
+											<td>
+												<!-- <a href="/quanta/admin/volunteer/editVolunteer/${member.id}" class="btn btn-primary">編輯</a>	 -->
+												<a href="/quanta/admin/showpiece/listSchool" class="btn btn-danger" onClick="deleteMember(${member.id})">刪除</a>
+												#{if member.enable}
+													<a href="" class="btn btn-warning" onClick="disableMember(${member.id})">關閉</a>
+												#{/if}	
+												#{else}
+													<a href="" class="btn btn-primary" onClick="enableMember(${member.id})">啟用</a>
+												#{/else}
+											</td>				
+			      						</tr>
+		      						#{/list}
+	    						</tbody>	    
+							</table>
+						</div>
+														
+					</div><!-- end of tab-content -->						
+				</div> <!-- end of tabble -->
+			</div>
+		</div>
+	</div>
+	
+	#{/deadbolt.restrict}		
+#{/if}
+#{else}
+<a href="/quanta/admin" class="btn-block  btn btn-danger" >請先登入</a> 
+#{/else}
+</div>

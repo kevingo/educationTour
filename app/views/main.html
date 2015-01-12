@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>#{get 'title' /}</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="shortcut icon" type="image/png" href="/public/images/favicon.png">
+		
+		<link href="@{'/public/stylesheets/bootstrap.min.css'}" >
+		<link href="@{'/public/stylesheets/bootstrap.css'}" rel="stylesheet">
+		<link href="@{'/public/stylesheets/font-awesome.css'}" rel="stylesheet">	
+		<link href="@{'/public/stylesheets/font-awesome-ie7.css'}" rel="stylesheet">
+		<link href="@{'/public/stylesheets/main.css'}" rel="stylesheet">
+		<link href="@{'/public/stylesheets/index.css'}" rel="stylesheet">
+		<!-- <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/jasny-bootstrap.min.css'}"> -->
+		<script type="text/javascript" src="@{'/public/javascripts/google_analytics.js'}"></script>
+		<!-- <script type="text/javascript" src="@{'/public/javascripts/jquery.js'}"></script>-->
+	    <script src="@{'/public/javascripts/jquery-1.8.0.min.js'}" type="text/javascript" charset="utf-8"></script>
+	    <script src="@{'/public/javascripts/jasny-bootstrap.min.js'}" type="text/javascript" charset="utf-8"></script>
+	    <script src="@{'/public/javascripts/jquery.nailthumb.1.1.js'}" type="text/javascript" charset="utf-8"></script>	
+	
+		<!-- <script type="text/javascript" src="@{'/public/javascripts/jquery.js'}"></script> -->
+		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+	    <!--[if lt IE 9]>
+	      <script src="/public/javascripts/html5shiv.js"></script>
+	    <![endif]-->
+	    
+	    <style>
+	    	.searchDiv {
+	    		margin-top:5px;
+	    	}
+	    	
+	    	.form-search {
+			    margin: 0 0 0;
+			    float: right;
+			}
+			
+
+	    </style>
+	    
+	</head>
+	<body>
+	<div class="container">
+		<input type="hidden" id="tabIndex" value="1">
+		<header class="row-fluid">
+			
+			<div id="logo" class="span3"><a href="@{Application.index()}"><img src="@{'/public/images/logo.png'}" width="295" height="128" alt="FunnyTrip放學趣"/></a></div>
+			<div id="nav" class="span9">
+				<ul class="nav nav-tabs" id="mainTab">
+					<li id="navtab1" onClick="setTabIndex(1)"><a href="#find_action">Home</a></li>
+					<li id="navtab2" onClick="setTabIndex(2)"><a href="#find_teacher">Profile</a></li>
+					<li id="navtab3" onClick="setTabIndex(3)"><a href="#find_case">Messages</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane" id="find_action">
+						<div class="span7">
+							<select onchange="getTag(this)" style="width:110px;">
+								<option>請選擇分類</option>
+								#{ list items:listTagCategoryByOA, as:'category'}
+								#{if selectedTagCategory?.name==category.name}
+								<option selected>${category.name}</option>
+								#{/if}
+								#{else}
+								<option>${category.name}</option>
+								#{/else}
+								#{/list}
+							</select>
+							<span></span>
+						</div>	
+						<div class="span5 searchDiv">
+						    <form class="form-search" method="POST" action="/oa/search">
+						    	<div class="input-append">
+								    <input type="text" name="kw" placeholder="搜尋戶外活動" class="span10 search-query">
+								    <button type="submit" class="btn"><i class="icon-search"></i></button>
+							    </div>
+						    </form>
+						</div>
+					</div>
+					
+					<div class="tab-pane" id="find_teacher">
+						<div class="span7">
+							<select onchange="getTag(this)" style="width:110px;">
+								<option>請選擇分類</option>
+								#{ list items:listTagCategoryByTeacher, as:'category'}
+								<option>${category.name}</option>
+								#{/list}
+							</select>
+							<span></span>
+						</div>
+						<div class="span5 searchDiv">
+						    <form class="form-search" method="POST" action="/teacher/search">
+						    	<div class="input-append">
+								    <input type="text" name="kw" placeholder="搜尋老師" class="span10 search-query">
+								    <button type="submit" class="btn"><i class="icon-search"></i></button>
+							    </div>
+						    </form>
+						</div>
+						
+					</div>
+					<div class="tab-pane" id="find_case">
+						<div class="span7">
+							<select onchange="getTag(this)" style="width:110px;">
+								<option>請選擇分類</option>
+								#{ list items:listTagCategoryByTP, as:'category'}
+								<option>${category.name}</option>
+								#{/list}
+							</select>
+							<span></span>
+						</div>
+						<div class="span5 searchDiv">
+						    <form class="form-search" method="POST" action="/tp/search">
+						    	<div class="input-append">
+							    	<input type="text" name="kw" placeholder="搜尋教案" class="span10 search-query">
+							    	<button type="submit" class="btn"><i class="icon-search"></i></button>
+							    </div>
+						    </form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="myPage">
+				
+				#{if session.contains("email")}	
+				<!-- 登入後用div.dropdown-->
+				<div class="dropdown">
+					<a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"></a>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="/member/myHomePage"><i class="icon-home"></i>我的首頁</a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="/member/configure"><i class="icon-cog"></i>個人設定</a></li>
+						<li role="presentation" class="divider"></li>
+						#{deadbolt.restrict roles:[['admin']]}
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="/member/validateTeacher"><i class="icon-ok-circle"></i>審核老師</a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="/admin/index"><i class="icon-tag"></i>標籤管理</a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="/admin/index#reply"><i class="icon-mail-reply"></i>意見回覆</a></li>
+						<li role="presentation" class="divider"></li>
+						#{/deadbolt.restrict}
+						#{deadbolt.restrict roles:[['teachingplanner'],['student']]}
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="/tp/createAgree"><i class="icon-plus-sign"></i>新建教案</a></li>
+						#{/deadbolt.restrict}
+						#{deadbolt.restrict roles:[['teachingplanner']]}
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="/oa/createAgree"><i class="icon-plus"></i>新建活動</a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="/examine/createAgree"><i class="icon-plus-sign-alt"></i>新建評量</a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="/member/configure#manageclass"><i class="icon-user"></i>班群管理</a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="/memberGroup/sendMail/0"><i class="icon-envelope"></i>發送信函</a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="/examine/index"><i class="icon-paper-clip"></i>評量管理</a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="/oa/apply/manage"><i class="icon-rss"></i>報名管理</a></li>
+						#{/deadbolt.restrict}
+						<li role="presentation" class="divider"></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="/logout"><i class="icon-signout"></i>我要登出</a></li>
+					</ul>
+				</div>                  
+                #{/if}     
+                #{else}
+                <!-- 登入前用div.login-->
+	            <div class="login">
+					<a href="/login"></a>
+				</div>
+                #{/else}
+				
+				
+			</div>
+		</header>
+		#{doLayout /}
+	</div>
+	
+	<footer>
+		<div class="container">
+			<div id="copyright" class="pull-left">
+				<p>版權所有 2013@ FunnyTrip i慢玩聯盟</p>
+				<p id="footer_fn">|<a href="@{Application.index()}">首頁</a>|<a href="/about">關於</a>|<a href="/license">隱私權與安全</a>|<!-- <a href="#">常見問題</a> |--><a href="/contactUs">建議與回報</a>|<a href="/quanta/admin">廣達專區</a>|</p>
+				<!-- 
+				<p>
+					<a href="/parent/login">Parent</a>
+					<a href="/student/login">Student</a>
+					<a href="/teacher/login">Teacher</a>
+					<a href="/admin/login">Admin</a>
+				</p>
+				 -->
+			</div>
+			<div id="social" class="pull-right">
+				<a id="share_fb" href="#" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent('www.funnytrip.net'),'facebook-share-dialog','width=626,height=436');return false;">Facebook</a>
+				<!-- <a id="share_tw" href="#">Twitter</a> -->
+				<a id="share_go" href="#" onclick="window.open('https://plus.google.com/share?url=http://www.funnytrip.net')">Google+</a>
+			</div>
+		</div>
+	</footer>
+	
+	<!-- <script src="@{'/public/javascripts/jquery.js'}"></script>-->
+	<script src="@{'/public/javascripts/bootstrap.js'}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			
+			switchTabIndex(${activityTab});
+			GoTop();
+		});
+		
+		function GoTop(){
+			backTop = function (btnId) {
+			    var btn = document.getElementById(btnId);
+			    if(btn!=null){
+				    var d = document.documentElement;
+				    window.onscroll = set;
+				    btn.onclick = function () {
+				        btn.style.display = "none";
+				        window.onscroll = null;
+				        this.timer = setInterval(function () {
+				            d.scrollTop -= Math.ceil(d.scrollTop * 0.1);
+				            if (d.scrollTop == 0) clearInterval(btn.timer, window.onscroll = set);
+				        }, 10);
+				    };
+				    
+			    }
+			    function set() {
+			        btn.style.display = d.scrollTop ? 'block' : "none";
+			    }
+			};
+			backTop('gotop');
+			
+		}
+		
+		function switchTabIndex(){
+			var args = arguments;
+		    switch (arguments.length) {
+		    case 1:    	
+		    	setTabIndex(args[0]);
+		        break;
+		    
+		    default:
+		    	setTabIndex(1);
+		        break;
+		    }
+		}
+		
+		function setTabIndex(index){
+			//hidden value 紀錄位於哪一個Tab
+			$('#tabIndex').val(index);
+			
+			//顯示正確的Tab
+			if(index==3){
+				$('#navtab3').addClass("active");
+				$('#find_case').addClass("active");
+			}
+			else if (index==2){
+				$('#navtab2').addClass("active");
+				$('#find_teacher').addClass("active");
+			}
+			else{
+				$("#navtab1").addClass("active");
+				$('#find_action').addClass("active");
+			}
+		}
+		
+		function getTag(select){
+			var category = select.options[select.selectedIndex].value;
+			var activity = $('#tabIndex').val();
+			
+			if(select.selectedIndex>0){
+				jQuery.ajax({
+					  url: '/ajax/getTag',
+					  type: 'POST',
+					  async: false,
+					  data: {
+					  	category:category,
+					  	activity:activity
+					  },
+					  success: function(response) {
+						  if(activity==1){
+							  $("#find_action span").html(response);
+						  }
+						  if(activity==2){
+							  $("#find_teacher span").html(response);
+						  }
+						  if(activity==3){
+							  $("#find_case span").html(response);
+						  }  		  
+					  },
+					  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+					});
+				}
+			else{
+				if(activity==1){
+					$("#find_action span").html("");
+			  	}
+			  	if(activity==2){
+					$("#find_teacher span").html("");
+			  	}
+			  	if(activity==3){
+				 	$("#find_case span").html("");
+			  	}
+			}	
+		}
+		
+		$('#mainTab a').click(function (e) {
+			e.preventDefault();
+			$(this).tab('show');
+		})
+	</script>	
+	
+	</body>
+</html>

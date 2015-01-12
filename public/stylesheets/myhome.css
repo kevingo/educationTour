@@ -1,0 +1,228 @@
+/* line 2, ../../sass/myhome.scss */
+#picupload {
+  width: 290px;
+  margin-left: -145px;
+}
+
+/* line 6, ../../sass/myhome.scss */
+.subfile {
+  width: 160px;
+}
+
+/* line 12, ../../sass/myhome.scss */
+.myhome .switchtype ul.dropdown-menu {
+  min-width: 100px;
+  padding: 2px 0;
+}
+/* line 15, ../../sass/myhome.scss */
+.myhome .switchtype ul.dropdown-menu li {
+  margin-bottom: 0;
+}
+/* line 20, ../../sass/myhome.scss */
+.myhome .select_child {
+  width: 100px;
+  position: relative;
+  top: -2px;
+}
+/* line 25, ../../sass/myhome.scss */
+.myhome .myhome_pic_name {
+  margin-bottom: 20px;
+}
+/* line 28, ../../sass/myhome.scss */
+.myhome .myhome_name {
+  text-align: center;
+  font-size: 15px;
+  border: 1px solid #ddd;
+  border-bottom: none;
+  padding: 5px 0px;
+}
+/* line 35, ../../sass/myhome.scss */
+.myhome .myhome_pic {
+  position: relative;
+  border: 1px solid #ccc;
+}
+/* line 38, ../../sass/myhome.scss */
+.myhome .myhome_pic .change_pic {
+  display: none;
+}
+/* line 41, ../../sass/myhome.scss */
+.myhome .myhome_pic:hover .change_pic {
+  display: block;
+  z-index: 2;
+  position: absolute;
+  bottom: 0;
+  width: 160px;
+  padding: 4px 0;
+  text-align: center;
+  background: #333;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+}
+/* line 54, ../../sass/myhome.scss */
+.myhome .myhome_div {
+  border: 1px solid #ccc;
+  border-top: none;
+  -moz-border-radius-bottomleft: 6px;
+  -webkit-border-bottom-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  -moz-border-radius-bottomright: 6px;
+  -webkit-border-bottom-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  margin-bottom: 20px;
+}
+/* line 59, ../../sass/myhome.scss */
+.myhome .myhome_div li {
+  list-style: none;
+}
+/* line 62, ../../sass/myhome.scss */
+.myhome .myhome_div .myhome_subdiv {
+  border-bottom: 1px dotted #ddd;
+}
+/* line 64, ../../sass/myhome.scss */
+.myhome .myhome_div .myhome_subdiv > ul {
+  padding: 5px 10px;
+}
+/* line 67, ../../sass/myhome.scss */
+.myhome .myhome_div .myhome_subdiv:last-child {
+  margin-bottom: 0;
+  border-bottom: none;
+}
+/* line 71, ../../sass/myhome.scss */
+.myhome .myhome_div .myhome_subdiv li {
+  margin-bottom: 5px;
+  text-align: center;
+}
+/* line 74, ../../sass/myhome.scss */
+.myhome .myhome_div .myhome_subdiv li hr {
+  margin: 7px 0;
+}
+/* line 79, ../../sass/myhome.scss */
+.myhome .myhome_div .myhome_subtitle {
+  margin: 0;
+  font-family: '微軟正黑體';
+  background: #ececec;
+  border-bottom: 1px dotted #ccc;
+  padding: 5px 10px;
+}
+/* line 86, ../../sass/myhome.scss */
+.myhome .myhome_div .nav-tabs {
+  padding-top: 10px;
+  margin-bottom: 0;
+  border-bottom: 1px solid #ccc;
+}
+/* line 90, ../../sass/myhome.scss */
+.myhome .myhome_div .nav-tabs li {
+  width: 120px;
+  height: 40px;
+  margin-right: 3px;
+}
+/* line 94, ../../sass/myhome.scss */
+.myhome .myhome_div .nav-tabs li a {
+  border: none;
+  width: 120px;
+  height: 20px;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 14px;
+  font-family: '微軟正黑體';
+  color: #fff;
+  text-shadow: 1px 1px 0px #333;
+  background: url(/public/images/myhome/myhome_tab.png) no-repeat;
+}
+/* line 105, ../../sass/myhome.scss */
+.myhome .myhome_div .nav-tabs li a:hover {
+  border: none;
+  color: #888;
+  background: url(/public/images/myhome/myhome_tab_h.png) no-repeat;
+  text-shadow: none;
+}
+/* line 112, ../../sass/myhome.scss */
+.myhome .myhome_div .nav-tabs li.active a {
+  background: url(/public/images/myhome/myhome_tab_h.png) no-repeat;
+  color: #333;
+  text-shadow: none;
+}
+/* line 119, ../../sass/myhome.scss */
+.myhome .myhome_div .tab-content {
+  padding: 0 10px;
+}
+/* line 122, ../../sass/myhome.scss */
+.myhome .myhome_div .tab-content .trip_items .trip_item {
+  width: 405px;
+  width: 395px\9;
+}
+/* line 125, ../../sass/myhome.scss */
+.myhome .myhome_div .tab-content .trip_items .trip_item .trip_item_info {
+  margin-left: 100px;
+  width: 285px\9;
+  width: 300px;
+}
+/* line 132, ../../sass/myhome.scss */
+.myhome .myhome_div .tab-content .pagination {
+  margin-left: 10px;
+  text-align: center;
+}
+/* line 137, ../../sass/myhome.scss */
+.myhome .myhome_div .tab-content .exams .exam {
+  margin: 10px 14px;
+  width: 160px;
+}
+/* line 141, ../../sass/myhome.scss */
+.myhome .myhome_div .tab-content .exams .exam_trip_name, .myhome .myhome_div .tab-content .exams .exam_status {
+  width: 150px;
+}
+/* line 146, ../../sass/myhome.scss */
+.myhome .myhome_div .tab-content .case_item_with_text .ciwt_item {
+  width: 405px;
+  width: 395px\9;
+}
+/* line 149, ../../sass/myhome.scss */
+.myhome .myhome_div .tab-content .case_item_with_text .ciwt_item .ciwt_info {
+  margin-left: 100px;
+  width: 300px;
+  width: 285px\9;
+  height: 95px;
+}
+
+/* line 161, ../../sass/myhome.scss */
+.user_profile_page .profiles table {
+  margin-bottom: 5px;
+}
+/* line 164, ../../sass/myhome.scss */
+.user_profile_page .user_p_td1 {
+  width: 100px;
+  font-size: 15px;
+  color: #19a655;
+  text-align: center;
+}
+/* line 170, ../../sass/myhome.scss */
+.user_profile_page .user_p_td2 {
+  width: 308px;
+}
+
+/* line 174, ../../sass/myhome.scss */
+.class_detail {
+  width: 960px;
+  margin: 0 auto;
+}
+/* line 177, ../../sass/myhome.scss */
+.class_detail table.table {
+  margin-bottom: 5px;
+}
+/* line 180, ../../sass/myhome.scss */
+.class_detail .class_d_td1 {
+  width: 100px;
+  font-size: 15px;
+  color: #19a655;
+  text-align: center;
+}
+/* line 186, ../../sass/myhome.scss */
+.class_detail .class_d_td2 {
+  width: 308px;
+}
+/* line 190, ../../sass/myhome.scss */
+.class_detail .student_lists li {
+  display: inline-block;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}

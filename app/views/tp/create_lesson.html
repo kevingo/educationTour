@@ -1,0 +1,229 @@
+#{extends 'main.html' /} 
+#{set title:'編輯教案內容' /}
+<link href="/public/stylesheets/lesson.css" rel="stylesheet">
+<link href="/public/stylesheets/jquery.cleditor.css" rel="stylesheet">
+<link href="/public/stylesheets/jquery.timepicker.css" rel="stylesheet">
+<script src="/public/javascripts/jquery.timepicker.min.js"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
+<script src="/public/javascripts/reg_func.js"></script>
+<script src="/public/javascripts/elements_event.js"></script>
+<script src="/public/javascripts/jquery.cleditor.min.js"></script>
+<script src="/public/javascripts/effect5.js"></script>
+
+<div class="create_lesson create">
+	<h3 class="title03">編輯教案內容</h3>
+	<div class="create_tabs">
+		<ul class="nav nav-tabs" id="create_lesson_tab">
+			<li class="active ct01"><a href="#basic">1.基本設定</a></li>
+			<li class="ct02"><a href="#prelearn">2.教學準備</a></li>
+			<li class="ct03"><a href="#middlelearn">3.行中講解</a></li>
+			<li class="ct04"><a href="#afterlearn">4.課後想想</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" id="basic">
+			<form name="basicFM" id="basicFM" target="basic_ifm" action="/tp/create_basicInfo" method="POST" enctype="multipart/form-data">
+				<input type="hidden" value="${tp?.id}" name="tpid" id="tpID">
+				<div class="row-fluid">
+					<div class="span10 offset1">
+						<div class="well topnote">
+							<ul>
+								<!-- <li>初次使用，不妨參考<a class="btn btn-info btn-mini" type="button" data-toggle="modal" data-target="#create_sample">新建教案範本</a>來協助您快速建立新教案。</li> -->
+								<li>設定時如有疑問，歡迎參考我們的<a>操作指引手冊</a>。</li>
+							</ul>
+						</div>
+						<dl class="create_inputs">
+							    <dt>教案名稱 *</dt><dd><input class="span11" id="lesson_name" name="lesson_name" type="text" placeholder="請輸入教案名稱" value="${tp?.name}" /></dd>
+							    <dt>是否公開 *</dt><dd><select class="span4" name="publish"><option value="1">公開中</option><option value="0">不公開</option></select><span class="public_status note">公開中，所有人都看的見</span></dd>
+							    <dt>是否分享 *</dt><dd><select class="span4" name="share"><option value="1">分享</option><option value="0">不分享</option></select><span class="share_status note">其他人將無法引用您的教案內容</span></dd>
+							    <dt>教案性質 *</dt><dd>	<a class="btn btn-mini" id="add_elements">+增加標籤</a></dd>
+							    <dt>融入領域 </dt><dd><input class="span11" id="lesson_subject" name="lesson_subject" type="text" placeholder="請輸入主題課程名稱" value="${tp?.subject}"/></dd>
+							    <dt>對應課綱 </dt><dd><input class="span11" id="lesson_unit" name="lesson_unit" type="text" placeholder="請輸入單元課程名稱" value="${tp?.unit}" /></dd>
+							    <dt>課程介紹</dt><dd><textarea class="span11" name="introduction" >${tp?.introduction}</textarea></dd>
+						    <hr>
+						    <p><span class="pull-left"><a class="btn btn-danger cancel" href="/member/myHomePage">取消新增</a></span><span class="pull-right"><a class="btn btn-success save">儲存</a> <a class="btn btn-info next">下一步：學前課程</a></span><span class="clearfix"></span></p>
+						</dl>
+					</div>
+				</div>
+			</form>
+			</div>
+			<div class="tab-pane" id="prelearn">
+				<form name="prelearnFM" id="prelearnFM" target="prelearn_ifm" action="/tp/create_Before" method="POST" enctype="multipart/form-data">
+					<input type="hidden" value="${tp?.tpBefore?.id}" name="tpBeforeid" id="tpBeforeid">
+					<div class="row-fluid">
+						<div class="span10 offset1">
+							<div class="well topnote">
+								<ul>
+									<li>在此可編寫教學前所準備的課前教材。</li>
+									<li>您可以針對此教案內容自行編排教學內容。</li>
+									<li>如果您想說明的項目很多，可以使用最下方的「新增說明欄位」來自訂。</li>
+								</ul>
+							</div>
+							<div class="add_toolkit">
+								<div class="basic_info">
+									<h4>課程說明</h4>
+									<p><textarea class="span12" name="illustration">${tp?.tpBefore?.illustration}</textarea></p>
+								</div>
+								<p style="display:none;"><a class="addfiled btn btn-warning pull-right">新增欄位</a><span class="clearfix"></span></p>
+								<div class="add_tools"></div>
+								<p><a class="addfiled btn btn-warning pull-right">新增欄位</a><span class="clearfix"></span></p>
+							</div>
+						    <hr>
+						    <p><span class="pull-left"><a class="btn btn-info prev">上一步：基本設定</a></span><span class="pull-right"><a class="btn btn-success save">儲存</a> <a class="btn btn-info next">下一步：學中課程</a></span><span class="clearfix"></span></p>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="tab-pane" id="middlelearn">
+				<form name="middlelearnFM" id="middlelearnFM" target="middlelearn_ifm" action="/tp/create_Now" method="POST" enctype="multipart/form-data">
+				<input type="hidden" value="${tp?.tpNow?.id}" name="tpNowid" id="tpNowid">
+				<div class="row-fluid">
+					<div class="span10 offset1">
+						<div class="well topnote">
+							<ul>
+								<li>在此可編寫活動中需要用到的教材。</li>
+								<li>您可以針對此教案內容自行編排教學內容。</li>
+								<li>如果您想說明的項目很多，可以使用最下方的「新增說明欄位」來自訂。</li>
+							</ul>
+						</div>
+						<div class="add_toolkit">
+							<div class="basic_info">
+								<h4>課程說明</h4>
+								<p><textarea class="span12" name="illustration">${tp?.tpNow?.illustration}</textarea></p>
+							</div>
+							<p style="display:none;"><a class="addfiled btn btn-warning pull-right">新增欄位</a><span class="clearfix"></span></p>
+							<div class="add_tools"></div>
+							<p><a class="addfiled btn btn-warning pull-right">新增欄位</a><span class="clearfix"></span></p>
+						</div>
+					    <hr>
+					    <p><span class="pull-left"><a class="btn btn-info prev">上一步：學前課程</a></span><span class="pull-right"><a class="btn btn-success save">儲存</a> <a class="btn btn-info next">下一步：學後課程</a></span><span class="clearfix"></span></p>
+					</div>
+				</div>
+			</form>
+			</div>
+			<div class="tab-pane" id="afterlearn">
+				<form name="afterlearnFM" id="afterlearnFM"  action="/tp/create_After" method="POST" enctype="multipart/form-data">
+				<input type="hidden" value="${tp?.tpAfter?.id}" name="tpAfterid" id="tpAfterid">
+				<div class="row-fluid">
+					<div class="span10 offset1">
+						<div class="well topnote">
+							<ul>
+								<li>在此可編寫活動後所需要用到的學習教材。</li>
+								<li>您可以針對此教案內容自行編排教學內容。</li>
+								<li>如果您想說明的項目很多，可以使用最下方的「新增說明欄位」來自訂。</li>
+							</ul>
+						</div>
+						<div class="add_toolkit">
+							<div class="basic_info">
+								<h4>課程說明</h4>
+								<p><textarea class="span12" name="illustration">${tp?.tpAfter?.illustration}</textarea></p>
+							</div>
+							<p style="display:none;"><a class="addfiled btn btn-warning pull-right">新增欄位</a><span class="clearfix"></span></p>
+							<div class="add_tools"></div>
+							<p><a class="addfiled btn btn-warning pull-right">新增欄位</a><span class="clearfix"></span></p>
+						</div>
+					    <hr>
+					    <p><span class="pull-left"><a class="btn btn-info prev">上一步：學中課程</a></span><span class="pull-right"><a class="btn btn-success save">儲存</a></span><span class="clearfix"></span></p>
+					</div>
+				</div>
+			</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="create_sample" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+		<h3 id="myModalLabel">套用範本</h3>
+	</div>
+	<div class="modal-body">
+		<p>請勾選您想套用的範本</p>
+		<ul class="select_sample">
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+		</ul>
+	</div>
+	<div class="modal-footer">
+		<a class="btn" data-dismiss="modal" aria-hidden="true">取消</a>
+		<a class="btn btn-success" type="button" data-toggle="modal" data-target="#confirm">立即套用</a>
+	</div>
+</div>
+<div id="confirm" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+		<h3 id="myModalLabel">注意</h3>
+	</div>
+	<div class="modal-body">
+		<p>套用後所有編輯中的內容都將被覆蓋，確定繼續套用嗎？</p>
+	</div>
+	<div class="modal-footer">
+		<a class="btn" data-dismiss="modal" aria-hidden="true">取消</a>
+		<a class="btn btn-success">確定套用</a>
+	</div>
+</div>
+<div id="add_element" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+		<h3 id="myModalLabel">新增說明欄位</h3>
+	</div>
+	<div class="modal-body">
+		<div class="main">
+		<p>您想加入什麼類型的說明？</p>
+		<ul>
+			<li class="addeleli02" title="使用編輯工具編輯內容，可自由控制文字排版或插入超連結、線上圖片等。">多行文字說明</li>
+			<li class="addeleli03" title="上傳您電腦中的照片">上傳圖片</li>
+			<li class="addeleli04" title="插入一則Youtube影音，其他人可在線上直接觀賞">Youtube影片</li>
+			<li class="addeleli05" title="從您的電腦中上傳文件檔案，例如試算表檔、文字檔、壓縮檔或簡報等。">分享附件</li>
+			<li class="addeleli06" title="貼上參考網站的連結及附加說明">網站連結</li>
+			<li class="addeleli07" title="您可以輸入與本內容相關的地理景點名稱，電話地址、座標、開放時間等資訊。">相關景點</li>
+			<li class="addeleli08" title="加入老師們的基本資歷說明，讓學生與家長更了解老師背景">老師簡歷</li>
+			<li class="addeleli01" title="引用其他老師所分享的教案內容，不只減輕您編寫教材的負擔，更能使您的教學內容豐富多元。">引用教案元件</li>
+		</ul>
+		</div>
+		<div class="ref" style="display:none;">
+			<p>搜尋教案，選擇你想引用的教案元件</p>
+			<div><!--<p class="add_other_lesson_filter">-->
+				<select id="menu"></select>
+			</div>
+			<hr>
+			<div class="well"><ul class="lessons"></ul></div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<a class="btn" data-dismiss="modal" aria-hidden="true">取消</a>
+		<a class="btn btn-info" id="create_ele">確定新增</a>
+		<a class="btn ref" id="ref_cancel" style="display:none">取消</a>
+		<a class="btn btn-info ref" id="ref_add" style="display:none;" >確定引用</a>
+	</div>
+</div>
+<div id="element_pop" class="modal hide fade"  style="width:750px;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+		<h3 id="myModalLabel">增加教案性質</h3>
+	</div>
+	<div class="modal-body">
+		#{list items: listCategory , as:'category'}
+			<ul>
+			#{list items: category.tags , as:'tag'}
+				#{if tag.enable}
+					<li style=" #{if tag.color!=null}background:${tag.color};#{/if}#{else}background:black;#{/else}" eid='${tag.id}'>${tag.name}</li>
+				#{/if}
+			#{/list}
+			</ul>
+		#{/list}	
+	</div>
+</div>

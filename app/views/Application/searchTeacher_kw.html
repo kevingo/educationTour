@@ -1,0 +1,35 @@
+#{extends 'main.html' /}
+#{set title:'搜尋結果' /}
+
+<link href="/public/stylesheets/jquery.nailthumb.1.1.css" rel="stylesheet">
+<script type="text/javascript" src="/public/javascripts/jquery.nailthumb.1.1.js"></script>
+<script src="/public/javascripts/effect12.js"></script>
+
+#{if kw!=''}
+<h3 class="title02">「<span>找老師</span>」搜尋【${kw}】結果如下…</h3>
+#{/if}
+
+#{if kw==''}
+<h3 class="title02">「<span>找老師</span>」搜尋【所有老師】結果如下…</h3>
+#{/if}
+
+<ul class="teacher_items search">
+	#{list items: listTeacher , as:'teacher'}
+		<li onclick="location.href='/member/profile/${teacher.id}';" style="cursor: pointer;">
+		<div class="nailthumb-container nc60">
+			#{if teacher.photo==null}
+				<img src="/public/images/default/teacher_default_100.png" />
+			#{/if}
+			#{else}
+				<img src="${teacher?.photo?.path}"/>
+			#{/else}
+		</div>
+		<p class="tname"><a href="/member/profile/${teacher.id}">${teacher.username}</a></p>
+		<p class="tstatus">${teacher.tempData}</p>
+		<p class="tinfo">${teacher.mood}</p>
+		</li>
+	#{/list}
+	#{if listTeacher.size()<1}
+		<script>alert("找不到符合的項目，請重新查詢");</script>
+	#{/if}
+</ul>

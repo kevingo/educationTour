@@ -1,0 +1,697 @@
+/* line 2, ../../sass/exam.scss */
+.create_agree {
+  margin-bottom: 100px;
+}
+/* line 5, ../../sass/exam.scss */
+.create_agree .argeebtns .agree {
+  background: url(/public/images/exam/exam_agree_btn-1.png) no-repeat;
+}
+/* line 6, ../../sass/exam.scss */
+.create_agree .argeebtns .agree:hover {
+  background: url(/public/images/exam/exam_agree_btn-2.png) no-repeat;
+}
+/* line 7, ../../sass/exam.scss */
+.create_agree .argeebtns .disagree {
+  background: url(/public/images/exam/exam_agree_btn-3.png) no-repeat;
+}
+/* line 8, ../../sass/exam.scss */
+.create_agree .argeebtns .disagree:hover {
+  background: url(/public/images/exam/exam_agree_btn-4.png) no-repeat;
+}
+
+/* line 11, ../../sass/exam.scss */
+.create_exam {
+  margin-bottom: 100px;
+}
+/* line 14, ../../sass/exam.scss */
+.create_exam .create_inputs dt {
+  color: #b4192f;
+}
+/* line 17, ../../sass/exam.scss */
+.create_exam .create_inputs p.custom_title {
+  color: #b4192f;
+}
+/* line 24, ../../sass/exam.scss */
+.create_exam .create_tabs .nav-tabs li.ce01 a {
+  background: url(/public/images/exam/create_exam_tabs-1.png) no-repeat;
+}
+/* line 25, ../../sass/exam.scss */
+.create_exam .create_tabs .nav-tabs li.ce02 a {
+  background: url(/public/images/exam/create_exam_tabs-2.png) no-repeat;
+}
+/* line 26, ../../sass/exam.scss */
+.create_exam .create_tabs .nav-tabs li.ce03 a {
+  background: url(/public/images/exam/create_exam_tabs-3.png) no-repeat;
+}
+/* line 28, ../../sass/exam.scss */
+.create_exam .create_tabs .nav-tabs li.active.ce01 a, .create_exam .create_tabs .nav-tabs li:hover.ce01 a {
+  background: url(/public/images/exam/create_exam_tabs_h-1.png) no-repeat;
+}
+/* line 29, ../../sass/exam.scss */
+.create_exam .create_tabs .nav-tabs li.active.ce02 a, .create_exam .create_tabs .nav-tabs li:hover.ce02 a {
+  background: url(/public/images/exam/create_exam_tabs_h-2.png) no-repeat;
+}
+/* line 30, ../../sass/exam.scss */
+.create_exam .create_tabs .nav-tabs li.active.ce03 a, .create_exam .create_tabs .nav-tabs li:hover.ce03 a {
+  background: url(/public/images/exam/create_exam_tabs_h-3.png) no-repeat;
+}
+
+/* line 37, ../../sass/exam.scss */
+.exam_items .exam {
+  border: 1px solid #ddd;
+  padding: 20px 5px;
+  position: relative;
+  background: #fff;
+  margin-bottom: 20px;
+}
+/* line 43, ../../sass/exam.scss */
+.exam_items .exam.exam_yesno .exam_detail p {
+  margin-bottom: 5px;
+}
+/* line 46, ../../sass/exam.scss */
+.exam_items .exam .exam_detail {
+  margin-left: 25px;
+}
+/* line 48, ../../sass/exam.scss */
+.exam_items .exam .exam_detail p {
+  margin-bottom: 8px;
+}
+/* line 51, ../../sass/exam.scss */
+.exam_items .exam .exam_detail p input {
+  margin-bottom: 0;
+}
+/* line 55, ../../sass/exam.scss */
+.exam_items .exam .editor {
+  width: 550px;
+  margin-left: 92px;
+  margin-bottom: 10px;
+  position: relative;
+}
+/* line 61, ../../sass/exam.scss */
+.exam_items .exam .exam_number {
+  display: block;
+  margin-right: 5px;
+  border-right: 1px solid #ddd;
+  position: absolute;
+  top: 20px;
+  width: 25px;
+  left: 5px;
+  font-size: 30px;
+  text-align: center;
+}
+/* line 72, ../../sass/exam.scss */
+.exam_items .exam .exam_function {
+  float: right;
+}
+/* line 74, ../../sass/exam.scss */
+.exam_items .exam .exam_function a {
+  margin: 2px 3px;
+}
+/* line 78, ../../sass/exam.scss */
+.exam_items .exam .exam_title {
+  width: 90px;
+  float: left;
+  font-size: 15px;
+  color: #ac4567;
+  text-align: center;
+  position: relative;
+  top: 4px;
+}
+/* line 87, ../../sass/exam.scss */
+.exam_items .exam .exam_list_content {
+  margin-left: 90px;
+}
+/* line 90, ../../sass/exam.scss */
+.exam_items .exam .select_option {
+  margin-right: 8px;
+  font-size: 22px;
+  color: #888;
+}
+/* line 95, ../../sass/exam.scss */
+.exam_items .exam .correct_check {
+  margin-left: 10px;
+  color: #888;
+  position: relative;
+}
+/* line 99, ../../sass/exam.scss */
+.exam_items .exam .correct_check input {
+  position: relative;
+  top: -3px;
+}
+/* line 104, ../../sass/exam.scss */
+.exam_items .exam.exam_yesno .exam_detail .select_option {
+  position: relative;
+  top: 4px;
+}
+
+/* line 110, ../../sass/exam.scss */
+.total_score {
+  background: #f8f8f8;
+  font-size: 22px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-bottom: none;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  font-family: '微軟正黑體';
+}
+/* line 119, ../../sass/exam.scss */
+.total_score .exam_total_count {
+  margin: 0 4px;
+  color: #c30040;
+}
+/* line 123, ../../sass/exam.scss */
+.total_score .exam_score {
+  margin: 0 4px;
+  color: #c30040;
+}
+
+/* line 129, ../../sass/exam.scss */
+#add_exam h3 {
+  color: #ac4567;
+}
+/* line 132, ../../sass/exam.scss */
+#add_exam .exam_type_select {
+  text-align: center;
+}
+/* line 134, ../../sass/exam.scss */
+#add_exam .exam_type_select li {
+  display: inline-block;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: #bbbbbb 2px 2px 6px;
+  -moz-box-shadow: #bbbbbb 2px 2px 6px;
+  box-shadow: #bbbbbb 2px 2px 6px;
+  text-align: center;
+  padding-top: 80px;
+  height: 30px;
+  width: 110px;
+  margin: 10px 5px;
+  font-size: 15px;
+  color: #666;
+  cursor: pointer;
+}
+/* line 147, ../../sass/exam.scss */
+#add_exam .exam_type_select li.e01 {
+  background: url(/public/images/exam/e01.png) no-repeat 0px -10px;
+}
+/* line 148, ../../sass/exam.scss */
+#add_exam .exam_type_select li.e02 {
+  background: url(/public/images/exam/e02.png) no-repeat 0px -10px;
+}
+/* line 149, ../../sass/exam.scss */
+#add_exam .exam_type_select li.e03 {
+  background: url(/public/images/exam/e03.png) no-repeat 0px -10px;
+}
+/* line 150, ../../sass/exam.scss */
+#add_exam .exam_type_select li:hover {
+  background-color: #f8f8f8;
+  color: #999;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  position: relative;
+  top: 2px;
+  left: 2px;
+}
+/* line 158, ../../sass/exam.scss */
+#add_exam .exam_type_select li.active {
+  border: 1px solid #b93823;
+  background-color: #f8f8f8;
+  color: #b93823;
+}
+/* line 163, ../../sass/exam.scss */
+#add_exam .exam_type_select li a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* line 171, ../../sass/exam.scss */
+.exam_review_title {
+  padding-top: 10px;
+  color: #d83168;
+  font-family: '微軟正黑體';
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 22px;
+  margin-bottom: 15px;
+  text-shadow: 0px 1px 1px #fff;
+  border-bottom: 1px dotted #c9abb9;
+  padding-bottom: 10px;
+}
+
+/* line 183, ../../sass/exam.scss */
+.exam_review, .exam_detail_page {
+  width: 960px;
+  margin: 0 auto;
+  margin-bottom: 50px;
+}
+
+/* line 189, ../../sass/exam.scss */
+.er_info p {
+  font-size: 15px;
+  line-height: 25px;
+  padding: 3px 0;
+}
+/* line 194, ../../sass/exam.scss */
+.er_info .er_info_title {
+  margin-right: 10px;
+  color: #243d7d;
+}
+
+/* line 199, ../../sass/exam.scss */
+.er_score {
+  text-align: center;
+}
+/* line 201, ../../sass/exam.scss */
+.er_score .er_score_title {
+  display: block;
+  text-align: left;
+  color: #f96;
+  font-size: 15px;
+}
+/* line 207, ../../sass/exam.scss */
+.er_score .er_score_result {
+  display: block;
+  font-size: 100px;
+  font-family: 'arial';
+  color: #ae1b30;
+  line-height: 100px;
+}
+
+/* line 215, ../../sass/exam.scss */
+.er_exams {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+/* line 218, ../../sass/exam.scss */
+.er_exams .er_exam_item {
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  padding: 20px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: #bbbbbb 2px 2px 6px;
+  -moz-box-shadow: #bbbbbb 2px 2px 6px;
+  box-shadow: #bbbbbb 2px 2px 6px;
+}
+/* line 224, ../../sass/exam.scss */
+.er_exams .er_exam_item input {
+  font-size: 13px;
+  margin-bottom: 0;
+}
+/* line 228, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_function {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  position: relative;
+}
+/* line 234, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_check {
+  position: absolute;
+  right: -6px;
+  top: -18px;
+  display: block;
+  width: 48px;
+  height: 48px;
+}
+/* line 241, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_check.check_yes {
+  background: url(/public/images/exam/right.png) no-repeat;
+}
+/* line 242, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_check.check_no {
+  background: url(/public/images/exam/wrong.png) no-repeat;
+}
+/* line 244, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_number {
+  width: 30px;
+  height: 100%;
+  float: left;
+  margin-right: 10px;
+  font-size: 22px;
+  border-right: 1px solid #ddd;
+}
+/* line 252, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_type {
+  font-size: 15px;
+  color: #b51f2b;
+}
+/* line 256, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_points {
+  font-size: 15px;
+  color: #888;
+}
+/* line 260, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_question {
+  border: 1px solid #ddd;
+  padding: 5px;
+  background: #f8f8f8;
+  font-weight: bold;
+}
+/* line 265, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_question p {
+  font-size: 15px;
+}
+/* line 267, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_question p a {
+  font-weight: normal;
+}
+/* line 272, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_answers {
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  border-top: none;
+  margin-bottom: 10px;
+}
+/* line 277, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_answers .ere_answers_textarea {
+  width: 820px;
+  margin-top: 10px;
+  height: 200px;
+}
+/* line 282, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_answers p {
+  font-size: 15px;
+  margin-bottom: 5px;
+  padding: 2px;
+  clear: both;
+}
+/* line 287, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_answers p:last-child {
+  margin-bottom: 0;
+}
+/* line 290, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_answers p.ere_answers_select {
+  border: 1px solid #aaa;
+  background: #ddd;
+}
+/* line 294, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_answers p.ere_answers_correct {
+  border: 1px solid #f96;
+  background: #ffefeb;
+}
+/* line 297, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_answers p.ere_answers_correct:after {
+  content: "正確答案";
+  color: #f96;
+  float: right;
+  margin-right: 5px;
+}
+/* line 305, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_answers input[type="radio"] {
+  margin-right: 5px;
+  position: relative;
+  top: -3px;
+}
+/* line 311, ../../sass/exam.scss */
+.er_exams .er_exam_item div h4 {
+  width: 80px;
+  float: left;
+  margin: 0;
+  margin-right: 10px;
+  font-size: 15px;
+  color: #b51f2b;
+  text-align: center;
+  margin-top: 3px;
+}
+/* line 321, ../../sass/exam.scss */
+.er_exams .er_exam_item div {
+  clear: both;
+}
+/* line 324, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_right_answer, .er_exams .er_exam_item .ere_about_answer, .er_exams .er_exam_item .ere_teacher_words {
+  margin-bottom: 10px;
+  border-bottom: 1px dotted #ccc;
+  padding-bottom: 10px;
+}
+/* line 328, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_right_answer p, .er_exams .er_exam_item .ere_about_answer p, .er_exams .er_exam_item .ere_teacher_words p {
+  margin-left: 90px;
+}
+/* line 331, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_right_answer ul, .er_exams .er_exam_item .ere_about_answer ul, .er_exams .er_exam_item .ere_teacher_words ul {
+  margin-left: 90px;
+  border: 1px solid #ddd;
+  background: #f8f8f8;
+  margin-top: 10px;
+}
+/* line 336, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_right_answer ul li.ere_teacher_word_old, .er_exams .er_exam_item .ere_about_answer ul li.ere_teacher_word_old, .er_exams .er_exam_item .ere_teacher_words ul li.ere_teacher_word_old {
+  list-style: none;
+  color: #444;
+  border-bottom: 1px solid #ddd;
+  padding: 5px 8px;
+}
+/* line 341, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_right_answer ul li.ere_teacher_word_old span, .er_exams .er_exam_item .ere_about_answer ul li.ere_teacher_word_old span, .er_exams .er_exam_item .ere_teacher_words ul li.ere_teacher_word_old span {
+  display: inline-block;
+  vertical-align: top;
+}
+/* line 345, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_right_answer ul li.ere_teacher_word_old span.date, .er_exams .er_exam_item .ere_about_answer ul li.ere_teacher_word_old span.date, .er_exams .er_exam_item .ere_teacher_words ul li.ere_teacher_word_old span.date {
+  color: #888;
+  margin-right: 5px;
+  font-size: 12px;
+  width: 65px;
+}
+/* line 351, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_right_answer ul li.ere_teacher_word_old span.point, .er_exams .er_exam_item .ere_about_answer ul li.ere_teacher_word_old span.point, .er_exams .er_exam_item .ere_teacher_words ul li.ere_teacher_word_old span.point {
+  color: #f96;
+  width: 40px;
+}
+/* line 355, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_right_answer ul li.ere_teacher_word_old span.reply, .er_exams .er_exam_item .ere_about_answer ul li.ere_teacher_word_old span.reply, .er_exams .er_exam_item .ere_teacher_words ul li.ere_teacher_word_old span.reply {
+  width: 690px;
+  margin: 0 5px;
+}
+/* line 359, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_right_answer ul li.ere_teacher_word_old:last-child, .er_exams .er_exam_item .ere_about_answer ul li.ere_teacher_word_old:last-child, .er_exams .er_exam_item .ere_teacher_words ul li.ere_teacher_word_old:last-child {
+  border-bottom: none;
+}
+/* line 366, ../../sass/exam.scss */
+.er_exams .er_exam_item .ere_right_answer p {
+  font-size: 15px;
+}
+
+/* line 372, ../../sass/exam.scss */
+.exam_basic_infomation {
+  background: #f8f8f8;
+  border: 1px solid #ddd;
+  border-bottom: none;
+  padding: 4px 10px;
+  -webkit-box-shadow: #bbbbbb 2px 2px 6px;
+  -moz-box-shadow: #bbbbbb 2px 2px 6px;
+  box-shadow: #bbbbbb 2px 2px 6px;
+}
+/* line 378, ../../sass/exam.scss */
+.exam_basic_infomation span {
+  display: inline-block;
+  width: 33%;
+}
+/* line 382, ../../sass/exam.scss */
+.exam_basic_infomation .ed_title {
+  color: #888;
+  font-size: 12px;
+  text-align: left;
+}
+/* line 387, ../../sass/exam.scss */
+.exam_basic_infomation .ed_teacher {
+  color: #888;
+  font-size: 12px;
+  text-align: right;
+}
+/* line 392, ../../sass/exam.scss */
+.exam_basic_infomation .ed_exam_title {
+  font-size: 15px;
+  text-align: center;
+}
+
+/* line 397, ../../sass/exam.scss */
+.exam_detail_content_wrapper {
+  -moz-border-radius-bottomleft: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  -moz-border-radius-bottomright: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  -webkit-box-shadow: #bbbbbb 2px 2px 6px;
+  -moz-box-shadow: #bbbbbb 2px 2px 6px;
+  box-shadow: #bbbbbb 2px 2px 6px;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+/* line 403, ../../sass/exam.scss */
+.exam_detail_content_wrapper:last-child {
+  margin-bottom: 0;
+}
+/* line 406, ../../sass/exam.scss */
+.exam_detail_content_wrapper .exam_detail_content {
+  margin-bottom: 30px;
+}
+/* line 408, ../../sass/exam.scss */
+.exam_detail_content_wrapper .exam_detail_content table.table {
+  border-bottom: 1px solid #ddd;
+}
+/* line 410, ../../sass/exam.scss */
+.exam_detail_content_wrapper .exam_detail_content table.table td {
+  background: #fff;
+}
+/* line 413, ../../sass/exam.scss */
+.exam_detail_content_wrapper .exam_detail_content table.table td.ed_info_td1 {
+  width: 10%;
+  text-align: center;
+  font-size: 15px;
+  color: #243d7d;
+}
+/* line 419, ../../sass/exam.scss */
+.exam_detail_content_wrapper .exam_detail_content table.table td.ed_info_td2 {
+  width: 39%;
+}
+/* line 421, ../../sass/exam.scss */
+.exam_detail_content_wrapper .exam_detail_content h4 {
+  color: #aa3943;
+}
+/* line 424, ../../sass/exam.scss */
+.exam_detail_content_wrapper .exam_detail_content .exam_info {
+  padding: 20px;
+  border: 1px solid #ccc;
+  background: #fff;
+}
+/* line 428, ../../sass/exam.scss */
+.exam_detail_content_wrapper .exam_detail_content .exam_info p {
+  margin-bottom: 5px;
+}
+/* line 430, ../../sass/exam.scss */
+.exam_detail_content_wrapper .exam_detail_content .exam_info p:last-child {
+  margin-bottom: 0px;
+}
+/* line 436, ../../sass/exam.scss */
+.exam_detail_content_wrapper .exam_detail_content .well ul {
+  margin-left: 20px;
+}
+/* line 438, ../../sass/exam.scss */
+.exam_detail_content_wrapper .exam_detail_content .well ul li {
+  line-height: 20px;
+}
+
+/* line 445, ../../sass/exam.scss */
+.create_exam_saved {
+  width: 760px;
+  margin: 0 auto;
+}
+/* line 448, ../../sass/exam.scss */
+.create_exam_saved .exam_finish {
+  margin-bottom: 50px;
+  padding: 30px 20px;
+  border: 1px solid #ddd;
+  border-top: none;
+}
+/* line 454, ../../sass/exam.scss */
+.create_exam_saved .exam_abstract {
+  border: 1px solid #ddd;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+  width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #f8f8f8;
+  margin-bottom: 50px;
+}
+/* line 462, ../../sass/exam.scss */
+.create_exam_saved .exam_abstract dt {
+  float: left;
+  font-weight: normal;
+  font-size: 15px;
+  width: 80px;
+  text-align: left;
+  padding-left: 20px;
+  color: #b4192f;
+}
+/* line 471, ../../sass/exam.scss */
+.create_exam_saved .exam_abstract dd {
+  position: relative;
+  margin: 0;
+  margin-bottom: 15px;
+  margin-left: 110px;
+  font-size: 15px;
+}
+/* line 479, ../../sass/exam.scss */
+.create_exam_saved .after_exam {
+  margin-bottom: 30px;
+  margin-top: 30px;
+  text-align: center;
+}
+/* line 483, ../../sass/exam.scss */
+.create_exam_saved .after_exam li {
+  font-weight: bold;
+  display: inline-block;
+  font-size: 15px;
+  text-shadow: 1px 1px 0px #fff;
+  padding: 15px;
+  width: 120px;
+  height: 120px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: #bbbbbb 2px 2px 6px;
+  -moz-box-shadow: #bbbbbb 2px 2px 6px;
+  box-shadow: #bbbbbb 2px 2px 6px;
+  margin-right: 25px;
+  vertical-align: top;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+}
+/* line 497, ../../sass/exam.scss */
+.create_exam_saved .after_exam li.ae01 {
+  background: url(/public/images/exam/01.png) no-repeat center;
+}
+/* line 498, ../../sass/exam.scss */
+.create_exam_saved .after_exam li.ae02 {
+  background: url(/public/images/exam/02.png) no-repeat center;
+}
+/* line 499, ../../sass/exam.scss */
+.create_exam_saved .after_exam li.ae03 {
+  background: url(/public/images/exam/03.png) no-repeat center;
+}
+/* line 500, ../../sass/exam.scss */
+.create_exam_saved .after_exam li.ae04 {
+  background: url(/public/images/exam/04.png) no-repeat center;
+}
+/* line 502, ../../sass/exam.scss */
+.create_exam_saved .after_exam li b, .create_exam_saved .after_exam li span {
+  display: block;
+}
+/* line 505, ../../sass/exam.scss */
+.create_exam_saved .after_exam li b {
+  color: #bc3155;
+}
+/* line 508, ../../sass/exam.scss */
+.create_exam_saved .after_exam li span {
+  position: absolute;
+  bottom: 10px;
+  font-size: 12px;
+  color: #666;
+  font-weight: normal;
+  width: 120px;
+}
+/* line 516, ../../sass/exam.scss */
+.create_exam_saved .after_exam li:last-child {
+  margin-right: 0px;
+}

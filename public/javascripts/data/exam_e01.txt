@@ -1,0 +1,45 @@
+<div class="exam exam_select">
+	<span class="exam_number"></span>
+	<input type='hidden' name='orderNumber[]' class='exam_number'/>
+	<input type='hidden' name="examType[]" value='singleAnswer' />
+	<input type="hidden" name="singleAnswer_id[]" class='exam_id'/>
+    <span class="exam_function">
+        <a class="btn btn-mini btn-warning upup"><i class="icon-chevron-sign-up"></i>上移</a><a class="btn btn-mini btn-warning downdown"><i class="icon-chevron-sign-down"></i>下移</a><a class="btn btn-mini btn-danger delete"><i class="icon-remove-circle"></i>刪除</a>
+    </span>
+    <div class="exam_detail">
+    	<div class="exam_detail_list">
+            <span class="exam_title">題目名稱</span>
+            <div class='editor'><textarea class="span8 require" name="singleAnswer_Question[]"></textarea></div>
+        </div>
+    	<div class="exam_detail_list">
+            <span class="exam_title">上傳附件</span>
+            <div class="exam_list_content">
+                <input type="file" name="file[]"/>
+                <div class="input-append" style="display:none;">
+                    <input type="text" class="fileName" readonly name="singleAnswer_Filename[]">
+                    <a class="btn fileTrigger">選擇檔案</a>
+                </div>
+            </div>
+        </div>
+    	<div class="exam_detail_list">
+            <span class="exam_title">答案</span>
+            <div class="exam_list_content qas">
+	            <p><span class="select_option">A</span><input class="span8 require" type="text" name="singleAnswer_OptionA[]" placeholder="請輸入問題答案"/><span class="correct_check"><input type="radio" name="singleAnswer" checked value='1'> 正解</span></p>
+	            <p><span class="select_option">B</span><input class="span8 require" type="text" name="singleAnswer_OptionB[]" placeholder="請輸入問題答案"/><span class="correct_check"><input type="radio" name="singleAnswer" value='2'> 正解</span></p>
+	            <p><span class="select_option">C</span><input class="span8 require" type="text" name="singleAnswer_OptionC[]" placeholder="請輸入問題答案"/><span class="correct_check"><input type="radio" name="singleAnswer" value='3'> 正解</span></p>
+	            <p><span class="select_option">D</span><input class="span8 require" type="text" name="singleAnswer_OptionD[]" placeholder="請輸入問題答案"/><span class="correct_check"><input type="radio" name="singleAnswer" value='4'> 正解</span></p>
+	        </div>
+            <input type="hidden" name='singleAnswer_Answer[]' class='answer'>
+        </div>
+    	<div class="exam_detail_list">
+            <span class="exam_title">計分</span>
+            <div class="exam_list_content">
+            	<p>本題答對給 <input class="span1 score" name="singleAnswer_Score[]" type="text" value="0" /> 分</p>
+            </div>
+        </div>
+    	<div class="exam_detail_list">
+            <span class="exam_title">解答說明</span>
+            <div class='editor'><textarea class="span8 require" name="singleAnswer_Intro[]"></textarea></div>
+        </div>
+    </div>
+</div>

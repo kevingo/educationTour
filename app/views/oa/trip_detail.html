@@ -1,0 +1,578 @@
+#{extends 'main.html' /} 
+#{set title:'戶外活動詳細內容' /}
+<link href="/public/stylesheets/trip.css" rel="stylesheet">
+<link href="/public/stylesheets/jquery.nailthumb.1.1.css" rel="stylesheet">
+<link href="/public/stylesheets/flexslider.css" rel="stylesheet">
+<script type="text/javascript" src="/public/javascripts/jquery.nailthumb.1.1.js"></script>
+<script type="text/javascript" src="/public/javascripts/jquery.flexslider.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="/public/javascripts/google_map.js"></script>
+<script type="text/javascript" src="/public/javascripts/one_point.js"></script>
+<script type="text/javascript" src="/public/javascripts/effect2.js"></script>
+<script type="text/javascript" src="/public/javascripts/itri_checkFavo.js"></script>
+<script type="text/javascript" src="/public/javascripts/itri_applyHandler.js"></script>
+<script src="/public/javascripts/FB.Share.js" type="text/javascript"></script>
+
+<div id="fb-root"></div>
+<script>
+(function(d, s, id) {var js, fjs = d.getElementsByTagName(s)[0];if (d.getElementById(id)) return;js = d.createElement(s); js.id = id;js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1";fjs.parentNode.insertBefore(js, fjs);}(document, 'script', 'facebook-jssdk'));
+</script>
+
+<style>
+
+	#apply input:not([type='text']) {
+	    font-size: 13px;
+	    width: 50px;
+	}
+	
+	.modal-body {
+	    max-height: 600px;
+	}
+	
+	
+	.trip_title { 
+		position: relative;
+	}
+	
+	.trip_title .dropdown {
+	    color: #666666;
+	    font-family: '新細明體';
+	    font-size: 12px;
+	    font-weight: normal;
+	    position: absolute;
+	    right: 2px;
+	    top: 5px;
+	}
+	
+	.tag a {
+		color: white;
+	}
+
+</style>
+
+<h3 class="trip_title">
+<i class="icon-beaker"></i>${oa.name}
+	#{if oa.status == 2}
+		(已截止報名)
+	#{/if}
+	#{if oa.status == 0}
+		(尚未開始報名)
+	#{/if}
+	#{if session.contains("email")}
+		#{if m.id==oa.creator.id || m.roleList.contains('admin')}
+		<div class="dropdown">
+			<a class="dropdown-toggle btn" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
+			管理本活動
+			<b class="caret"></b>
+			</a>
+			<ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+				#{if m.id==oa.creator.id}
+	        	<li role="presentation"><a role="menuitem" tabindex="-1" href="/oa/create/${oa.id}">編輯活動內容</a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="/oa/apply/manage">管理報名名單</a></li>
+				#{if oa.componentOrder != '' || oa.componentOrder!=null}
+	        	<li role="presentation"><a role="menuitem" tabindex="-1" href="/oa/nfc/${oa.id}">設定智慧元件提示功能</a></li>
+	        	#{/if}
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="javascript: void(0)" onclick="del('oa', '${oa.id}')">刪除本活動</a></li>
+		        <li role="presentation" class="divider"></li>
+		        #{/if}
+				#{deadbolt.restrict roles:[['admin']]}
+				#{if oa.enable}
+		        	<li role="presentation"><a role="menuitem" tabindex="-1" href="javascript: void(0)" onclick="enableHandler('disable', 'oa', ${oa.id})">強制下架</a></li>
+		        #{/if}
+		        #{else}
+		        	<li role="presentation"><a role="menuitem" tabindex="-1" href="javascript: void(0)" onclick="enableHandler('enable', 'oa', ${oa.id})">開放上架</a></li>
+		        #{/else}
+		        #{/deadbolt.restrict}
+	      </ul>
+		</div>
+		#{/if}	
+	#{/if}
+</h3>
+<div class="trip_detail">
+	<div id="gallery" class="ad-gallery">
+      <section class="slider">
+        <div id="slider" class="flexslider">
+          <ul class="slides">
+			${photo_nail_500.raw()}
+          </ul>
+        </div>
+        <div id="carousel" class="flexslider">
+          <ul class="slides">
+			${photo_nail_100.raw()}
+          </ul>
+        </div>
+      </section>
+	</div>
+	<div id="descriptions"></div>
+	<div class="trip_info">
+		<h3 class="title01">活動摘要</h3>
+		<dl>
+			<dt>標籤特色</dt>
+			<dd class="tags">
+				#{list oa.tags, as:'t'}
+						<span style="background:${t?.color};" class="tag tag_c${t_index}" onclick="goToTag(${t.id}, 'oa')"><a>${t.name}</a></span>
+				#{/list}
+			</dd>
+			<dt>報名截止</dt>
+			<dd>
+				${oa.regDue}
+				#{if apply_remain_day<=0}
+					(剩<b>0</b>天)
+				#{/if}
+				#{else}
+					(剩<b>${apply_remain_day}</b>天)
+				#{/else}
+			</dd>
+			<dt>活動狀態</dt><dd>				
+				#{if oa.status == 1}
+					開放報名中(剩<b>${apply_remain}</b>名額)
+				#{/if}
+				#{if oa.status == 0}
+					尚未開始報名
+				#{/if}
+				#{if oa.status == 2}
+					已截止報名
+				#{/if}</dd>
+			<dt>活動發起</dt><dd><a href="/member/profile/${oa.creator.id}">${oa.creator.username}老師</a></dd>
+			<dt>集合地點</dt><dd>${oa.gatherPoint}</dd>
+			<dt>活動期間</dt><dd>自${oa.fromDate} ${oa.fromTime}開始，至${oa.toDate} ${oa.toTime}結束</dd>
+			<dt>活動費用</dt><dd>NT<b>${oa.price}</b>元
+			#{if session.contains("email")}
+				#{if oa.status == 1}
+					<a href="#pay" role="button" class="btn btn-mini" data-toggle="modal">前往繳費</a>
+				#{/if}
+			#{/if}
+			</dd>
+		</dl>
+		
+		#{if session.contains("email")}
+			#{if oa.status == 1}
+				<button id="applyBtn" class="buy_btn pull-right">我要報名</button>
+			#{/if}
+		#{/if}
+		
+		
+		<div class="share_btns pull-right">
+			<a class="btn btn-warning" target="_blank" href="/oa/slide/${oa.id}"><i class="icon-play"></i>全螢幕播放</a>
+			<button class="btn btn-fb" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),'facebook-share-dialog','width=626,height=436');return false;"><i class="icon-facebook-sign"></i>Facebook分享</button>			
+			<button class="btn btn-danger" onclick="window.open('https://plus.google.com/share?url=http://www.funnytrip.net')"><i class="icon-google-plus-sign"></i>Google+分享</button>
+			<!-- <a href="https://plus.google.com/share?url=http://www.funnytrip.net" onclick="javascript:window.open('http://www.funnytrip.net','',return false;"></a> -->
+			#{if session.contains("email")}
+				#{if add=="no"}
+					<button class="btn btn-twitter" onClick="addFavo('${session.get('email')}', ${oa.id}, 'oa')"><i class="icon-star"></i>加入收藏</button>
+				#{/if}
+				
+				#{if add=="yes"}
+					<button class="btn btn-twitter" onClick="removeFavo('${session.get('email')}', ${oa.id}, 'oa')")><i class="icon-star"></i>已收藏</button>
+				#{/if}
+			#{/if}
+			<!--<button class="btn btn-danger disabled"><i class="icon-star"></i>已收藏</button>-->
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+</div>
+<div class="trip_detail_tabs">
+	<ul class="nav nav-tabs" id="trip_tab">
+		<li class="tdt01 active"><a href="#tt01">詳細內容</a></li>
+		<li class="tdt02"><a href="#tt02">引用教案</a></li>
+		<li class="tdt03"><a href="#tt03">行程景點</a></li>
+		<li class="tdt04"><a href="#tt04">測驗評量</a></li>
+		<!-- 老師與admin可以看到報名名單，其他人看到自己的報名名單 -->
+		#{if session.contains("email")}
+		<li class="tdt05"><a href="#tt05">報名名單</a></li>
+		#{/if}
+	</ul>
+	<div class="tab-content">
+		<div class="tab-pane active" id="tt01">
+			<div class="row-fluid">
+				<div class="span8 tdt_info1">
+					${trip_introduction.raw()}
+					${detail.raw()}
+				</div>
+				<!--.tdt_info2為歸類內容的欄位-->
+				<div class="span4 tdt_info2">
+					<div class="ps_div">
+						<h3>所有活動圖片</h3>
+							<ul class="thumbs upload_list">
+								${photo_content.raw()}
+							</ul>
+					</div>
+					<div class="ps_div">
+						<h3>所有活動附件</h3>
+							<div class="files">
+								<!-- doc, pdf, xls, rar, zip, jpg, png, gif, pps, txt 其他（沒有給class就是其他）-->
+								${attatch_content.raw()}
+							</div>
+					</div>
+					<div class="ps_div">
+						<h3>所有活動連結</h3>
+							<div class="files">
+								${link_content.raw()}	
+							</div>
+					</div>
+					<!-- 
+					<div class="ps_div">
+						<h3>活動統計資料</h3>
+						<dl class="star">
+							<dt title="1-10人一顆星，11~20人兩顆星…依此類推">已閱讀人數</dt>
+							<dd><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-empty"></i></dd>
+							<dt title="1-10人一顆星，11~20人兩顆星…依此類推">被收藏次數</dt>
+							<dd><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-empty"></i></dd>
+							<dt title="1-10人一顆星，11~20人兩顆星…依此類推">以報名人數</dt>
+							<dd><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-empty"></i></dd>
+						</dl>
+					</div>
+					-->
+					<!-- 
+					<div class="ps_div">
+						<h3>其他相關活動</h3>
+						<div class="trip_items">
+							<div class="trip_item">
+								<div class="trip_item_img">
+									<div class="nailthumb-container nc80">
+										<img src="/public/images/lesson/l01.jpg"/>
+									</div>
+								</div>
+								<div class="trip_item_info">
+									<p class="trip_item_title"><a href="#">活動名稱活動名稱</a></p>
+									<p class="tags"><span class="tag tag_c1">台北市</span><span class="tag tag_c2">語言發展</span><span class="tag tag_c3">自然體驗</span><span class="tag">語言</span><span class="tag">語言語言</span></p>
+									<p class="trip_item_note">活動簡介，活動簡介。這裡是活動簡介，活動的簡介</p>
+								</div>
+							</div>
+							<div class="trip_item">
+								<div class="trip_item_img">
+									<div class="nailthumb-container nc80">
+										<img src="/public/images/lesson/l01.jpg"/>
+									</div>
+								</div>
+								<div class="trip_item_info">
+									<p class="trip_item_title"><a href="#">活動名稱活動名稱</a></p>
+									<p class="tags"><span class="tag tag_c1">台北市</span><span class="tag tag_c2">語言發展</span><span class="tag tag_c3">自然體驗</span><span class="tag">語言</span><span class="tag">語言語言</span></p>
+									<p class="trip_item_note">活動簡介，活動簡介。這裡是活動簡介，活動的簡介</p>
+								</div>
+							</div>
+							<div class="trip_item">
+								<div class="trip_item_img">
+									<div class="nailthumb-container nc80">
+										<img src="/public/images/lesson/l01.jpg"/>
+									</div>
+								</div>
+								<div class="trip_item_info">
+									<p class="trip_item_title"><a href="#">活動名稱活動名稱</a></p>
+									<p class="tags"><span class="tag tag_c1">台北市</span><span class="tag tag_c2">語言發展</span><span class="tag tag_c3">自然體驗</span><span class="tag">語言</span><span class="tag">語言語言</span></p>
+									<p class="trip_item_note">活動簡介，活動簡介。這裡是活動簡介，活動的簡介</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					-->
+					<!-- 
+					<div class="ps_div">
+						<div class="fb-comments" data-href="http://example.com" data-width="330"></div>
+					</div>
+					-->
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane" id="tt02">
+			<div class="tdt_div">
+				<h4 class="tdt_title">引用教案</h4>
+				<div class="tdt_text">
+					<div class="case_item_with_text">
+
+						${ref_content.raw()}
+
+						<!-- 
+						<div class="ciwt_item">
+							<div class="ciwt_img">
+								<div class="nailthumb-container nc120">
+									<img src="/public/images/trip_detail_img6.jpg"/>
+								</div>
+							</div>
+							<div class="ciwt_info">
+								<p class="ciwt_title">教案名稱教案名稱</p>
+								<p class="tags"><span class="tag tag_c1">台北市</span><span class="tag tag_c2">語言發展</span><span class="tag tag_c3">自然體驗</span><span class="tag">語言</span><span class="tag">語言語言</span></p>
+								<p class="ciwt_note">老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明… 純文字框</p>
+							</div>
+						</div>
+						-->
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane" id="tt03">
+			<div class="tdt_div">
+				<h4 class="tdt_title">行程景點</h4>
+				<div class="row-fluid map_tool">
+					<div class="span8 map_tool_map">
+						<div id="map_canvas"></div>
+						<small><a href="https://www.google.com.tw/maps?f=q&amp;source=embed&amp;hl=zh-TW&amp;geocode=&amp;q=%E5%98%89%E7%BE%A9%E7%B8%A3%E9%98%BF%E9%87%8C%E5%B1%B1%E9%84%89&amp;aq=&amp;sll=25.085406,121.561501&amp;sspn=0.994995,1.249695&amp;brcurrent=3,0x346ee754485a7249:0x9f2ec8f84ed35ef,0,0x346eeb57bfbbaa51:0x97e5ee9d562a7635&amp;ie=UTF8&amp;split=0&amp;hq=&amp;hnear=%E5%98%89%E7%BE%A9%E7%B8%A3%E9%98%BF%E9%87%8C%E5%B1%B1%E9%84%89&amp;t=m&amp;ll=23.435529,120.780945&amp;spn=0.441001,0.479965&amp;z=11&amp;iwloc=A" style="color:#0000FF;text-align:left">顯示詳細地圖</a></small>
+					</div>
+					<div class="span4 map_tool_spot">
+						<div class="spots">
+							${pois.raw()}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane" id="tt04">
+			<div class="tdt_div">
+				<h4 class="tdt_title">進行中評量</h4>
+				<div class="exams">
+					#{list items:exams_process, as:'exam'}
+					<div class="exam">
+						<p class="exam_title"><i class="icon-file-text"></i><a href="/examine/show/${exam.id}">${exam.title}</a></p>
+						<div class="nc200 nailthumb-container exam_img">
+							<img src="/public/images/default/exam_default_100.png"/>
+							<p class="exam_trip_name">${exam.title}</p>
+						</div>
+						<p class="exam_teacher"><a href="/member/profile/${exam.creator.id}">${exam.creator.username} 老師</a>
+						</p>
+					</div>
+					#{/list}
+				</div>
+			</div>
+			<div class="tdt_div">
+				<h4 class="tdt_title">已結束評量</h4>
+				<div class="exams">
+					#{list items:exams_finish, as:'exam'}
+					<div class="exam">
+						<p class="exam_title"><i class="icon-file-text"></i><a href="/examine/show/${exam.id}">${exam.title}</a></p>
+						<div class="nc200 nailthumb-container exam_img">
+							<img src="/public/images/default/exam_default_100.png"/>
+							<p class="exam_trip_name">${exam.title}</p>
+						</div>
+						<p class="exam_teacher"><a href="/member/profile/${exam.creator.id}">${exam.creator.username} 老師</a>
+						</p>
+					</div>
+					#{/list}
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane" id="tt05">
+			<div class="tdt_div">
+				<h4 class="tdt_title">已報名名單</h4>
+				<table class="table">
+					<thead>
+						<tr>
+							<td>#</td>
+							<td>姓名</td>
+							<td>報名時間</td>
+							<td>報名狀態</td>
+							<td>#</td>
+							<td>姓名</td>
+							<td>報名時間</td>
+							<td>報名狀態</td>
+						</tr>
+					</thead>
+					<tbody>
+						#{if session.contains("email")}
+							#{if m.id==oa.creator.id || m.roleList.contains("admin")}
+								#{list items:applies, as:'a'}
+								<tr>
+									<td>${a_index}</td>
+									<td><a href="/member/profile/${a.attendantMember.id}">${a.attendantMember.username}</a></td>
+									<td>${a.applyTime}</td>
+									#{if a.status==0}
+									<td>家長尚未同意</td>
+									#{/if}
+									#{if a.status==1}
+									<td>尚未繳款</td>
+									#{/if}
+									#{if a.status==2}
+									<td>確認中</td>
+									#{/if}
+									#{if a.status==3}
+									<td>已繳款，報名成功</td>
+									#{/if}
+									#{if a.status==4}
+									<td>拒絕參加</td>
+									#{/if}
+								</tr>
+								#{/list}				
+							#{/if}
+							#{else}
+								#{list items:myApply, as:'a'}
+								<tr>
+									<td>${a_index}</td>
+									#{if a.attendantMember!=null}
+									<td><a href="/member/profile/${a.attendantMember.id}">${a.username}</a></td>
+									#{/if}
+									#{else}
+									<td>${a.username}</td>
+									#{/else}
+									<td>${a.applyTime}</td>
+									#{if a.status==0}
+									<td>家長尚未同意</td>
+									#{/if}
+									#{if a.status==1}
+									<td>尚未繳款</td>
+									#{/if}
+									#{if a.status==2}
+									<td>確認中</td>
+									#{/if}
+									#{if a.status==3}
+									<td>已繳款，報名成功</td>
+									#{/if}
+									#{if a.status==4}
+									<td>拒絕參加</td>
+									#{/if}
+								</tr>
+								#{/list}				
+							#{/else}
+						#{/if}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 購買對話框 -->
+<div id="pay" class="modal hide fade" tabindex="-1" role="dialog" aria-titleledby="myModaltitle" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="myModaltitle">繳費說明</h3>
+	</div>
+	<form id="atmForm" name="atmForm" action="/oa/replyATM" method="post">
+		<input id="oaid" type="hidden" name="oaid" value="${oa.id}"/>
+		#{if session.contains("email")}
+		<input id="member_id" type="hidden" name="member_id" value="${m.id}"/>
+		#{/if}
+		<div class="modal-body">
+			<p>完成報名後，請依照下列方式繳費：<br>繳費後，請您提供匯款帳號後五碼以便查帳。</p>
+			<div class="pay_info">
+				<dl>
+					<dt>繳費方式</dt><dd>ATM現金轉帳或劃撥</dd>
+					<dt>收款銀行</dt><dd>${oa.creator.bankCode ? oa.creator.bankCode : "尚未設定"}</dd>
+					<dt>收款帳號</dt><dd>${oa.creator.accountATM ? oa.creator.accountATM : "尚未設定"}</dd>
+					<dt>活動費用</dt><dd>NT. ${myApply.size() * oa.price}元 (共報名${myApply.size()}人)</dd>
+				</dl>
+			</div>
+			<p class="checkfive">您的帳號後五碼
+			#{if myApply.size()>0}
+				<input id="atm" name="atm" class="check_account" type="text" maxlength="5" min="5" value="${myApply.get(0).ATMaccount}"  />
+			#{/if}
+			#{else}
+				<input id="atm" name="atm" class="check_account" type="text" value="未報名" disabled />
+			#{/else}			
+		</div>
+		<div class="modal-footer">
+			<input id="atmForm_submit" type="button" class="btn btn-info" value="確認繳費" OnClick="atmCheck()" />
+			<button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+			<!-- <button class="btn btn-google">確認繳費</button> -->
+		</div>
+	</form>
+</div>
+
+<!-- 照片對話框 -->
+<div id="showimage" class="modal hide fade" tabindex="-1" role="dialog" aria-titleledby="myModaltitle" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3></h3>
+	</div>
+	<div class="modal-body">
+		<img src=""/>
+		<p class="showimage_info"></p>
+	</div>
+</div>
+
+<!-- 地圖對話框 -->
+<div id="showmap" class="modal hide fade" tabindex="-1" role="dialog" aria-titleledby="myModaltitle" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3></h3>
+	</div>
+	<div class="modal-body">
+		<div id="map1" style='width:500px;height:300px;'></div>
+		<p class="showmap_tel"></p>
+		<p class="showmap_info"></p>
+		<p class="showmap_address"></p>
+	</div>
+</div>
+<div id="msg" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<a href="#" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</a>
+		<h3>系統訊息</h3>
+	</div>
+	<div class="modal-body"></div>
+	<div class="modal-footer"><a href="#" class="btn" data-dismiss="modal" aria-hidden="true">確認</a></div>
+</div>
+<!-- 對話框 -->
+<div id="msg" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<a href="#" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</a>
+		<h3>系統訊息</h3>
+	</div>
+	<div class="modal-body"></div>
+	<div class="modal-footer"><a href="#" class="btn" data-dismiss="modal" aria-hidden="true">確認</a></div>
+</div>
+<!-- 我要報名對話框 -->
+<div id="apply" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<a href="#" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</a>
+		<h3>填寫報名資訊</h3>
+	</div>
+	<div class="modal-body">
+		<!-- 學生報名區塊 -->
+		#{deadbolt.restrict roles:[['student']]}
+		<div class='apply_block'>
+			<h4>報名資料僅供辦理本次活動保險使用，敬請安心填寫。
+			請輸入您本人的報名資料：</h4>
+			<form id="applyfm1" name="applyfm1" action="/oa/apply/${oa.id}" method="post">
+				<input id="oaid" type="hidden" name="oaid" value="${oa.id}"/>
+				#{if session.contains("email")}
+				<input id="member_id" type="hidden" name="member_id" value="${m.id}"/>
+				#{/if}
+				<dl>
+					<dt>真實姓名*</dt><dd><input id="name1" name="childname" class="span2" type="text" placeholder="請輸入您的真實姓名" value="${m.username}"  /></dd>
+					<dt>身份證號*</dt><dd><input id="userId1" name="userId" class="span2" type="text" placeholder="請輸入您的身份證號" /></dd>
+					<dt>聯絡電話*</dt><dd><input id="phone1" name="phone" class="span2" type="text" placeholder="請輸入您的聯絡電話" /></dd>
+					<dt>出生日期*</dt><dd><input id="birth1" name="birth" class="span2" type="text" placeholder="請輸入您的出生年月日" /></dd>
+				</dl>
+			<input id="apply_submit" type="button" class="btn btn-info" value="送出" OnClick="check()" /> 
+			<input id="apply_cancle" type="reset" class='cancel btn btn-danger' value="清除" onClick="initApply()"  />	
+			<!-- <button class='apply btn btn-info'>送出報名</button>
+			<button class='cancel btn btn-danger'>取消</button> -->
+			</form>
+		</div>
+		<hr>
+		#{/deadbolt.restrict}
+		<!-- 家長報名區塊 -->
+		#{deadbolt.restrict roles:[['parent']]}
+		<div class='apply_block'>
+			<h4>報名資料僅供辦理本次活動保險使用，敬請安心填寫。
+			請輸入您子女的報名資料：</h4>
+			<form id="applyfm2" name="applyfm2" action="/oa/apply/${oa.id}" method="post">
+				<input id="oaid" type="hidden" name="oaid" value="${oa.id}"/>				
+				<input id="attendant_id" type="hidden" name="attendant_id" value="" />
+				#{list items:children, as:'child'}
+					<input id="birth_${child.id}" type="hidden" name="birth_${child.id}" value="${child.birthday}"/>
+				#{/list}
+				#{if session.contains("email")}
+				<input id="member_id" type="hidden" name="member_id" value="${m.id}"/>
+				#{/if}
+				<dl>
+					<dt>選擇子女*</dt>
+					<dd>
+						<select id="children">
+							<option id="self" selected="selected">無</option>
+							#{list items:children, as:'child'}
+							<option id="${child.id}">${child.username}</option>
+							#{/list}
+						</select>
+					</dd>
+					<dt>真實姓名*</dt><dd><input id="name2" name="childname" class="span2" type="text" placeholder="請輸入您子女的真實姓名" /></dd>
+					<dt>身份證號*</dt><dd><input id="userId2" name="userId" class="span2" type="text" placeholder="請輸入您子女的身份證號" /></dd>
+					<dt>聯絡電話*</dt><dd><input id="phone2" name="phone" class="span2" type="text" placeholder="請輸入聯絡電話" /></dd>
+					<dt>出生日期*</dt><dd><input id="birth2" name="birth" class="span2" type="text" placeholder="請輸入您的出生年月日" /></dd>
+				</dl>
+			</form>
+			<input id="apply_submit2" type="button" class="btn btn-info" value="送出" OnClick="checkParentApply()" /> 
+			<input id="apply_cancel2" type="reset" class='cancel btn btn-danger' value="清除" onClick="initApply()"  />	
+		</div>
+		#{/deadbolt.restrict}
+	</div>
+</div>

@@ -1,0 +1,7 @@
+
+
+#{if session.contains("email")}	
+		#{deadbolt.restrict roles:[['q_teacher']]}
+		
+		#{/deadbolt.restrict}
+#{/if}

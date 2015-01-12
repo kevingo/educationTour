@@ -1,0 +1,52 @@
+#{extends 'main.html' /}
+#{set title:'搜尋結果' /}
+
+<link href="/public/stylesheets/jquery.nailthumb.1.1.css" rel="stylesheet">
+<script type="text/javascript" src="/public/javascripts/jquery.nailthumb.1.1.js"></script>
+<script src="/public/javascripts/effect12.js"></script>
+<script type="text/javascript" src="/public/javascripts/itri_checkFavo.js"></script>
+
+<style>
+	.tag a {
+		color: white;
+	}
+</style>
+
+#{if kw!=''}
+<h3 class="title03">「<span>找教案</span>」搜尋【${kw}】結果如下…</h3>
+#{/if}
+
+#{if kw==''}
+<h3 class="title01">「<span>找教案</span>」搜尋【所有教案】結果如下…</h3>
+#{/if}
+
+<div class="case_item_with_text search">
+#{list items: tps , as: 'tp'}
+	<div class="ciwt_item" onclick="location.href='/tp/show/${tp.id}';" style="cursor: pointer;">
+		<div class="ciwt_img">
+			<div class="nailthumb-container nc120">
+				#{if tp.photo==null}
+					<img src="/public/images/default/tp_default_100.png" />
+				#{/if}
+				#{else}
+					<img src="${tp?.photo?.path}"/>
+				#{/else}
+			</div>
+		</div>
+		<div class="ciwt_info">
+			<p class="ciwt_title"><a href="/tp/show/${tp.id}">${tp.name}</a></p>
+			<p class="tags">
+				#{list items: tp?.tags , as:'tag'}
+					<span class="tag" style="background:${tag.color};" onclick="goToTag(${tag.id}, 'tp')"><a>${tag.name}</a></span>
+				#{/list}
+			</p>
+			<p class="ciwt_note">
+				${tp.introduction}
+			</p>
+		</div>
+	</div>
+#{/list}
+#{if tps.size()<1}
+	<script>alert("找不到符合的項目，請重新查詢");</script>
+#{/if}
+</div>

@@ -1,0 +1,7 @@
+﻿var school = {
+	ele:[
+{city_id:'23',area_id:'999',name:'其他學校'}
+
+],
+    jun:[]
+};

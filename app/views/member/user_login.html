@@ -1,0 +1,65 @@
+#{extends 'main.html' /}
+#{set title:'登入' /}
+
+<style>
+.loginForm {
+	margin-buttom: 500px;
+}
+</style>
+
+<link href="/public/stylesheets/member.css" rel="stylesheet">
+<form method="post" action="/login" name="loginForm" class="loginForm">
+	<div class="span8 offset2 logindiv divisions">
+		<h3 class="title01">會員登入</h3>
+		<dl class="division">
+		    <dt>快速登入</dt>
+		    <dd>
+		    	<a class="btn btn-fb" href="@{Application.auth()}"><i class="icon-facebook-sign"></i>使用Facebook帳號</a>
+		    	<a class="btn btn-google" href="https://accounts.google.com/o/oauth2/auth?scope=https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile&state=/profile&redirect_uri=http://www.funnytrip.net/google/login&response_type=code&client_id=346649764818.apps.googleusercontent.com"><i class="icon-google-plus-sign"></i>使用Google+帳號</a>
+		    </dd>
+		   
+		    	<dt>電子郵件</dt><dd><input class="span6" type="text" placeholder="請輸入您的註冊電子信箱" name="email" id="email" /></dd>
+		    	<dt>登入密碼</dt><dd><input class="span6" type="password" placeholder="請輸入您的登入密碼" name="password"/></dd>
+		    <p>
+		    	<input class="btn btn-info" type="submit" value="登入" />
+		    	<span class="pull-right">
+		    		<a class="btn" href="/member/register">註冊新帳號</a>
+		    		<!-- <a class="btn" href="/resetPwd" onClick="forgotPassword()">忘記密碼?</a> -->
+		    		<a class="btn" href="/resetPwd">忘記密碼?</a>
+		    	</span>
+		    </p>
+		</dl>
+	</div>
+</form>
+<!-- 
+<script type="text/javascript">
+
+	function forgotPassword() {
+		if (confirm("是否確定重設？系統將重設您的密碼，並寄至您的Email信箱中")) {
+			var email = $("#email").val();
+			if (email == "") {
+				alert("請輸入 Email !");
+				return false;
+			} 
+			else {
+				jQuery.ajax({
+					url : '/member/forgotPassword',
+					type : 'POST',
+					async : false,
+					data : {
+						email : email
+					},
+					success : function(data) {
+						alert(data);
+					},
+					error : function(xhr, textStatus, errorThrown) {
+						alert(errorThrown);
+					}
+				});
+			}
+			location.reload(true);
+			return false;
+		}
+	}
+</script>
+ -->

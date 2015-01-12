@@ -1,0 +1,147 @@
+#{extends 'main.html' /}
+#{set title:'班群詳細內容' /}
+<link href="/public/stylesheets/myhome.css" rel="stylesheet">
+<link href="/public/stylesheets/jquery.nailthumb.1.1.css" rel="stylesheet">
+<script type="text/javascript" src="/public/javascripts/jquery.nailthumb.1.1.js"></script>
+<script>
+	function deleteGroupByMember(group_id){
+		if(group_id>0){
+			jQuery.ajax({
+				  url: '/member/deleteGroupByMember',
+				  type: 'POST',
+				  async: false,
+				  data: {
+					  group_id:group_id
+				  },
+				  success: function(data) {
+						  	alert(data);	
+						  	reloadPage(group_id);
+				  },
+				  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+				});	
+		}
+		else{
+			alert("發生錯誤");
+			return false;
+		}
+	}
+	
+	function joinGroupByMember(group_id){
+		if(group_id>0){
+			jQuery.ajax({
+				  url: '/memberGroup/joinGroupByMember',
+				  type: 'POST',
+				  async: false,
+				  data: {
+					  group_id:group_id
+				  },
+				  success: function(data) {
+						  	alert(data);	
+						  	reloadPage(group_id);
+				  },
+				  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+				});	
+		}
+		else{
+			alert("發生錯誤");
+			return false;
+		}
+	}
+	
+	function reloadPage(group_id){
+		 location.replace("/memberGroup/show/"+group_id);
+	}
+</script>
+<div class="class_detail myhome">
+	<h3 class="exam_review_title main_title">
+		${group.groupName}
+		#{if session.contains("email")}	
+		#{if member?.id==group.creator.id || member.roleList.contains('admin')}
+		<div class="dropdown">
+			<a class="dropdown-toggle btn" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
+			管理班群
+			<b class="caret"></b>
+			</a>
+			<ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+		        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">班群管理</a></li>
+	      </ul>
+		</div>
+		#{/if}
+		#{/if}
+	</h3>
+	<div class="row-fluid">
+		<div class="span12">
+			<h3 class="title04">班群資訊</h4>
+			<div class="myhome_div profiles">
+				<table class="table">
+					<tr>
+						<td class="class_d_td1">建班日期</td>
+						<td class="class_d_td2">${group.createDate}</td>
+						<td class="class_d_td1">學生人數</td>
+						<td class="class_d_td2">${group.members.size()}</td>
+					</tr>
+					<tr>
+						<td class="class_d_td1">班群名稱</td>
+						<td class="class_d_td2">${group.groupName}</td>
+						<td class="class_d_td1">班群老師</td>
+						<td class="class_d_td2"><a href="/member/profile/${group.creator.id}">${group.creator.username} 老師</a></td>
+					</tr>
+					<tr>
+						<td class="class_d_td1">申請狀態</td>
+						#{if group.members.contains(member)}
+						<td class="" colspan="3">您已成功加入此班群</td>
+						#{/if}
+						#{else}
+						<td class="" colspan="3">尚未加入此班群</td>
+						#{/else}
+					</tr>
+					<tr>
+						<td class="class_d_td1">學生名單</td>
+						<td class="" colspan="3">
+							<ul class="student_lists">
+								#{list items: group.members,as:'m'}
+								<li><a href="/member/profile/${m.id}">${m.username}</a></li>
+								#{/list}
+								<!-- <li><a href="">王同學</a></li> -->
+							</ul>	
+						</td>
+					</tr>
+				</table>
+			</div>
+			<p class="center">
+				#{if group.members.contains(member)}
+					<a class="btn btn-large btn-danger" href="#delete_group" role="button" data-toggle="modal">退出班群</a>
+				#{/if}
+				#{else}
+					<a class="btn btn-large btn-info" href="#assign_join" role="button" data-toggle="modal">申請加入</a>
+				#{/else}
+			</p>
+		</div>
+	</div>
+</div>
+<div id="assign_join" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="myModalLabel">申請加入班群</h3>
+	</div>
+	<div class="modal-body">
+        <p>您確定要加入此班群？</p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+		<button class="btn btn-primary" onClick="joinGroupByMember(${group.id})">確定申請</button>
+	</div>
+</div>
+<div id="delete_group" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="myModalLabel">退出 ${group.groupName} 班群</h3>
+	</div>
+	<div class="modal-body">
+        <p>您確定要退出此班群？</p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+		<button class="btn btn-danger" onClick="deleteGroupByMember(${group.id})">確定退出</button>
+	</div>
+</div>

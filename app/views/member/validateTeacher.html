@@ -1,0 +1,88 @@
+#{extends 'main.html' /} 
+#{set title:'審核老師身分' /}
+
+<script>	
+	
+	// 審核通過-上架
+	function ok(id) {
+        jQuery.ajax({
+            type: 'PUT',
+            url: "/member/verify/ok",                
+            data: {
+            		tid:id,            		
+         	},
+            success: function() {
+            	window.location.reload();
+            },
+            error: function(a,b,c) {
+                alert("XMLHttpRequest : " + a + " textStatus : " + b + " errorThrown : " + c);
+            }
+        });				
+	}
+	
+	// 審核不通過-拒絕
+	function reject(id) {
+		jQuery.ajax({
+            type: 'PUT',
+            url: "/member/verify/reject",                
+            data: {
+            		tid:id,            		
+         	},
+            success: function() {
+            	window.location.reload();
+            },
+            error: function(a,b,c) {
+                alert("XMLHttpRequest : " + a + " textStatus : " + b + " errorThrown : " + c);
+            }
+        });
+	}
+	
+	
+</script>
+
+<div class="container">
+	
+	<div class="alert">
+		<button class="close" data-dismiss="alert">×</button>
+		<h4 class="alert-heading">目前有 ${listTeacher.size} 個老師：</h4>
+	</div>
+
+	<table class="table table-hover">
+	    <thead>
+			<tr>
+				<th>#</th>
+				<th>Email</th>
+				<th>姓名</th>
+				<th>履歷</th>
+				<th>狀態</th>
+				<th>動作</th>			
+			</tr>
+	    </thead>
+	    <tbody>
+	    	#{list items:listTeacher, as:'teacher'}
+				<tr>
+					<td>${teacher.id}</td>
+					<td>${teacher.email}</td>
+					<td><a href="/member/profile/${teacher.id}">${teacher.username}</td>
+					<td><a href="/public/member/${teacher.email}/attatch/${teacher.attatch?.fileName}">下載</a></td>		
+					#{if teacher.roleList.contains("teachingplanner")}
+					<td><span class="label label-success">已通過</span></td>		
+					#{/if}
+					#{else}
+					<td><span class="label label-important">尚未審核通過</span></td>	
+					#{/else}
+					<td>
+					#{if teacher.roleList.contains("teachingplanner")}
+					<input type="button" class="verify btn btn-danger" value="拒絕" onclick="reject('${teacher.id}')">
+					#{/if}
+					#{else}
+					<input type="button" class="verify btn btn-primary" value="通過" onclick="ok('${teacher.id}')">
+					#{/else}
+						
+						
+					</td>
+		      	</tr>
+	      	#{/list}
+	    </tbody>
+	</table>
+</div>

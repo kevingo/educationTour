@@ -1,0 +1,253 @@
+#{extends 'main.html' /}
+#{set title:'放學趣 Funnytrip' /}
+
+<script type="text/javascript">
+	$(document).ready(function() {	
+		var msg = $("#msg").val();
+		if(msg!=""){
+			alert(msg);
+			location.replace("/");
+		}
+	});
+</script>
+
+<style>
+	.atitile a {
+		color: white;
+	}
+</style>
+
+#{if session.contains("email") && uncheck_size != 0}	
+	<div class="alert alert-error">
+		<i class="icon-search"></i> 放學趣平台有新的老師申請通知！提醒您，您尚有  <span class="label label-info">${uncheck_size}</span>  個尚未審核的講師 。<a href="/member/validateTeacher">【點選審查】</a>
+	</div>
+#{/if}
+
+#{if hasNoReply}
+	<div class="alert alert-error">
+		<i class="icon-search"></i> 提醒您，您尚有未確認的【班群邀請】或【親子關係】。立刻前往<a href="/member/configure">【個人設定】</a>確認。
+	</div>
+#{/if}
+
+<div id="content">
+<input type="hidden" id="msg" value="${msg}" >
+<script type="text/javascript" src="/public/javascripts/effect1.js"></script>
+	<div id="index">
+		<div id="main_banner">
+			<img src="/public/images/banner01.jpg">
+		</div>
+		<div id="action_teacher" class="row-fluid">
+			<div id="new_action" class="span7">
+				<h3 class="title title1">最新活動</h3>
+				<ul id="action_filter">
+					<li class="active"><a href="#edu1">最新活動</a></li>
+					<li><a href="#edu2">熱門活動</a></li>
+					<li><a href="#edu3">北部地區</a></li>
+					<li><a href="#edu4">中部地區</a></li>
+					<li><a href="#edu5">南部地區</a></li>
+					<li><a href="#edu6">精選活動</a></li>
+				</ul>
+				<div id="action_div">
+	            	<div id='edu1'>
+	            		#{list items : list_oa , as:'oa'}
+	                    <div class="action_item">
+	                        <span class="atitile"><a href="/oa/show/${oa.id}">${oa.name}</a></span>
+	                        <div class="aimg_w">
+	                        	#{if oa?.photos.size() > 0}
+	                        		<img class="aimg1" style="width: 180px; height: 135px;" src="${oa?.photos.toArray()[0].path}"/>
+	                        	#{/if}
+	                        	#{else}
+	                        		<img class="aimg1" style="width: 180px; height: 135px;" src="/public/images/default/oa_default_500.png"/>
+	                        	#{/else}
+	                             <img class="aimg2" src="/public/images/aimg2.png"/>
+		                         <img class="aimg3" src="/public/images/aimg3.png"/>
+	                        </div>
+	                        <p><span class="alocate">${oa.gatherPoint}</span></p>
+	                        <p><span class="ateacher"><a href="/member/profile/${oa.creator.id}">${oa.creator.username} 老師</a></span></p>
+	                        <p class="atime">${oa.fromDate} ~ ${oa.toDate}</p>
+	                        <a class="btn btn-mini" href="/oa/show/${oa.id}">詳細內容</a>
+	                    </div>
+	                 	#{/list}
+	                </div>
+	                
+	                <div id='edu2' style='display:none'>
+	                	#{list items : list_hot_oa , as:'oa'}
+	                    <div class="action_item">
+	                        <span class="atitile"><a href="/oa/show/${oa.id}">${oa.name}</a></span>
+	                        <div class="aimg_w">
+	                        	#{if oa?.photos.size() > 0}
+	                        		<img class="aimg1" style="width: 180px; height: 135px;" src="${oa?.photos.toArray()[0].path}"/>
+	                        	#{/if}
+	                        	#{else}
+	                        		<img class="aimg1" style="width: 180px; height: 135px;" src="/public/images/default/oa_default_500.png"/>
+	                        	#{/else}
+	                            <img class="aimg2" src="/public/images/aimg2.png"/>
+	                            <img class="aimg3" src="/public/images/aimg3.png"/>
+	                        </div>
+	                       <p><span class="alocate">${oa.gatherPoint}</span></p>
+	                        <p><span class="ateacher"><a href="/member/profile/${oa.creator.id}">${oa.creator.username} 老師</a></span></p>
+	                        <p class="atime">${oa.fromDate} ~ ${oa.toDate}</p>
+	                        <a class="btn btn-mini" href="/oa/show/${oa.id}">詳細內容</a>
+	                    </div>
+	                 	#{/list}
+	                 	<!-- 原版html
+	                    <div class="action_item">
+	                        <span class="atitile">發現之旅自然生態教育園區</span>
+	                        <div class="aimg_w">
+	                            <img class="aimg1" src="/public/images/aimg1.png"/>
+	                            <img class="aimg2" src="/public/images/aimg2.png"/>
+	                            <img class="aimg3" src="/public/images/aimg3.png"/>
+	                        </div>
+	                        <p><span class="alocate">台中市</span>/<span class="ateacher">李麥克 老師</span></p>
+	                        <p class="atime">2013/05/08 / 8.5小時</p>
+	                        <button class="btn btn-mini">詳細內容</button>
+	                    </div>
+	                     -->
+					</div>
+					
+	                <div id='edu3' style='display:none'>
+	                	#{list items : list_oas_tab3 , as:'oa'}
+	                    <div class="action_item">
+	                        <span class="atitile"><a href="/oa/show/${oa.id}">${oa.name}</a></span>
+	                        <div class="aimg_w">
+	                        	#{if oa?.photos.size() > 0}
+	                        		<img class="aimg1" style="width: 180px; height: 135px;" src="${oa?.photos.toArray()[0].path}"/>
+	                        	#{/if}
+	                        	#{else}
+	                        		<img class="aimg1" style="width: 180px; height: 135px;" src="/public/images/default/oa_default_500.png"/>
+	                        	#{/else}
+	                            <img class="aimg2" src="/public/images/aimg2.png"/>
+	                            <img class="aimg3" src="/public/images/aimg3.png"/>
+	                        </div>
+	                        <p><span class="alocate">${oa.gatherPoint}</span></p>
+	                        <p><span class="ateacher"><a href="/member/profile/${oa.creator.id}">${oa.creator.username} 老師</a></span></p>
+	                        <p class="atime">${oa.fromDate} ~ ${oa.toDate}</p>
+	                        <a class="btn btn-mini" href="/oa/show/${oa.id}">詳細內容</a>
+	                    </div>
+	                 	#{/list}
+	                </div>
+	                <div id='edu4' style='display:none'>
+	                	#{list items : list_oas_tab4 , as:'oa'}
+	                    <div class="action_item">
+	                        <span class="atitile">${oa.name}</span>
+	                        <div class="aimg_w">
+	                        	#{if oa?.photos.size() > 0}
+	                        		<img class="aimg1" style="width: 180px; height: 135px;" src="${oa?.photos.toArray()[0].path}"/>
+	                        	#{/if}
+	                        	#{else}
+	                        		<img class="aimg1" style="width: 180px; height: 135px;" src="/public/images/default/oa_default_500.png"/>
+	                        	#{/else}
+	                            <img class="aimg2" src="/public/images/aimg2.png"/>
+	                            <img class="aimg3" src="/public/images/aimg3.png"/>
+	                        </div>
+	                        <p><span class="alocate">${oa.gatherPoint}</span></p>
+	                        <p><span class="ateacher"><a href="/member/profile/${oa.creator.id}">${oa.creator.username} 老師</a></span></p>
+	                        <p class="atime">${oa.fromDate} ~ ${oa.toDate}</p>
+	                        <a class="btn btn-mini" href="/oa/show/${oa.id}">詳細內容</a>
+	                    </div>
+	                 	#{/list}
+	                </div>
+	                <div id='edu5' style='display:none'>
+	                	#{list items : list_oas_tab5 , as:'oa'}
+	                    <div class="action_item">
+	                        <span class="atitile"><a href="/oa/show/${oa.id}">${oa.name}</a></span>
+	                        <div class="aimg_w">
+	                        	#{if oa?.photos.size() > 0}
+	                        		<img class="aimg1" style="width: 180px; height: 135px;" src="${oa?.photos.toArray()[0].path}"/>
+	                        	#{/if}
+	                        	#{else}
+	                        		<img class="aimg1" style="width: 180px; height: 135px;" src="/public/images/default/oa_default_500.png"/>
+	                        	#{/else}
+	                            <img class="aimg2" src="/public/images/aimg2.png"/>
+	                            <img class="aimg3" src="/public/images/aimg3.png"/>
+	                        </div>
+	                        <p><span class="alocate">${oa.gatherPoint}</span></p>
+	                        <p><span class="ateacher"><a href="/member/profile/${oa.creator.id}">${oa.creator.username} 老師</a></span></p>
+	                        <p class="atime">${oa.fromDate} ~ ${oa.toDate}</p>
+	                        <a class="btn btn-mini" href="/oa/show/${oa.id}">詳細內容</a>
+	                    </div>
+	                 	#{/list}
+	                </div>
+	                <div id='edu6' style='display:none'>
+	                	#{list items : list_oas_tab6 , as:'oa'}
+	                    <div class="action_item">
+	                        <span class="atitile"><a href="/oa/show/${oa.id}">${oa.name}</a></span>
+	                        <div class="aimg_w">
+	                        	#{if oa?.photos.size() > 0}
+	                        		<img class="aimg1" style="width: 180px; height: 135px;" src="${oa?.photos.toArray()[0].path}"/>
+	                        	#{/if}
+	                        	#{else}
+	                        		<img class="aimg1" style="width: 180px; height: 135px;" src="/public/images/default/oa_default_500.png"/>
+	                        	#{/else}
+	                            <img class="aimg2" src="/public/images/aimg2.png"/>
+	                            <img class="aimg3" src="/public/images/aimg3.png"/>
+	                        </div>
+	                      <p><span class="alocate">${oa.gatherPoint}</span></p>
+	                        <p><span class="ateacher"><a href="/member/profile/${oa.creator.id}">${oa.creator.username} 老師</a></span></p>
+	                        <p class="atime">${oa.fromDate} ~ ${oa.toDate}</p>
+	                        <a class="btn btn-mini" href="/oa/show/${oa.id}">詳細內容</a>
+	                    </div>
+	                 	#{/list}
+	                </div>
+				</div>
+			</div>
+			<div id="hot_teacher" class="span5">
+				<h3 class="title title2">熱門老師</h3>
+				<ul class="teacher_items">
+					#{list items: list_teacher , as : 'teacher'}
+					<li>
+						#{if teacher.photo==null}
+						<img style="width: 55px; height: 50px;" src="/public/images/default/teacher_default_100.png"/>
+						#{/if}
+						#{else}
+						<img style="width: 55px; height: 50px;" src="${teacher.photo?.path}"/>
+						#{/else}
+						<p class="tname"><a href="/member/profile/${teacher.id}"><a href="/member/profile/${teacher.id}">${teacher.username} 老師</a></a></p>
+						#{if teacher.mood==null}
+						<p class="tinfo">休息是為了走更長遠的路，加油。</p>
+						#{/if}
+						#{else }
+						<p class="tinfo">${teacher.mood}</p>
+						#{/else}
+					</li>
+					#{/list}
+					<!-- 
+					<li>
+						<img src="/public/images/timg.png"/>
+						<p class="tname">布魯斯老師</p>
+						<p class="tinfo">休息是為了走更長遠的路，加油。</p>
+					</li>
+					<li>
+						<img src="/public/images/timg.png"/>
+						<p class="tname">布魯斯老師</p>
+						<p class="tinfo">版型歪掉了</p>
+					</li>
+					 -->
+				</ul>
+			</div>
+		</div>
+		<div id="hot_case">
+			<h3 class="title title3">熱門教案</h3>
+			<ul class="case_items">
+				#{list items : list_tp , as:'tp'}
+				<li>
+					<div class="nailthumb-container nc210x155">
+						#{if tp?.photo!=null}
+						<img src="${tp.photo.path}"/>
+						#{/if}
+						#{else}
+						<img src="/public/images/default/tp_default_500.png"/>
+						#{/else}
+					</div>
+					<p class="ctitle"><a class="ctitle" href="/tp/show/${tp.id}">${tp.name}</a></p>
+					<p class="cinfo"><a href="/member/profile/${tp.creator.id}">${tp.creator.username}</a></p>
+				</li>
+				#{/list}
+				<!-- 原版 html
+				<li><img src="/public/images/cimg.png"/><p class="ctitle">創意素描練習營</p><p class="cinfo">台中市 / 李麥克老師</p></li>
+				<li><img src="/public/images/cimg.png"/><p class="ctitle">創意素描練習營</p><p class="cinfo">台中市 / 李麥克老師</p></li>
+				 -->
+			</ul>
+		</div>
+	</div>
+</div>

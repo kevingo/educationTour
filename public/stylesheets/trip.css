@@ -1,0 +1,430 @@
+/* line 2, ../../sass/trip.scss */
+.trip_title {
+  padding-top: 10px;
+  color: #238551;
+  font-family: '微軟正黑體';
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 22px;
+  margin-bottom: 15px;
+  text-shadow: 0px 1px 1px #fff;
+  border-bottom: 1px dotted #abc9b9;
+  padding-bottom: 10px;
+}
+/* line 13, ../../sass/trip.scss */
+.trip_title i {
+  margin-right: 5px;
+}
+
+/* line 17, ../../sass/trip.scss */
+.trip_detail {
+  margin-bottom: 30px;
+}
+/* line 19, ../../sass/trip.scss */
+.trip_detail .ad-gallery {
+  display: block;
+  float: left;
+  width: 500px;
+  margin-bottom: 20px;
+}
+/* line 24, ../../sass/trip.scss */
+.trip_detail .ad-gallery .ad-image-wrapper {
+  margin-bottom: 15px;
+  -webkit-box-shadow: #999999 0px 0px 4px;
+  -moz-box-shadow: #999999 0px 0px 4px;
+  box-shadow: #999999 0px 0px 4px;
+  border: 1px solid #aaa;
+}
+/* line 29, ../../sass/trip.scss */
+.trip_detail .ad-gallery .ad-controls {
+  display: none;
+}
+/* line 33, ../../sass/trip.scss */
+.trip_detail .trip_info {
+  display: block;
+  margin-left: 530px;
+  width: 580px;
+}
+/* line 37, ../../sass/trip.scss */
+.trip_detail .trip_info dl {
+  border: 1px solid #ddd;
+  border-top: none;
+  padding: 30px 20px 20px 20px;
+  margin: 0;
+  margin-bottom: 30px;
+  -webkit-box-shadow: #cccccc 0px 2px 0px;
+  -moz-box-shadow: #cccccc 0px 2px 0px;
+  box-shadow: #cccccc 0px 2px 0px;
+  background: #fafafa;
+  font-size: 15px;
+}
+/* line 46, ../../sass/trip.scss */
+.trip_detail .trip_info dl dt {
+  float: left;
+  width: 80px;
+  font-weight: normal;
+  color: #888;
+  letter-spacing: .1em;
+  text-align: center;
+}
+/* line 54, ../../sass/trip.scss */
+.trip_detail .trip_info dl dd {
+  margin-left: 100px;
+  display: block;
+  margin-bottom: 15px;
+}
+/* line 58, ../../sass/trip.scss */
+.trip_detail .trip_info dl dd b {
+  margin: 0 3px;
+  color: #059548;
+  font-weight: normal;
+}
+/* line 63, ../../sass/trip.scss */
+.trip_detail .trip_info dl dd button {
+  position: relative;
+  top: -2px;
+  margin-left: 10px;
+}
+/* line 71, ../../sass/trip.scss */
+.trip_detail .share_btns {
+  border: 1px solid #ddd;
+  padding: 15px 10px;
+  position: relative;
+  top: 4px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+  background: #f8f8f8;
+  -webkit-box-shadow: #cccccc 0px 2px 0px;
+  -moz-box-shadow: #cccccc 0px 2px 0px;
+  box-shadow: #cccccc 0px 2px 0px;
+}
+
+/* line 81, ../../sass/trip.scss */
+.trip_detail_tabs {
+  margin-bottom: 50px;
+}
+/* line 83, ../../sass/trip.scss */
+.trip_detail_tabs .nav-tabs {
+  margin-bottom: 0;
+  border-bottom: 1px solid #ccc;
+}
+/* line 86, ../../sass/trip.scss */
+.trip_detail_tabs .nav-tabs li {
+  width: 120px;
+  height: 40px;
+  margin-right: 3px;
+}
+/* line 90, ../../sass/trip.scss */
+.trip_detail_tabs .nav-tabs li a {
+  border: none;
+  width: 120px;
+  height: 40px;
+  text-indent: -10000em;
+  padding: 0;
+}
+/* line 96, ../../sass/trip.scss */
+.trip_detail_tabs .nav-tabs li a:hover {
+  border: none;
+}
+/* line 100, ../../sass/trip.scss */
+.trip_detail_tabs .nav-tabs li.tdt01 a {
+  background: url(/public/images/trip_detail_tabs-1.png) no-repeat;
+}
+/* line 101, ../../sass/trip.scss */
+.trip_detail_tabs .nav-tabs li.tdt02 a {
+  background: url(/public/images/trip_detail_tabs-2.png) no-repeat;
+}
+/* line 102, ../../sass/trip.scss */
+.trip_detail_tabs .nav-tabs li.tdt03 a {
+  background: url(/public/images/trip_detail_tabs-3.png) no-repeat;
+}
+/* line 103, ../../sass/trip.scss */
+.trip_detail_tabs .nav-tabs li.tdt04 a {
+  background: url(/public/images/trip_detail_tabs-4.png) no-repeat;
+}
+/* line 104, ../../sass/trip.scss */
+.trip_detail_tabs .nav-tabs li.tdt05 a {
+  background: url(/public/images/trip_detail_tabs-5.png) no-repeat;
+}
+/* line 106, ../../sass/trip.scss */
+.trip_detail_tabs .nav-tabs li.active.tdt01 a, .trip_detail_tabs .nav-tabs li:hover.tdt01 a {
+  background: url(/public/images/trip_detail_tabs_h-1.png) no-repeat;
+}
+/* line 107, ../../sass/trip.scss */
+.trip_detail_tabs .nav-tabs li.active.tdt02 a, .trip_detail_tabs .nav-tabs li:hover.tdt02 a {
+  background: url(/public/images/trip_detail_tabs_h-2.png) no-repeat;
+}
+/* line 108, ../../sass/trip.scss */
+.trip_detail_tabs .nav-tabs li.active.tdt03 a, .trip_detail_tabs .nav-tabs li:hover.tdt03 a {
+  background: url(/public/images/trip_detail_tabs_h-3.png) no-repeat;
+}
+/* line 109, ../../sass/trip.scss */
+.trip_detail_tabs .nav-tabs li.active.tdt04 a, .trip_detail_tabs .nav-tabs li:hover.tdt04 a {
+  background: url(/public/images/trip_detail_tabs_h-4.png) no-repeat;
+}
+/* line 110, ../../sass/trip.scss */
+.trip_detail_tabs .nav-tabs li.active.tdt05 a, .trip_detail_tabs .nav-tabs li:hover.tdt05 a {
+  background: url(/public/images/trip_detail_tabs_h-5.png) no-repeat;
+}
+/* line 114, ../../sass/trip.scss */
+.trip_detail_tabs .tab-content {
+  border: 1px solid #ccc;
+  border-top: none;
+  padding: 20px;
+  -moz-border-radius-bottomleft: 6px;
+  -webkit-border-bottom-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  -moz-border-radius-bottomright: 6px;
+  -webkit-border-bottom-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+/* line 121, ../../sass/trip.scss */
+.trip_detail_tabs .tab-content .ps_div .trip_items .trip_item {
+  width: 315px;
+  margin: 0;
+  margin-bottom: 10px;
+  display: block;
+}
+/* line 126, ../../sass/trip.scss */
+.trip_detail_tabs .tab-content .ps_div .trip_items .trip_item .trip_item_info {
+  display: block;
+  width: 210px;
+  margin-left: 100px;
+  height: 90px;
+}
+/* line 131, ../../sass/trip.scss */
+.trip_detail_tabs .tab-content .ps_div .trip_items .trip_item .trip_item_info .trip_item_title {
+  margin-bottom: 5px;
+  height: 20px;
+  overflow: hidden;
+}
+/* line 136, ../../sass/trip.scss */
+.trip_detail_tabs .tab-content .ps_div .trip_items .trip_item .trip_item_info .tags {
+  margin-bottom: 4px;
+}
+/* line 139, ../../sass/trip.scss */
+.trip_detail_tabs .tab-content .ps_div .trip_items .trip_item .trip_item_info .trip_item_note {
+  height: 40px;
+  overflow: hidden;
+}
+/* line 147, ../../sass/trip.scss */
+.trip_detail_tabs .tab-content .tdt_div {
+  margin-bottom: 25px;
+  line-height: 20px;
+}
+/* line 150, ../../sass/trip.scss */
+.trip_detail_tabs .tab-content .tdt_div h4.tdt_title {
+  color: #2c4d3b;
+  border: 1px solid #9ba8a1;
+  border-left: 6px solid #9ba8a1;
+  padding: 4px 10px;
+  background: #f8f8f8;
+  font-size: 15px;
+  margin-bottom: 8px;
+  padding-bottom: 3px;
+  font-weight: normal;
+}
+/* line 161, ../../sass/trip.scss */
+.trip_detail_tabs .tab-content .tdt_div:last-child {
+  margin-bottom: 0;
+}
+/* line 165, ../../sass/trip.scss */
+.trip_detail_tabs .tab-content .tdt_div.tdt_spot .spots .spot {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  box-sizing: border-box;
+  -moz-box-sizing: padding-box;
+}
+/* line 174, ../../sass/trip.scss */
+.trip_detail_tabs .tab-content .tdt_div.tdt_teacher .teacher_resume_2 {
+  width: 540px;
+}
+/* line 176, ../../sass/trip.scss */
+.trip_detail_tabs .tab-content .tdt_div.tdt_teacher .teacher_resume_2.short {
+  width: 540px;
+}
+/* line 182, ../../sass/trip.scss */
+.trip_detail_tabs .tab-content .reference_mark {
+  display: block;
+  width: 40px;
+  height: 36px;
+  font-size: 60px;
+  text-indent: -10000em;
+  background: url(/public/images/lesson/mark.png) no-repeat;
+  float: left;
+}
+/* line 190, ../../sass/trip.scss */
+.trip_detail_tabs .tab-content .reference_mark.top {
+  margin-right: 10px;
+  position: relative;
+  top: -4px;
+}
+/* line 195, ../../sass/trip.scss */
+.trip_detail_tabs .tab-content .reference_mark.bottom {
+  float: right;
+  margin-left: 10px;
+}
+/* line 200, ../../sass/trip.scss */
+.trip_detail_tabs .tab-content .tdt_reference {
+  text-align: right;
+  margin-top: 20px;
+  color: #999;
+  font-size: 15px;
+  font-style: italic;
+}
+/* line 206, ../../sass/trip.scss */
+.trip_detail_tabs .tab-content .tdt_reference a {
+  margin: 0 4px;
+  color: #777;
+}
+/* line 209, ../../sass/trip.scss */
+.trip_detail_tabs .tab-content .tdt_reference a:hover {
+  color: #ccc;
+}
+/* line 213, ../../sass/trip.scss */
+.trip_detail_tabs .tab-content .tdt_reference:before {
+  content: "～ ";
+}
+/* line 217, ../../sass/trip.scss */
+.trip_detail_tabs .tab-content .lesson_reference .tdt_title {
+  margin-left: 50px;
+}
+/* line 220, ../../sass/trip.scss */
+.trip_detail_tabs .tab-content .tdt_refenence_addinfo {
+  margin-top: 15px;
+  padding: 20px;
+  background: #f3f3f3;
+}
+
+/* line 228, ../../sass/trip.scss */
+.tdt_info2 .files span {
+  width: 130px;
+}
+
+/* line 233, ../../sass/trip.scss */
+.create_lesson {
+  margin-bottom: 100px;
+}
+/* line 236, ../../sass/trip.scss */
+.create_lesson .create_inputs dt {
+  color: #4fa261;
+}
+/* line 239, ../../sass/trip.scss */
+.create_lesson .create_inputs p.custom_title {
+  color: #4fa261;
+}
+/* line 246, ../../sass/trip.scss */
+.create_lesson .create_tabs .nav-tabs li.ct01 a {
+  background: url(/public/images/trip/create_trip_tabs-1.png) no-repeat;
+}
+/* line 247, ../../sass/trip.scss */
+.create_lesson .create_tabs .nav-tabs li.ct02 a {
+  background: url(/public/images/trip/create_trip_tabs-2.png) no-repeat;
+}
+/* line 248, ../../sass/trip.scss */
+.create_lesson .create_tabs .nav-tabs li.ct03 a {
+  background: url(/public/images/trip/create_trip_tabs-3.png) no-repeat;
+}
+/* line 249, ../../sass/trip.scss */
+.create_lesson .create_tabs .nav-tabs li.ct04 a {
+  background: url(/public/images/trip/create_trip_tabs-4.png) no-repeat;
+}
+/* line 251, ../../sass/trip.scss */
+.create_lesson .create_tabs .nav-tabs li.active.ct01 a, .create_lesson .create_tabs .nav-tabs li:hover.ct01 a {
+  background: url(/public/images/trip/create_trip_tabs_h-1.png) no-repeat;
+}
+/* line 252, ../../sass/trip.scss */
+.create_lesson .create_tabs .nav-tabs li.active.ct02 a, .create_lesson .create_tabs .nav-tabs li:hover.ct02 a {
+  background: url(/public/images/trip/create_trip_tabs_h-2.png) no-repeat;
+}
+/* line 253, ../../sass/trip.scss */
+.create_lesson .create_tabs .nav-tabs li.active.ct03 a, .create_lesson .create_tabs .nav-tabs li:hover.ct03 a {
+  background: url(/public/images/trip/create_trip_tabs_h-3.png) no-repeat;
+}
+/* line 254, ../../sass/trip.scss */
+.create_lesson .create_tabs .nav-tabs li.active.ct04 a, .create_lesson .create_tabs .nav-tabs li:hover.ct04 a {
+  background: url(/public/images/trip/create_trip_tabs_h-4.png) no-repeat;
+}
+
+/* line 261, ../../sass/trip.scss */
+#add_element .modal-body ul.lessons li {
+  cursor: pointer;
+}
+/* line 264, ../../sass/trip.scss */
+#add_element .modal-body ul.lessons li.active {
+  border: 1px solid #1995c9;
+  border-top: 4px solid #1995c9;
+}
+
+/* line 269, ../../sass/trip.scss */
+p.share_option {
+  display: none;
+}
+
+/* line 272, ../../sass/trip.scss */
+.create_agree {
+  margin-bottom: 100px;
+}
+/* line 275, ../../sass/trip.scss */
+.create_agree .argeebtns .agree {
+  background: url(/public/images/trip/trip_agree_btn-1.png) no-repeat;
+}
+/* line 276, ../../sass/trip.scss */
+.create_agree .argeebtns .agree:hover {
+  background: url(/public/images/trip/trip_agree_btn-2.png) no-repeat;
+}
+/* line 277, ../../sass/trip.scss */
+.create_agree .argeebtns .disagree {
+  background: url(/public/images/trip/trip_agree_btn-3.png) no-repeat;
+}
+/* line 278, ../../sass/trip.scss */
+.create_agree .argeebtns .disagree:hover {
+  background: url(/public/images/trip/trip_agree_btn-4.png) no-repeat;
+}
+
+/* line 282, ../../sass/trip.scss */
+#apply {
+  width: 600px;
+  margin-left: -300px;
+}
+/* line 285, ../../sass/trip.scss */
+#apply dl {
+  margin: 0;
+  position: relative;
+}
+/* line 289, ../../sass/trip.scss */
+#apply dt {
+  width: 80px;
+  float: left;
+  font-weight: normal;
+  color: #888;
+  font-size: 15px;
+  text-align: center;
+  position: relative;
+  top: 4px;
+}
+/* line 299, ../../sass/trip.scss */
+#apply dd {
+  margin: 5px 0;
+}
+/* line 302, ../../sass/trip.scss */
+#apply button {
+  margin-right: 10px;
+}
+/* line 305, ../../sass/trip.scss */
+#apply input, #apply select {
+  width: 420px;
+  font-size: 13px;
+}
+/* line 309, ../../sass/trip.scss */
+#apply h4 {
+  font-size: 13px;
+  color: #333;
+  font-weight: normal;
+  margin-bottom: 20px;
+  margin-top: 0;
+}

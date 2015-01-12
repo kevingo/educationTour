@@ -1,0 +1,50 @@
+#{extends 'main.html' /}
+#{set title:'搜尋結果' /}
+
+<script type="text/javascript" src="/public/javascripts/itri_checkFavo.js"></script>
+
+<style>
+
+	.tag a {
+		color: white;
+	}
+
+</style>
+
+#{if tag!=null}
+	<h3 class="title01">「<span>找活動</span>」搜尋【${tag?.name}】結果如下…</h3>
+#{/if}
+#{else}
+	<h3 class="title01">「<span>找活動</span>」搜尋【所有活動】結果如下…</h3>
+#{/else}
+<div class="search_result">
+
+	#{list items: listOA , as: 'oa'}
+	<div class="search_result_item" onclick="location.href='/oa/show/${oa.id}';" style="cursor: pointer;">
+		<p class="sri_title"><i class="icon-beaker"></i><a href="/oa/show/${oa.id}">${oa.name}</a></p>
+		<p class="tags">
+		#{list items: oa?.tags , as:'tag'}
+		<span class="tag" style="background:${tag.color};" onclick="goToTag(${tag.id}, 'oa')"><a>${tag.name}</a></span>
+		#{/list}
+		</p>
+		<div class="sri_imgs">
+			<!-- 圖片四張需在同一行，避免空隙產生 -->
+			#{list items: oa?.photos , as: 'photo'}<img src="${photo.path}"/>#{/list}#{if oa?.photos.size()<4}#{list items:1..(4-oa?.photos.size()), as:'i'}<img src="/public/images/default/oa_default_100.png"/>#{/list}#{/if}
+		</div>
+		<p class="sri_info">${oa.introduction}</p>
+		<p class="sri_status"><span class="sri_teacher"><a href="/member/profile/${oa.creator.id}">${oa.creator.username} 老師</a></span>
+		#{if oa.status == 2}
+		<a class="pull-right btn btn-mini btn-danger" href="/oa/show/${oa.id}">已截止報名</a>
+		#{/if}
+		#{elseif oa.status == 1}
+		<a class="pull-right btn btn-mini btn-info" href="/oa/show/${oa.id}">開放報名中</a>
+		#{/elseif}
+		#{else}
+		<a class="pull-right btn btn-mini btn-inverse" href="/oa/show/${oa.id}">尚未開放報名</a>
+		#{/else}
+	</div>
+	#{/list}
+	#{if listOA.size()<1}
+	<script>alert("找不到符合的項目，請重新查詢");</script>
+	#{/if}
+</div>

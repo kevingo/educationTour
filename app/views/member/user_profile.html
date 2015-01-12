@@ -1,0 +1,388 @@
+#{extends 'main.html' /}
+#{set title:'個人頁面' /}
+
+<link href="/public/stylesheets/myhome.css" rel="stylesheet">
+<link href="/public/stylesheets/jquery.nailthumb.1.1.css" rel="stylesheet">
+<script type="text/javascript" src="/public/javascripts/jquery.nailthumb.1.1.js"></script>
+<script type="text/javascript" src="/public/javascripts/itri_checkFavo.js"></script>
+<style>
+
+	.tag a {
+		color: white;
+	}
+
+</style>
+<div class="user_profile_page myhome">
+	<h3 class="exam_review_title main_title">
+		${user.username} 的個人檔案
+		 
+		#{deadbolt.restrict roles:[['admin']]}
+			<div class="dropdown">
+				<a class="dropdown-toggle btn" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
+				管理會員
+				<b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+				<!--
+			        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">通過老師資格審核</a></li>
+			        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">取消老師資格審核</a></li>
+			    -->
+			    #{if user.enable}
+			    	<li role="presentation"><a role="menuitem" tabindex="-1" onClick="disableMember(${user.id})">封鎖帳號</a></li>
+			    #{/if}
+			    #{else}
+			   		<li role="presentation"><a role="menuitem" tabindex="-1" onClick="enableMember(${user.id})">取消封鎖</a></li>
+			    #{/else}
+			        
+			        
+		      </ul>
+			</div>
+		#{/deadbolt.restrict}
+		 
+	</h3>
+	<div class="row-fluid">
+		<div class="span2">
+			<div class="myhome_pic_name">
+				<p class="myhome_name">${user.username}</p>
+				<div class="myhome_pic">
+					<div class="nailthumb-container nc160">
+						<span role="button" data-toggle="modal">
+							#{if user.photo==null}
+								#{if user.roleList.contains("admin")}
+									<img src="/public/images/default/admin_default_100.png"/>
+								#{/if}
+								#{elseif user.roleList.contains("teachingplanner")}
+									<img src="/public/images/default/teacher_default_100.png"/>
+								#{/elseif}
+								#{elseif user.roleList.contains("student")}
+									<img src="/public/images/default/student_default_100.png"/>
+								#{/elseif}
+								#{elseif user.roleList.contains("parent")}
+									<img src="/public/images/default/parent_default_100.png"/>
+								#{/elseif}	
+							#{/if}
+							#{else}
+								<img src="${user?.photo?.path}"/>
+							#{/else}
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="span10">
+			<h3 class="title04">關於我</h4>
+			<div class="myhome_div profiles">
+				<table class="table">
+					<tr>
+						<td class="user_p_td1">我的身分</td>
+						#{if user.roleList.contains("admin")}
+						<td class="user_p_td2">管理者</td>
+						#{/if}
+						#{elseif user.roleList.contains("teachingplanner")}
+						<td class="user_p_td2">老師</td>
+						#{/elseif}
+						#{elseif user.roleList.contains("student")}
+						<td class="user_p_td2">學生</td>
+						#{/elseif}
+						#{elseif user.roleList.contains("parent")}
+						<td class="user_p_td2">家長</td>
+						#{/elseif}
+						<td colspan="2"></td>
+					</tr>
+					#{if user.roleList.contains("student")}
+					<tr>
+						<td class="user_p_td1">就讀學校</td>
+						<td class="user_p_td2">${user?.schoolName}</td>
+						<td class="user_p_td1">就讀班級</td>
+						<td class="user_p_td2">${user?.className}</td>
+					</tr>
+					<tr>
+						<td class="user_p_td1">我的家長</td>
+						<td class="user_p_td2">
+							#{list items:user.relationMember, as:'parent'}
+							<a href="/member/profile/${parent.id}">${parent.username}</a>
+							#{/list}
+						</td>
+						<td class="user_p_td1">我的老師</td>
+						<td class="user_p_td2">
+							#{list items:my_teacher_group, as:'group'}
+							<a href="${group.creator.id}">${group.creator.username} 老師</a>
+							#{/list}
+						</td>
+					</tr>
+					#{/if}
+					<tr>
+						<td class="user_p_td1">自我介紹</td>
+						<td class="" colspan="3">${user.mood ? user.mood : "無"}</td>
+					</tr>
+				</table>
+			</div>
+			<div class="myhome_collect">
+				<h3 class="title03">目前動態</h4>
+				<div class="myhome_div">
+					<ul class="nav nav-tabs" id="status_tab">
+						#{if user.roleList.contains("teachingplanner") || user.roleList.contains("admin")}
+						<li><a href="#st1">建立的活動(${my_create_oa?.size})</a></li>
+						#{/if}
+						#{if user.roleList.contains("teachingplanner") || user.roleList.contains("student") || user.roleList.contains("admin")}
+						<li><a href="#st2">建立的教案(${my_create_tp?.size})</a></li>
+						#{/if}
+						#{if user.roleList.contains("teachingplanner")|| user.roleList.contains("admin")}
+						<li><a href="#st3">建立的班群(${my_create_group.size})</a></li>
+						#{/if}
+						#{if user.roleList.contains("student") || user.roleList.contains("admin")}
+						<li><a href="#st4">參加的活動(${my_join_oa.size})</a></li>
+						<li><a href="#st5">參加的評量(${my_join_exam.size})</a></li>
+						<li><a href="#st6">參加的班群(${my_join_group.size})</a></li>
+						#{/if}
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane" id="st1">
+							<div class="trip_items">
+								#{list items:my_create_oa, as:'oa'}
+								<div class="trip_item">
+									<div class="trip_item_img">
+										<div class="nailthumb-container nc80">
+											<img src="${oa.photos.size()>0 ? oa.photos.toArray()[0].path : '/public/images/default/oa_default_100.png'}"/>
+										</div>
+										<span class="trip_status ts01">
+											#{if oa.status == 2}
+												已截止報名
+											#{/if}
+											#{if oa.status == 1}
+												開放報名中
+											#{/if}
+											#{if oa.status == 0}
+												尚未開始報名
+											#{/if}
+										</span>
+										<span class="trip_teacher"><a href="/member/profile/${oa.creator.id}">${oa.creator.username} 老師</a></span>
+									</div>
+									<div class="trip_item_info">
+										<p class="trip_item_title"><a href="/oa/show/${oa.id}">${oa.name}</a></p>
+										<p class="tags">
+											#{list items: oa?.tags , as:'tag'}
+											<span class="tag" style="background:${tag.color};" onclick="goToTag(${tag.id}, 'oa')"><a>${tag.name}</a></span>
+											#{/list}
+										</p>
+										<p class="trip_item_note">${oa.introduction ? oa.introduction : "無說明"}</p>
+									</div>
+								</div>
+								#{/list}
+								
+							</div>
+							<!-- 
+							<div class="pagination">
+								<ul>
+									<li><a href="#">上一頁</a></li>
+									<li><a href="#">1</a></li>
+									<li><a href="#">2</a></li>
+									<li><a href="#">3</a></li>
+									<li><a href="#">4</a></li>
+									<li><a href="#">5</a></li>
+									<li><a href="#">下一頁</a></li>
+								</ul>
+							</div>
+							-->
+						</div>
+						<div class="tab-pane" id="st2">
+							<div class="case_item_with_text">
+							#{list items:my_create_tp, as:'tp'}
+								<div class="ciwt_item">
+									<div class="ciwt_img">
+										<div class="nailthumb-container nc80">
+											<img src="${tp.photo ? tp.photo.path : '/public/images/default/tp_default_100.png'}"/>
+										</div>
+									</div>
+									<div class="ciwt_info">
+										<p class="ciwt_title"><a href="/tp/show/${tp.id}">${tp.name}</a></p>
+										<p class="ciwt_note">${tp.introduction ? tp.introduction : "無說明"}</p>
+									</div>
+								</div>
+								#{/list}
+							</div>
+							<!-- 
+							<div class="pagination">
+								<ul>
+									<li><a href="#">上一頁</a></li>
+									<li><a href="#">1</a></li>
+									<li><a href="#">2</a></li>
+									<li><a href="#">3</a></li>
+									<li><a href="#">4</a></li>
+									<li><a href="#">5</a></li>
+									<li><a href="#">下一頁</a></li>
+								</ul>
+							</div>
+							 -->
+						</div>
+						<div class="tab-pane" id="st3">
+							<div class="class_items">
+								#{list items:my_create_group ,as:'group'}
+								<div class="class_item">
+									<p><a href="/memberGroup/show/${group.id}">${group.groupName}</a></p>
+									<span>${group.members.size()} 人</span>
+									<h5><a href="/member/profile/${group.creator.id}">${group.creator.username} 老師</a></h5>
+								</div>
+								#{/list}						
+							</div>
+						</div>
+						<div class="tab-pane" id="st4">
+							<div class="trip_items">
+								#{list items:my_join_oa, as:'oa'}
+								<div class="trip_item">
+									<div class="trip_item_img">
+										<div class="nailthumb-container nc80">
+											<img src="${oa.photos.size()>0 ? oa.photos.toArray()[0].path : '/public/images/default/oa_default_100.png'}"/>
+										</div>
+										<span class="trip_status ts01">
+											#{if oa.status == 2}
+												已截止報名
+											#{/if}
+											#{if oa.status == 1}
+												開放報名中
+											#{/if}
+											#{if oa.status == 0}
+												尚未開始報名
+											#{/if}
+										</span>
+										<span class="trip_teacher"><a href="/member/profile/${oa.creator.id}">${oa.creator.username} 老師</a></span>
+									</div>
+									<div class="trip_item_info">
+										<p class="trip_item_title"><a href="/oa/show/${oa.id}">${oa.name}</a></p>
+										<p class="tags">
+											#{list items: oa?.tags , as:'tag'}
+											<span class="tag" style="background:${tag.color};" onclick="goToTag(${tag.id}, 'oa')"><a>${tag.name}</a></span>
+											#{/list}
+										</p>
+										<p class="trip_item_note">${oa.introduction ? oa.introduction : "無說明"}</p>
+									</div>
+								</div>
+								#{/list}								
+							</div>
+							<!-- 
+							<div class="pagination">
+								<ul>
+									<li><a href="#">上一頁</a></li>
+									<li><a href="#">1</a></li>
+									<li><a href="#">2</a></li>
+									<li><a href="#">3</a></li>
+									<li><a href="#">4</a></li>
+									<li><a href="#">5</a></li>
+									<li><a href="#">下一頁</a></li>
+								</ul>
+							</div>
+							 -->
+						</div>
+						<div class="tab-pane" id="st5">
+							<div class="exams">
+								#{list items:my_join_exam, as:'exam'}
+								<div class="exam">
+									<p class="exam_title"><i class="icon-file-text"></i>${exam.title}</p>
+									<div class="nc160 nailthumb-container exam_img">
+										<img src="/public/images/trip_detail_img9.jpg"/>
+										<p class="exam_trip_name">${exam.title}</p>
+										#{if exam.endTime == '' || exam.endTime == null}
+										<p class="exam_status">未作答</p>
+										#{/if}
+										#{else}
+										<p class="exam_status">已作答</p>
+										#{/else}
+									</div>
+									<p class="exam_teacher"><a href="/member/profile/${exam.creator.id}">${exam.creator.username} 老師</a>
+									<span class="pull-right exam_students">18/39人作答</span></p>
+								</div>
+								#{/list}
+							</div>
+							<!--  
+							<div class="pagination">
+								<ul>
+									<li><a href="#">上一頁</a></li>
+									<li><a href="#">1</a></li>
+									<li><a href="#">2</a></li>
+									<li><a href="#">3</a></li>
+									<li><a href="#">4</a></li>
+									<li><a href="#">5</a></li>
+									<li><a href="#">下一頁</a></li>
+								</ul>
+							</div>
+							-->
+						</div>
+						<div class="tab-pane" id="st6">
+							<div class="class_items">
+								#{list items:my_join_group, as:'group'}
+								<div class="class_item">
+									<p><a href="/memberGroup/show/${group.id}">${group.groupName}</a></p>
+									<span>${group.members.size()} 人</span>
+									<h5><a href="/member/profile/${group.creator.id}">${group.creator.username} 老師</a></h5>
+								</div>
+								#{/list}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+$('#status_tab a').click(function (e) {
+  e.preventDefault();
+  $(this).tab('show');
+})
+$(function(){
+    $('.nc80').nailthumb({width:80,height:80});
+    $('.nc160').nailthumb({width:160,height:160});
+    $('.nc200').nailthumb({width:200,height:200});
+    $('.nc250').nailthumb({width:250,height:250});
+    
+    //控制預設頁籤  
+    #{if user.roleList.contains("student")}
+	    $("#st2").addClass("active");
+		$("a[href='#st2']").parents("li").addClass("active");
+    #{/if}
+    #{if user.roleList.contains("teachingplanner") || user.roleList.contains("admin")}
+	    $("#st1").addClass("active");
+		$("a[href='#st1']").parents("li").addClass("active");
+    #{/if}
+	
+	
+});
+
+function disableMember(userId){
+	jQuery.ajax({
+		  url: '/member/disableAccount',
+		  type: 'POST',
+		  async: false,
+		  data: {
+			  userId:userId
+		  },
+		  success: function(response) {
+			  alert(response);	
+			  reloadPage();
+		  },
+		  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+		});
+}
+
+function enableMember(userId){
+	jQuery.ajax({
+		  url: '/member/enableAccount',
+		  type: 'POST',
+		  async: false,
+		  data: {
+		  	userId:userId
+		  },
+		  success: function(response) {
+			  alert(response);	
+			  reloadPage();
+		  },
+		  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+		});
+}
+
+function reloadPage(){
+	location.href="/member/profile/${user.id}"
+}
+
+
+</script>

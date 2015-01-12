@@ -1,0 +1,24 @@
+#{extends 'main.html' /} 
+#{set title:'建立戶外活動 同意條款' /}
+<link href="/public/stylesheets/trip.css" rel="stylesheet">
+<div class="row-fluid create_agree">
+	<div class="span10 offset1 divisions">
+		<h3 class="title01">刊登服務條款</h3>
+		<div class="division">
+			<div class="row-fluid">
+				<div class="span6">
+					<div class="well">
+						<p><strong>敬愛的老師，您好：</strong></p>
+						<iframe src="../create_content_license" width="400" height="250" frameborder="0"></iframe>
+						<p class="pull-right">FunnyTrip 敬上</p>
+						<p class="clearfix"></p>
+					</div>
+				</div>
+				<div class="span6 argeebtns">
+					<button class="agree" onClick="location.href='/oa/create'">我同意</button>或
+					<button class="disagree" onClick="javascript:history.back(1)">不同意</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

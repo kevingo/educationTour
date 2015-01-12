@@ -1,0 +1,75 @@
+#{extends 'main.html' /} 
+#{set title:'設定教學元件智慧化提示功能頁面' /}
+
+<style>
+
+.table th {
+    text-align: center;    
+}
+
+</style>
+
+<div class="container">
+	<div class="alert">
+		<button class="close" data-dismiss="alert">×</button>
+		<h4 class="alert-heading">${oa.name} - 設定教學元件智慧化提示的功能(可設定五個提示)</h4>
+	</div>
+	<form name="nfc_form" action="/oa/nfc/${oa.id}" method="POST">
+	<table class="table table-hover table-bordered">
+	    <thead>
+			<tr>
+				<th>標題名稱</th>
+				<th>選擇元件</th>	
+			</tr>
+	    </thead>
+	    <tbody>
+				<tr>
+					<input type="hidden" name="order" value="1">
+					<td class="span4"><input type="text" placeholder="元件標題" class="input-large" name="title"></td>
+					<td>						
+						#{list items:component_name, as:'components'}
+							<input type="checkbox" value="${components.split('##')[1]}" name="components1[]">${components.split('##')[0]}<br />
+						#{/list}
+					</td>
+		      	</tr>
+		      	<tr>
+		      		<input type="hidden" name="order" value="2">
+					<td><input type="text" placeholder="元件標題" class="input-large" name="title"></td>
+					<td>						
+						#{list items:component_name, as:'components'}
+							<input type="checkbox" value="${components.split('##')[1]}" name="components2[]">${components.split('##')[0]}<br />
+						#{/list}
+					</td>
+		      	</tr>
+		      	<tr>
+		      		<input type="hidden" name="order" value="3">
+					<td><input type="text" placeholder="元件標題" class="input-large" name="title"></td>
+					<td>						
+						#{list items:component_name, as:'components'}
+							<input type="checkbox" value="${components.split('##')[1]}" name="components3[]">${components.split('##')[0]}<br />
+						#{/list}
+					</td>
+		      	</tr>
+		      	<tr>
+		      		<input type="hidden" name="order" value="4">
+					<td><input type="text" placeholder="元件標題" class="input-large" name="title"></td>
+					<td>						
+						#{list items:component_name, as:'components'}
+							<input type="checkbox" value="${components.split('##')[1]}" name="components4[]">${components.split('##')[0]}<br />
+						#{/list}
+					</td>
+		      	</tr>
+		      	<tr>
+		      		<input type="hidden" name="order" value="5">
+					<td><input type="text" placeholder="元件標題" class="input-large" name="title"></td>
+					<td>						
+						#{list items:component_name, as:'components'}
+							<input type="checkbox" value="${components.split('##')[1]}" name="components5[]">${components.split('##')[0]}<br />
+						#{/list}
+					</td>
+		      	</tr>
+	    </tbody>
+	</table>
+	<input type="submit" class="verify btn btn-primary" value="送出">
+	</form>
+</div>

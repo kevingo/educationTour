@@ -1,0 +1,272 @@
+#{extends 'main.html' /}
+#{set title:'老師評量管理後台' /}
+
+<link href="/public/stylesheets/control.css" rel="stylesheet">
+<link href="/public/stylesheets/admin.css" rel="stylesheet">
+<script src='/public/javascripts/jquery.slimscroll.js'></script>
+<script src='/public/javascripts/effect11.js'></script>
+
+<script>
+	
+	var pagination = 5;
+	
+	$(document).ready(function() {
+		
+		if(document.getElementById('own') != null) {
+			var own = document.getElementById('own').id;
+			if(own=='own') {
+				changeTeacher();
+				changeOA();
+			}	
+		}
+	});
+	
+	function changeTeacher() {
+		$("#exam_list").empty();
+		var myselect = document.getElementById("teachers");
+		var member_id = myselect.options[myselect.selectedIndex].value; 
+		if(member_id=='x') {
+			$("#oas").html("<option value='x'>請選擇老師</option>");
+			$(".pagination").empty();
+		}
+		else {
+			jQuery.ajax({
+				  url: '/ajax/getOaByCreatorId',
+				  type: 'POST',
+				  async: false,
+				  data: {
+					  creatorId:member_id
+				  },
+				  success: function(response) {
+					  if(response=="") {
+						$("#oas").html("<option value='none'>無</option>");
+						$(".pagination").empty();
+					  }
+					  else {
+					  	$("#oas").html(response);
+					  	changeOA();
+					  }
+				  },
+				  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+				});
+		}
+	}
+	
+	function changeOA() {
+		var teachers = document.getElementById("teachers");
+		var member_id = teachers.options[teachers.selectedIndex].value;
+		if(member_id=='x') {
+			alert("請先選擇老師");
+		}
+		else {
+			var myselect = document.getElementById("oas");
+			
+			var oa_id = myselect.options[myselect.selectedIndex].value;
+			if(oa_id=='x') {
+				$("#oas").html("<option value='x'>請選擇活動</option>");
+				$(".pagination").empty();
+			}
+			else {
+				getList(oa_id, 0, pagination);
+				showPagination(oa_id, 'examine');
+			}
+		}
+	}
+	
+	function getList(oa_id, start, end) {
+		
+		jQuery.ajax({
+			  url: '/examine/getExamineByOaId',
+			  type: 'POST',
+			  async: false,
+			  data: {
+				  oaid:oa_id,
+				  start:start,
+				  end:end
+			  },
+			  success: function(response) {
+				  if(response=="") {
+					$("#exam_list").empty();
+					$(".pagination").empty();
+				  }
+				  else
+				  	$("#exam_list").html(response);
+			  },
+			  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+		});
+		
+	}
+	
+	function onSearch() {
+		var myselect = document.getElementById("oas");
+		var oa_id = myselect.options[myselect.selectedIndex].value;
+		if(oa_id=='x') {
+			alert("請先選擇活動");
+			$(".pagination").empty();
+		} else if(oa_id=='none') {
+			alert("目前無活動");
+		} else {
+			var kw = document.getElementById("kw").value;
+			if(kw=='')
+				alert("請輸入關鍵字");
+			else {
+				jQuery.ajax({
+					  url: '/examine/getExamineByKw',
+					  type: 'POST',
+					  async: false,
+					  data: {
+						  oaid:oa_id,
+						  kw:kw
+					  },
+					  success: function(response) {
+						  if(response=="") {
+							$("#exam_list").empty();
+							$(".pagination").empty();
+						  }
+						  else {
+							$(".pagination").empty();
+						  	$("#exam_list").html(response);
+						  	//showPagination(oa_id, 'exam_search', kw);
+						  }
+					  },
+					  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+				});
+			}
+		}
+	}
+	
+	function delExamine(e_id, oaid) {
+		if(confirm("請問是確認要刪除此評量？")) {
+			jQuery.ajax({
+				  url: '/examine/delExamine',
+				  type: 'POST',
+				  async: false,
+				  data: {
+					  e_id:e_id,
+					  oaid:oaid
+				  },
+				  success: function(response) {
+					  $("#exam_list").html(response);
+					  showPagination(oaid, 'examine');
+				  },
+				  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+			});
+		}
+	}
+	
+	function showPagination(oa_id, type, kw) {
+		jQuery.ajax({
+			  url: '/ajax/getPagination',
+			  type: 'POST',
+			  async: false,
+			  data: {
+				  id:oa_id,
+				  type: type,
+				  kw:kw
+			  },
+			  success: function(response) {
+				  if(response=="") {
+					  $(".pagination").empty();
+				  }
+				  else {
+				  	$("#pagination").html(response);
+				  }
+			  },
+			  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+		});
+	}
+
+</script>
+
+<div class="span10 offset1 control divisions">
+	<h3 class="title03">評量管理列表</h3>
+	<div class="control_content division manage_exam">
+		<div class="manage_exam_function">
+			<span>老師
+				<select id="teachers" onchange="changeTeacher()">
+					#{if member.roleList.contains("admin")}
+						<option value="x" selected="selected">請選擇 </option>
+						#{list items:teachers, as:'t'}
+							<option value="${t.id}">${t.username}</option>
+						#{/list}
+					#{/if}
+					#{else}
+						<option selected="selected" id="own" value="${member.id}">${member.username}</option>
+					#{/else}
+				</select>
+			</span>
+			<span>活動	
+				<select id="oas" onchange="changeOA()">
+					<option value="x" selected="selected">請選擇活動 </option>
+				</select>
+			</span>
+			<span class="pull-right">關鍵字
+				<input id="kw" type="text" placeholder="搜尋評量" value="">
+				<button class="btn btn-mini btn-info" onclick="onSearch()">搜尋</button>
+			</span>
+			 
+		</div>
+		<table class="table manage_exam_main_table">
+			<thead>
+				<tr>
+					<td class="mse_td1">#</td>
+					<td class="mse_td2">評量名稱</td>
+					<td class="mse_td3">活動主題</td>
+					<td class="mse_td4">開始作答日期</td>
+					<td class="mse_td5">結束作答日期</td>
+					<td class="mse_td6">評量狀態</td>
+					<td class="mse_td7">考試人數</td>
+					<td class="mse_td8">待閱卷</td>
+					<td class="mse_td9">操作功能</td>
+				</tr>
+			</thead>
+			<tbody id='exam_list'>
+			<!-- 
+				<tr>
+					<td class="mse_td1">1</td>
+					<td class="mse_td2"><a>第一次期中考試</a></td>
+					<td class="mse_td3">活動名稱活動名稱</td>
+					<td class="mse_td4">2013/10/13</td>
+					<td class="mse_td5">
+						<button class="btn btn-mini disabled">尚未開始作答</button>
+					</td>
+					<td class="mse_td6">45/58</td>
+					<td class="mse_td7">25</td>
+					<td class="mse_td8">
+						<button class="btn btn-mini btn-success">閱卷</button>
+						<button class="btn btn-mini btn-google">編輯</button>
+						<button class="btn btn-mini btn-info">預覽</button>
+						<button class="btn btn-mini btn-danger">刪除</button>
+					</td>
+				</tr>
+				 -->				
+			</tbody>
+		</table>
+		<div id="pagination" class="pagination">
+				
+		</div>
+		<!-- 
+		<div class="pagination">
+			<ul>
+				<li><a href="#">上一頁</a></li>
+				<li><a href="#">1</a></li>
+				<li><a href="#">2</a></li>
+				<li><a href="#">下一頁</a></li>
+			</ul>
+		</div>
+		 -->
+	</div>
+	<div><button class="btn btn-mini pull-right" id="gotop">△Top</button></div>
+</div>
+
+<script>
+$('#controlTab a').click(function (e) {
+  e.preventDefault();
+  $(this).tab('show');
+})
+$(function(){
+    $('.invite_search').slimScroll({
+        height: '150px'
+    });
+});
+</script>

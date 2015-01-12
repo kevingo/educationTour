@@ -1,0 +1,18 @@
+<div class="er_exam_item">
+<input type="hidden" class='qid'/>
+	<div class="ere_function">
+		<span class="ere_number"></span>
+		<span class="ere_type">是非題</span>
+		<span class="ere_points"></span>
+	</div>
+	<div class="ere_question"></div>
+	<div class="ere_answers">
+		<p><input type="radio" disabled="disabled" value='1'>(Ｏ)正確</p>
+		<p><input type="radio" disabled="disabled" value='0'>(Ｘ)錯誤</p>
+	</div>
+	<div class="ere_about_answer"><h4>解答說明</h4></div>
+	<div class="ere_teacher_words">
+		<h4>老師批示</h4>
+		<p class='teacher_comment'><input class="span9 comment" type="text" placeholder="請輸入回覆或評語"><a class="btn btn-mini btn-pink">送出</a></p>
+	</div>
+</div>

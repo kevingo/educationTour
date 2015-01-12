@@ -1,0 +1,19 @@
+#{extends 'main.html' /}
+#{set title:'註冊完成' /}
+
+<link href="/public/stylesheets/member.css" rel="stylesheet">
+<div class="welcome span10 offset1">
+	<h1>歡迎您來到放學趣</h1>
+	<div class="welcome_info well">
+		<p>FunnyTrip放學趣是一個教育觀光活動平台，藉由多元課後活動讓孩子不只是在教室裡上課，而在放學後還可以有許多有趣的學習活動。未來將結合更多師資，創造一系列不只是知識的學習。期望加入更多人文關懷元素，讓我們的孩子培養更廣闊的視野。</p>
+		<p>如果您還想要了解更多，在<a href="">關於我們</a>中有更進一步介紹。</p>
+	</div>
+	<h1>您現在可以選擇以下頁面瀏覽...</h1>
+	<ul class="welcome_select">
+		<li class="ws01" onclick="location.href='/searchOA/0'">找活動</li>
+		<li class="ws02" onclick="location.href='/searchTeacher/0'">找老師</li>
+		<li class="ws03" onclick="location.href='/searchTP/0'">找教案</li>
+		<li class="ws04" onclick="location.href='/member/myHomePage'">我的首頁</li>
+	</ul>
+</div>
+

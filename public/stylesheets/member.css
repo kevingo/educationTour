@@ -1,0 +1,143 @@
+/* line 2, ../../sass/member.scss */
+.logindiv {
+  margin-top: 70px;
+  margin-bottom: 250px;
+}
+/* line 5, ../../sass/member.scss */
+.logindiv .divisions {
+  padding: 30px 20px 20px 20px;
+}
+
+/* line 9, ../../sass/member.scss */
+.registerdiv {
+  margin-top: 20px;
+  margin-bottom: 80px;
+}
+/* line 12, ../../sass/member.scss */
+.registerdiv div.title {
+  margin-top: 20px;
+}
+/* line 15, ../../sass/member.scss */
+.registerdiv label {
+  display: inline-block;
+  font-size: 15px;
+  margin-right: 10px;
+}
+/* line 19, ../../sass/member.scss */
+.registerdiv label input[type="radio"] {
+  margin-right: 4px;
+}
+/* line 23, ../../sass/member.scss */
+.registerdiv p.ps {
+  margin-left: 110px;
+  position: relative;
+  top: -16px;
+  color: #777;
+}
+/* line 29, ../../sass/member.scss */
+.registerdiv .regip {
+  margin-left: 20px;
+}
+/* line 31, ../../sass/member.scss */
+.registerdiv .regip input {
+  margin-right: 5px;
+  position: relative;
+  top: 2px;
+}
+/* line 37, ../../sass/member.scss */
+.registerdiv input#school_full_name {
+  margin-left: 5px;
+  position: relative;
+  top: -2px;
+}
+
+/* line 44, ../../sass/member.scss */
+.welcome h1 {
+  color: #49932b;
+}
+/* line 47, ../../sass/member.scss */
+.welcome .welcome {
+  padding: 15px;
+}
+/* line 50, ../../sass/member.scss */
+.welcome .welcome_info p {
+  font-size: 15px;
+  line-height: 27px;
+  margin: 5px;
+}
+/* line 55, ../../sass/member.scss */
+.welcome .welcome_info {
+  margin-bottom: 30px;
+}
+/* line 58, ../../sass/member.scss */
+.welcome .welcome_select {
+  margin-bottom: 100px;
+  margin-top: 10px;
+}
+/* line 61, ../../sass/member.scss */
+.welcome .welcome_select li {
+  font-weight: bold;
+  display: inline-block;
+  font-size: 20px;
+  font-family: '微軟正黑體';
+  text-shadow: 1px 1px 0px #fff;
+  padding: 15px;
+  width: 170px;
+  height: 170px;
+  -moz-border-radius-bottomleft: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  -moz-border-radius-bottomright: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  -webkit-box-shadow: #bbbbbb 2px 2px 6px;
+  -moz-box-shadow: #bbbbbb 2px 2px 6px;
+  box-shadow: #bbbbbb 2px 2px 6px;
+  margin-right: 36px;
+  margin-left: 0;
+  margin: 0 13px \9;
+  cursor: pointer;
+}
+/* line 76, ../../sass/member.scss */
+.welcome .welcome_select li:last-child {
+  margin-right: 0;
+}
+/* line 79, ../../sass/member.scss */
+.welcome .welcome_select li.ws01 {
+  background: url(/public/images/member/welcome_icon_01.png) no-repeat;
+}
+/* line 80, ../../sass/member.scss */
+.welcome .welcome_select li.ws02 {
+  background: url(/public/images/member/welcome_icon_02.png) no-repeat;
+}
+/* line 81, ../../sass/member.scss */
+.welcome .welcome_select li.ws03 {
+  background: url(/public/images/member/welcome_icon_03.png) no-repeat;
+}
+/* line 82, ../../sass/member.scss */
+.welcome .welcome_select li.ws04 {
+  background: url(/public/images/member/welcome_icon_04.png) no-repeat;
+}
+/* line 83, ../../sass/member.scss */
+.welcome .welcome_select li.ws01:hover {
+  background: url(/public/images/member/welcome_icon_h_01.png) no-repeat;
+}
+/* line 84, ../../sass/member.scss */
+.welcome .welcome_select li.ws02:hover {
+  background: url(/public/images/member/welcome_icon_h_02.png) no-repeat;
+}
+/* line 85, ../../sass/member.scss */
+.welcome .welcome_select li.ws03:hover {
+  background: url(/public/images/member/welcome_icon_h_03.png) no-repeat;
+}
+/* line 86, ../../sass/member.scss */
+.welcome .welcome_select li.ws04:hover {
+  background: url(/public/images/member/welcome_icon_h_04.png) no-repeat;
+}
+/* line 87, ../../sass/member.scss */
+.welcome .welcome_select li:hover {
+  position: relative;
+  top: 1px;
+  left: 1px;
+  color: #888;
+}

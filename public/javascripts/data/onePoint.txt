@@ -1,0 +1,12 @@
+<div id="showmap" class="modal hide fade" tabindex="-1" role="dialog" aria-titleledby="myModaltitle" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3></h3>
+	</div>
+	<div class="modal-body">
+		<div id="map1" style='width:500px;height:300px;'></div>
+		<p class="showmap_tel"></p>
+		<p class="showmap_info"></p>
+		<p class="showmap_address"></p>
+	</div>
+</div>

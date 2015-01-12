@@ -1,0 +1,29 @@
+#{extends 'main.html' /}
+#{set title:'填寫評量' /}
+<link href="/public/stylesheets/exam.css" rel="stylesheet">
+<script src="/public/javascripts/effect15.js"></script>
+<div class="exam_detail_page">
+	<input type="hidden" name="examID" id="examID" value="${examine?.id}">
+	<input type="hidden" name="oaID" id="oaID" value="${oa?.id}">
+	<h3 class="exam_review_title main_title">${examine.title}</h3>
+	<div class="exam_basic_infomation">
+		<span class="ed_title">${oa.name}</span>
+		<span class="ed_exam_title">${examine.title}</span>
+		<span class="ed_teacher">命題老師 ${examine.creator.username}</span>
+	</div>
+	<div class="exam_detail_content_wrapper">
+		<div class="exam_detail_content"></div>
+		<p><a class="btn btn-large btn-danger pull-left back">上一題</a><a class="btn btn-large btn-pink pull-right next">下一題</a><a style='display:none;' class="btn btn-large btn-pink pull-right finish">交卷</a></p>
+		<p class="clearfix"></p>
+	</div>
+</div>
+<div id="tips" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+		<h3 id="myModalLabel">系統提示</h3>
+	</div>
+	<div class="modal-body">一定要針對題目選擇出答案，才能進行下一題</div>
+	<div class="modal-footer">
+		<a class="btn" data-dismiss="modal" aria-hidden="true">我瞭解了</a>
+	</div>
+</div>

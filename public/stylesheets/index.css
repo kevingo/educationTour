@@ -1,0 +1,115 @@
+/*index.html*/
+/* line 4, ../../sass/index.scss */
+#index #main_banner {
+  height: 320px;
+  background: url(/public/images/banner_bg.png) no-repeat;
+  margin-bottom: 15px;
+}
+/* line 8, ../../sass/index.scss */
+#index #main_banner img {
+  width: 100%;
+  height: 310px;
+}
+/* line 13, ../../sass/index.scss */
+#index #action_teacher {
+  margin-bottom: 15px;
+}
+/* line 17, ../../sass/index.scss */
+#index #new_action h3, #index #hot_teacher h3, #index #hot_case h3 {
+  text-indent: -10000em;
+  margin-bottom: 2px;
+}
+/* line 22, ../../sass/index.scss */
+#index #new_action, #index #hot_teacher {
+  height: 310px;
+}
+/* line 25, ../../sass/index.scss */
+#index #new_action {
+  background: url(/public/images/new_action.png) no-repeat;
+  position: relative;
+}
+/* line 28, ../../sass/index.scss */
+#index #new_action #action_filter {
+  margin-left: 5px;
+}
+/* line 30, ../../sass/index.scss */
+#index #new_action #action_filter li {
+  list-style: none;
+  display: block;
+  width: 130px;
+  height: 42px;
+  background: #e8e8e8;
+  border-bottom: 1px solid #fff;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #e8e8e8));
+  background-image: -webkit-linear-gradient(#ffffff, #e8e8e8);
+  background-image: -moz-linear-gradient(#ffffff, #e8e8e8);
+  background-image: -o-linear-gradient(#ffffff, #e8e8e8);
+  background-image: linear-gradient(#ffffff, #e8e8e8);
+  -webkit-box-shadow: #cccccc 2px 2px 4px;
+  -moz-box-shadow: #cccccc 2px 2px 4px;
+  box-shadow: #cccccc 2px 2px 4px;
+}
+/* line 39, ../../sass/index.scss */
+#index #new_action #action_filter li a {
+  display: block;
+  color: #4a3b2c;
+  text-align: center;
+  padding: 10px 0px;
+  width: 130px;
+  height: 23px;
+}
+/* line 47, ../../sass/index.scss */
+#index #new_action #action_filter li:hover {
+  background: #cecece;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #dddddd), color-stop(100%, #cecece));
+  background-image: -webkit-linear-gradient(#dddddd, #cecece);
+  background-image: -moz-linear-gradient(#dddddd, #cecece);
+  background-image: -o-linear-gradient(#dddddd, #cecece);
+  background-image: linear-gradient(#dddddd, #cecece);
+}
+/* line 51, ../../sass/index.scss */
+#index #new_action #action_filter li.active {
+  width: 160px;
+  background: url(/public/images/action_filter_active.png) no-repeat;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+/* line 55, ../../sass/index.scss */
+#index #new_action #action_filter li.active a {
+  color: #fff;
+}
+/* line 61, ../../sass/index.scss */
+#index #new_action #action_div {
+  margin-left: 160px;
+  margin-top: 65px;
+  width: 470px;
+  position: absolute;
+  top: 0px;
+}
+/* line 67, ../../sass/index.scss */
+#index #new_action #action_div .action_item {
+  display: inline-block;
+  margin-right: 15px;
+}
+/* line 73, ../../sass/index.scss */
+#index #hot_teacher {
+  background: url(/public/images/hot_teacher.png) no-repeat;
+  position: relative;
+}
+/* line 76, ../../sass/index.scss */
+#index #hot_teacher .teacher_items {
+  position: relative;
+  left: 3px;
+  padding: 5px 10px;
+}
+/* line 82, ../../sass/index.scss */
+#index #hot_case {
+  height: 540px;
+  background: url(/public/images/hot_case.png) no-repeat;
+  margin-bottom: 30px;
+}
+/* line 86, ../../sass/index.scss */
+#index #hot_case .case_items {
+  padding: 10px 20px;
+}

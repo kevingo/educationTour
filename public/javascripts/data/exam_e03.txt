@@ -1,0 +1,35 @@
+<div class="exam exam_answer">
+	<span class="exam_number"></span>
+	<input type='hidden' name='orderNumber[]' class='exam_number'/>
+	<input type='hidden' name="examType[]" value='shortAnswer' />
+	<input type="hidden" name="shortAnswer_id[]" class='exam_id'/>
+    <span class="exam_function">
+        <a class="btn btn-mini btn-warning upup"><i class="icon-chevron-sign-up"></i>上移</a><a class="btn btn-mini btn-warning downdown"><i class="icon-chevron-sign-down"></i>下移</a><a class="btn btn-mini btn-danger delete"><i class="icon-remove-circle"></i>刪除</a>
+    </span>
+    <div class="exam_detail">
+    	<div class="exam_detail_list">
+            <span class="exam_title">題目名稱</span>
+            <div class='editor'><textarea class="span8 require" name="shortAnswer_Question[]"></textarea></div>
+        </div>
+    	<div class="exam_detail_list">
+            <span class="exam_title">上傳附件</span>
+            <div class="exam_list_content">
+                <input type="file" name="file[]"/>
+                <div class="input-append" style="display:none;">
+                    <input type="text" class="fileName" readonly name="shortAnswer_Filename[]">
+                    <a class="btn fileTrigger">選擇檔案</a>
+                </div>
+            </div>
+        </div>
+    	<div class="exam_detail_list">
+            <span class="exam_title">計分</span>
+            <div class="exam_list_content">
+            	<p>問答題無法自動給分</p>
+            </div>
+        </div>
+    	<div class="exam_detail_list">
+            <span class="exam_title">解答說明</span>
+            <div class='editor'><textarea class="span8 require" name="shortAnswer_Intro[]"></textarea></div>
+        </div>
+    </div>
+</div>

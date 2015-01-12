@@ -1,0 +1,23 @@
+#{extends 'main.html' /}
+#{set title:'填寫評量' /}
+<link href="/public/stylesheets/exam.css" rel="stylesheet">
+<div class="exam_detail_page">
+	<h3 class="exam_review_title main_title">
+		${examine?.title}
+		
+	</h3>
+	<div class="exam_basic_infomation">
+		<span class="ed_title">${oa.name}</span>
+		<span class="ed_exam_title">${examine?.title}</span>
+		<span class="ed_teacher">命題老師：${examine?.creator.username}</span>
+	</div>
+	<div class="exam_detail_content_wrapper">
+		<div class="exam_detail_content">
+			<h4>評量考前說明</h4>
+			<div class="exam_info">
+				<p style="font-size:15px; line-height:24px;">${examine?.questionExplain.raw()}</p>
+			</div>
+		</div>
+		<p class="center"><a href="/examine/showQuestion/${examine?.id}" class="btn btn-large btn-pink">開始評量GO!</a></p>
+	</div>
+</div>

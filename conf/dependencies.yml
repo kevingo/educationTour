@@ -1,0 +1,21 @@
+# Application dependencies
+
+require:
+- play
+- play -> fbgraph 0.4
+- play -> deadbolt 1.5.4
+- provided -> qrgen 1.0
+- provided -> zxing-core 1.7
+- provided -> zxing-j2se 1.7
+- provided -> google-api-translate-java 0.97
+- provided -> flexjson 2.1
+- provided -> restfb 1.6.9
+- provided -> microsoft-translator-java-api-0.6.1-jar-with-dependencies 1.0
+
+repositories:
+  - provided:
+      type:       local
+      descriptor: "${application.path}/../[module]/conf/dependencies.yml"
+      artifact:   "${application.path}/lib/[module]-[revision].jar"
+      contains:
+        - provided -> *

@@ -1,0 +1,33 @@
+﻿var school = {
+	ele:[
+{city_id:'20',area_id:'600',name:'國立嘉義大學附小'},
+{city_id:'20',area_id:'600',name:'市立崇文國小'},
+{city_id:'20',area_id:'600',name:'市立博愛國小'},
+{city_id:'20',area_id:'600',name:'市立垂楊國小'},
+{city_id:'20',area_id:'600',name:'市立民族國小'},
+{city_id:'20',area_id:'600',name:'市立宣信國小'},
+{city_id:'20',area_id:'600',name:'市立大同國小'},
+{city_id:'20',area_id:'600',name:'市立志航國小'},
+{city_id:'20',area_id:'600',name:'市立嘉北國小'},
+{city_id:'20',area_id:'600',name:'市立僑平國小'},
+{city_id:'20',area_id:'600',name:'市立林森國小'},
+{city_id:'20',area_id:'600',name:'市立北園國小'},
+{city_id:'20',area_id:'600',name:'市立精忠國小'},
+{city_id:'20',area_id:'600',name:'市立育人國小'},
+{city_id:'20',area_id:'600',name:'市立蘭潭國小'},
+{city_id:'20',area_id:'600',name:'市立興安國小'},
+{city_id:'20',area_id:'600',name:'市立世賢國小'},
+{city_id:'20',area_id:'600',name:'市立興嘉國小'},
+{city_id:'20',area_id:'600',name:'市立港坪國小'},
+{city_id:'20',area_id:'600',name:'市立文雅國小'}
+
+],
+    jun:[{city_id:'20',area_id:'600',name:'市立大業國中'},
+{city_id:'20',area_id:'600',name:'市立北興國中'},
+{city_id:'20',area_id:'600',name:'市立嘉義國中'},
+{city_id:'20',area_id:'600',name:'市立南興國中'},
+{city_id:'20',area_id:'600',name:'市立民生國中'},
+{city_id:'20',area_id:'600',name:'市立玉山國中'},
+{city_id:'20',area_id:'600',name:'市立蘭潭國中'},
+{city_id:'20',area_id:'600',name:'市立北園國中'}]
+};

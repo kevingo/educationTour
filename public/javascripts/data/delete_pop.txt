@@ -1,0 +1,13 @@
+<div id="delete_pop" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<a href="#" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</a>
+		<h3 id="myModalLabel">刪除元件</h3>
+	</div>
+	<div class="modal-body">
+		<p>您確定您要刪除此元件，此動作無法復原</p>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal" aria-hidden="true">取消</a>
+		<a href="#" class="btn btn-danger done">確定刪除</a>
+	</div>
+</div>

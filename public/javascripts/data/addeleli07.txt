@@ -1,0 +1,21 @@
+﻿<div class="toolkit_item toolkit_spot">
+    <div class="toolkit_number"></div><input type="hidden" name="seq[]" class="seqno"/>
+    <div class="toolkit_content"><input type="hidden" name="spot_id[]" class="ele_id"/>
+        <p class="toolkit_title">
+            <span class="toolkit_type">相關景點</span>
+            <input type="text" class="span7 require title" placeholder="自定欄位名稱" name="spot_fieldname[]">
+            <span class="toolkit_function">
+                <a class="btn btn-mini btn-warning upup"><i class="icon-chevron-sign-up"></i>上移</a><a class="btn btn-mini btn-warning downdown"><i class="icon-chevron-sign-down"></i>下移</a><a class="btn btn-mini btn-danger delete"><i class="icon-remove-circle"></i>刪除</a>
+            </span>
+        </p>
+        <div class="toolkit_detail"><!--欄位類型差異-->
+            <p><span class="tool_ele_title span2 ">景點名稱</span><input type="text" class="span10 require place" placeholder="請輸入景點名稱" name="spot_name[]"></p>
+            <p><span class="tool_ele_title span2">景點地址</span><input type="text" class="span10 addr" placeholder="請輸入景點的地址" name="spot_addr[]"></p>
+            <p><span class="tool_ele_title span2">經緯度</span><span class="spot_inline">經度</span><input type="text" class="span4 lat" placeholder="請輸入經度" name="spot_lat[]"><span class="spot_inline">緯度</span><input type="text" class="span4 lng" placeholder="請輸入緯度" name="spot_lng[]"><a class="btn btn-mini spot_inline calc_latlng">自動取得座標</a></p>
+            <p><span class="tool_ele_title span2">聯絡電話</span><input type="text" class="span10 phone" placeholder="請輸入景點的電話" name="spot_tel[]"></p>
+            <p><span class="tool_ele_title span2">開放時間</span><div class="input-append bootstrap-timepicker"><input type="text" class="span10 timepicker op" placeholder="請輸入開始時間" name="spot_open[]"><span class="add-on"><i class="icon-time"></i></span></div>～<div class="input-append bootstrap-timepicker"><input type="text" class="span10 timepicker cl" placeholder="請輸入結束時間" name="spot_end[]"><span class="add-on"><i class="icon-time"></i></span></div></p>
+            <p><span class="tool_ele_title span2">景點說明</span><textarea class='memo' name="spot_memo[]"></textarea></p>
+            <p class="share_option"><span class="tool_ele_title span2">分享設定</span><select name="spot_share[]" class='share'><option value="yes">分享此項目</option><option value="no">不分享此項目</option></select></p>
+        </div>
+    </div>
+</div>

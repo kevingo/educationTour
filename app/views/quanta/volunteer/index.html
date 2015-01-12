@@ -1,0 +1,50 @@
+#{extends 'main.html' /} 
+#{set title:'廣達志工服務專區' /}
+
+<script type="text/javascript">
+$(document).ready(function() {	
+	var msg = $("#message").val();
+	if(msg!="")
+		alert(msg);
+
+});
+
+
+</script>
+
+<div class="container">
+	<input type="hidden" id="message" value="${message}" >
+#{if session.contains("email")}	
+	#{deadbolt.restrict roles:[['q_volunteer']]}	
+
+	<div class="row">
+		<div id="content" class="span12">
+			<div class="row span12">
+			        <div class="tabbable">
+						<ul class="nav nav-tabs" id="myTab">
+						    <li class="active"><a href="#volunteer" data-toggle="tab">廣達志工服務專區</a></li>
+						</ul>
+						
+						<div class="tab-content">
+							<div class="tab-pane active" id="volunteer">
+								<div class="row">
+									<div class="span7">
+										<span class="label label-info">志工服務：請選擇動作</span>
+										<a href="/quanta/volunteer/webcheckin" class="btn btn-primary" >簽到</a> 
+										<a href="/quanta/volunteer/webcheckout" class="btn btn-primary" >簽退</a> 
+										<a href="/quanta/volunteer/webquery/${session.get("email")}" class="btn btn-primary save submit">查詢我的志工服務紀錄</a>
+									</div>
+								</div>
+							</div>
+														
+						</div><!-- end of tab-content -->						
+					</div> <!-- end of tabble -->
+			</div>
+		</div>
+	</div>
+	#{/deadbolt.restrict}		
+#{/if}
+#{else}
+<a href="/quanta/admin" class="btn-block  btn btn-danger" >請先登入</a> 
+#{/else}
+</div>

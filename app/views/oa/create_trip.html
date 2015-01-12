@@ -1,0 +1,185 @@
+#{extends 'main.html' /}
+#{set title:'編輯戶外活動內容' /}
+
+<link href="/public/stylesheets/trip.css" rel="stylesheet">
+<link href="/public/stylesheets/datepicker.css" rel="stylesheet">
+<link href="/public/stylesheets/jquery.timepicker.css" rel="stylesheet">
+<link href="/public/stylesheets/jquery.cleditor.css" rel="stylesheet">
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
+<script src="/public/javascripts/jquery.cleditor.min.js"></script>
+<script src="/public/javascripts/jquery.timepicker.min.js"></script>
+<script src="/public/javascripts/bootstrap-datepicker.js"></script>
+<script src="/public/javascripts/reg_func.js"></script>
+<script src="/public/javascripts/elements_event.js"></script>
+<script src="/public/javascripts/effect7.js"></script>
+
+<div class="create_lesson create">
+	<h3 class="title01">編輯活動內容</h3>
+	<div class="create_tabs">
+		<ul class="nav nav-tabs" id="create_lesson_tab">
+			<li class="active ct01"><a href="#basic">1.基本設定</a></li>
+			<li class="ct02"><a href="#prelearn">2.活動說明</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" id="basic">
+			<form name="basicFM" id="basicFM" target="basic_ifm" action="/oa/create_basicInfo" method="POST" enctype="multipart/form-data">
+			<input type="hidden" value="${oa?.id}" name="oaid" id="oaID">
+				<div class="row-fluid">
+					<div class="span10 offset1">
+						<div class="well topnote">
+							<ul>
+								<!-- <li>初次使用，不妨參考<a class="btn btn-success btn-mini" data-toggle="modal" data-target="#create_sample">新建活動範本</a>來協助您快速建立新教案。</li> -->
+								<li>設定時如有疑問，歡迎參考我們的<a>操作指引手冊</a>。</li>
+							</ul>
+						</div>
+						<dl class="create_inputs">
+							    <dt>活動名稱 *</dt><dd><input class="span11 require" id="trip_name" name="trip_name" type="text" placeholder="請輸入活動名稱" value="${oa?.name}" /></dd>
+							    <dt>是否公開 *</dt><dd><select class="span4" name="publish"><option value="1">公開中</option><option value="0">不公開</option></select><span class="public_status note">公開中，所有人都看的見</span></dd>
+							    <dt>活動狀態 *</dt><dd>
+							    	<select class="span4" name="regStatus">
+							    	
+							    		<option value="0">尚未開始報名</option>
+							    		<option value="1">開放報名中</option>
+							    		<option value="2">已截止報名</option>
+						    		
+							    	</select>
+							    </dd>
+							    <dt>活動性質 *</dt><dd><a class="btn btn-mini" id="add_elements">+選擇性質</a></dd>
+							    <dt>活動開始時間*</dt><dd><div class="input-prepend span4"><span class="add-on"><i class="icon-calendar"></i></span><input class="span10 datepicker require" id="dpd1" name="fromDate" type="text" placeholder="活動開始日期" data-date-format="yyyy-mm-dd" value="${oa?.fromDate}"></div><div class="input-prepend bootstrap-timepicker"><span class="add-on"><i class="icon-time"></i></span><input id="timepicker1" type="text" name="fromTime" class="input-small" value="${oa?.fromTime}"></div><span class="clearfix"></span></dd>
+							    <dt>活動結束時間*</dt><dd><div class="input-prepend span4"><span class="add-on"><i class="icon-calendar"></i></span><input class="span10 datepicker require" type="text" id="dpd2" name="toDate" placeholder="活動結束日期" data-date-format="yyyy-mm-dd" value="${oa?.toDate}"></div><div class="input-prepend bootstrap-timepicker"><span class="add-on"><i class="icon-time"></i></span><input id="timepicker2" type="text" name="toTime" class="input-small"  value="${oa?.toTime}"></div><span class="clearfix"></span></dd>
+							    <dt>報名截止日 *</dt><dd><div class="input-prepend span4 dp"><span class="add-on"><i class="icon-calendar"></i></span><input class="span10 require" type="text" id="dpd3" name="regDue" placeholder="請選擇報名截止時間" data-date-format="yyyy-mm-dd" value="${oa?.regDue}"></div><span class="clearfix"></span></dd>
+							    <dt>報名人數 *</dt><dd>最少 <input class="span1 require" name="lowerLimit" type="text" placeholder="" value="${oa?.attendeeLowerLimit}"/> 人；最多 <input class="span1 require" name="upperLimit" type="text" placeholder="" value="${oa?.attendeeUpperLimit}" /> 人</dd>
+							    <dt>集合地點 *</dt><dd><input class="span11 require" name="gatherPoint" type="text" placeholder="請輸入集合地點" value="${oa?.gatherPoint}" /></dd>
+							    <dt>活動收費 *</dt><dd><div class="input-prepend span4"><span class="add-on"><i class="icon-dollar"></i></span><input class="span10 require" name="price" type="text" placeholder="活動所需費用" value="${oa?.price}"></div></dd>
+						    <hr>
+						    <p><span class="pull-left"><a class="btn btn-danger cancel" href="/member/myHomePage">取消新增</a></span><span class="pull-right"><a type="button" class="btn btn-success save">儲存</a><a type="button" class="btn btn-info next">下一步：活動說明</a></span><span class="clearfix"></span></p>
+						</dl>
+					</div>
+				</div>
+			</form>
+			</div>
+			<div class="tab-pane" id="prelearn">
+				<form name="prelearnFM" id="prelearnFM"  action="/oa/create_detail" method="POST" enctype="multipart/form-data">
+					<div class="row-fluid">
+						<div class="span10 offset1">
+							<div class="well topnote">
+								<ul>
+									<li>詳細的說明有助您的學生與家長了解此活動內容。</li>
+									<li>如果您想說明的項目很多，可以使用最下方的「新增說明欄位」來自訂。</li>
+								</ul>
+							</div>
+							<div class="add_toolkit">
+								<div class="basic_info">
+									<h4>活動說明</h4>
+									<p><textarea class="span12" name="introduction"></textarea></p>
+								</div>
+								<p style="display:none;"><a class="addfiled btn btn-warning pull-right">新增欄位</a><span class="clearfix"></span></p>
+								<div class="add_tools"></div>
+								<p><a class="addfiled btn btn-warning pull-right">新增欄位</a><span class="clearfix"></span></p>
+							</div>
+						    <hr>
+						    <p><span class="pull-left"><a class="btn btn-info prev">上一步：基本設定</a></span><span class="pull-right"><a type="button" class="btn btn-success save">儲存</a></span><span class="clearfix"></span></p>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="create_sample" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<a type="button" class="close" data-dismiss="modal" aria-hidden="true">×</a>
+		<h3 id="myModalLabel">套用範本</h3>
+	</div>
+	<div class="modal-body">
+		<p>請勾選您想套用的範本</p>
+		<ul class="select_sample">
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+			<li><label><input type="checkbox"/><span>活動名稱活動名稱活動名稱活動名稱</span></label><a class="pull-right btn-mini btn">預覽範本</a></li>
+		</ul>
+	</div>
+	<div class="modal-footer">
+		<a class="btn" data-dismiss="modal" aria-hidden="true">取消</a>
+		<a class="btn btn-success" type="button" data-toggle="modal" data-target="#confirm">立即套用</a>
+	</div>
+</div>
+<div id="confirm" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<a type="button" class="close" data-dismiss="modal" aria-hidden="true">×</a>
+		<h3 id="myModalLabel">注意</h3>
+	</div>
+	<div class="modal-body">
+		<p>套用後所有編輯中的內容都將被覆蓋，確定繼續套用嗎？</p>
+	</div>
+	<div class="modal-footer">
+		<a class="btn" data-dismiss="modal" aria-hidden="true">取消</a>
+		<a class="btn btn-success">確定套用</a>
+	</div>
+</div>
+<div id="add_element" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<a type="button" class="close" data-dismiss="modal" aria-hidden="true">×</a>
+		<h3 id="myModalLabel">新增說明欄位</h3>
+	</div>
+	<div class="modal-body">
+		<div class="main">
+		<p>您想加入什麼類型的說明？<span class='selected'></span></p>
+		<ul>
+			<li class="addeleli02" title="使用編輯工具編輯內容，可自由控制文字排版或插入超連結、線上圖片等。">多行文字說明</li>
+			<li class="addeleli03" title="上傳您電腦中的照片">上傳圖片</li>
+			<li class="addeleli04" title="插入一則Youtube影音，其他人可在線上直接觀賞">Youtube影片</li>
+			<li class="addeleli05" title="從您的電腦中上傳文件檔案，例如試算表檔、文字檔、壓縮檔或簡報等。">分享附件</li>
+			<li class="addeleli06" title="貼上參考網站的連結及附加說明">網站連結</li>
+			<li class="addeleli07" title="您可以輸入與本內容相關的地理景點名稱，電話地址、座標、開放時間等資訊。">相關景點</li>
+			<li class="addeleli08" title="加入老師們的基本資歷說明，讓學生與家長更了解老師背景">老師簡歷</li>
+			<li class="addeleli01" title="引用其他老師所分享的教案內容，不只減輕您編寫教材的負擔，更能使您的教學內容豐富多元。">引用教案</li>
+		</ul>
+		</div>
+		<div class="ref" style="display:none;">
+			<p>請選擇你想引用的教案</p>
+			<div><!--<p class="add_other_lesson_filter">-->
+				<select id="menu"></select>
+			</div>
+			<hr>
+			<div class="well"><ul class="lessons"></ul></div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<a class="btn" data-dismiss="modal" aria-hidden="true">取消</a>
+		<a class="btn btn-info" id="create_ele">確定新增</a>
+		<a class="btn ref" id="ref_cancel" style="display:none">取消</a>
+		<a class="btn btn-info ref" id="ref_add" style="display:none;" >確定引用</a>
+	</div>
+</div>
+<div id="element_pop" class="modal hide fade" style="width:750px;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<a type="button" class="close" data-dismiss="modal" aria-hidden="true">×</a>
+		<h3 id="myModalLabel">增加戶外活動性質</h3>
+	</div>
+	<div class="modal-body">	
+		#{list items: listCategory , as:'category'}
+			<ul>
+			#{list items: category.tags , as:'tag'}
+				#{if tag.enable}
+					<li style=" #{if tag.color!=null}background:${tag.color};#{/if}#{else}background:black;#{/else}" eid='${tag.id}'>${tag.name}</li>
+				#{/if}
+			#{/list}
+			</ul>
+		#{/list}
+	</div>
+</div>

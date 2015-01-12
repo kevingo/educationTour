@@ -1,0 +1,296 @@
+#{extends 'main.html' /}
+#{set title:'網站管理者後台' /}
+
+<link href="/public/stylesheets/control.css" rel="stylesheet">
+<link href="/public/stylesheets/admin.css" rel="stylesheet">
+<script src='/public/javascripts/jquery.slimscroll.js'></script>
+<script src='/public/javascripts/jscolor.js'></script>
+<script src="/public/javascripts/tinymce/tinymce.min.js"></script>
+<script src='/public/javascripts/effect10.js'></script>
+<div class="span10 offset1 control divisions">
+	<h3 class="title03">管理者後台</h3>
+	<div class="control_content division">
+		<ul class="nav nav-tabs" id="controlTab">
+			<li class="active"><a href="#tagmanage">標籤管理</a></li>
+			<li><a href="#reply">意見回覆</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" id="tagmanage">
+				<h4>
+					標籤管理
+					<span class="pull-right">
+						<ul class="dropdown_ul">
+						<li class="dropdown">
+						<a id="drop1" href="#" role="button" class="dropdown-toggle btn btn-mini" data-toggle="dropdown">管理群組 <b class="caret"></b></a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+						<li role="presentation"><a href="#addgroup" role="button" type="button" data-toggle="modal">新增群組</a></li>
+						<li role="presentation"><a href="#renamegroup" role="button" type="button" data-toggle="modal">重新命名</a></li>
+						<li role="presentation"><a href="#delgroup" role="button" type="button" data-toggle="modal">刪除群組</a></li>
+						</ul>
+						</li>
+						<li class="dropdown">
+						<a href="#" id="drop2" role="button" class="dropdown-toggle btn btn-mini" data-toggle="dropdown">管理大類別 <b class="caret"></b></a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+						<li role="presentation"><a href="#addcate" role="button" type="button" data-toggle="modal">新增大類別</a></li>
+						<li role="presentation"><a href="#renamecate" role="button" type="button" data-toggle="modal">重新命名</a></li>
+						<li role="presentation"><a href="#delcate" role="button" type="button" data-toggle="modal">刪除大類別</a></li>
+						</ul>
+						</li>
+						</ul>
+						<button class="btn btn-success btn-mini" href="#edittag" role="button" type="button" data-toggle="modal" onClick="setTagId(0)">新增標籤</button>
+					</span>
+				</h4>
+				<table class="table">
+					<thead>
+						<tr>
+							<td class="admintd1">#</td><td class="admintd2">標籤項目</td><td class="admintd3">群組</td><td class="admintd4">大類別</td><td class="admintd5">啟用狀況</td><td class="admintd6">管理功能</td>
+						</tr>
+					</thead>
+					<tbody>
+						#{list items : listTagCategory, as:'category'}
+							#{list items : category?.tags , as:'tag' }
+								<tr>
+									<td class="admintd1">${tag.id}</td>
+									<td class="admintd2"><span class="tag" style="background:${tag.color};">${tag.name}</span></td>
+									<td class="admintd3">${category.name}</td>
+									<td class="admintd4">${category.tagActivity.name}</td>
+									#{if tag.enable}
+									<td class="admintd5"><span class="btn btn-success btn-mini disabled">啟用中</span></td>
+									#{/if}
+									#{else}
+									<td class="admintd5"><span class="btn btn-mini disabled">停用</span></td>
+									#{/else}
+									
+									<td class="admintd6"><button class="btn btn-mini btn-info" href="#edittag" role="button" type="button" data-toggle="modal" onClick="setTagId(${tag.id})">編輯</button> <button class="btn btn-mini btn-danger" href="#deltag" role="button" type="button" data-toggle="modal"  onClick="setTagId(${tag.id})">刪除</button></td>
+								</tr>
+							#{/list}
+						#{/list}
+						<!-- <tr>
+							<td class="admintd1">1</td>
+							<td class="admintd2"><span class="tag">音樂</span></td>
+							<td class="admintd3">地區</td>
+							<td class="admintd4">找老師</td>
+							<td class="admintd5"><span class="btn btn-mini disabled">啟用中</span></td>
+							<td class="admintd6"><button class="btn btn-mini btn-info" href="#edittag" role="button" type="button" data-toggle="modal">編輯</button> <button class="btn btn-mini btn-danger" href="#deltag" role="button" type="button" data-toggle="modal">刪除</button></td>
+							</tr> -->
+					</tbody>
+				</table>
+				<!-- 
+				<div class="pagination">
+					<ul>
+						<li><a href="#">上一頁</a></li>
+						<li><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">下一頁</a></li>
+					</ul>
+				</div>
+				 -->
+			</div>
+			<div class="tab-pane" id="reply">
+				<h4>意見回覆列表</h4>
+				<table class="table">
+					<thead>
+						<tr><td class="reptd1">#</td><td class="reptd2">狀態</td><td class="reptd3">意見類別</td><td class="reptd4">標題</td><td class="reptd5">發信人</td><td class="reptd6">發信時間</td><td class="reptd7">功能</td></tr>
+					</thead>
+					<tbody id='reply_list'>
+						#{if list_contact.size>0}
+						#{list items: list_contact.size-1..0 , as :'i'}
+						<tr>
+							<td class="reptd1">${list_contact[i].id}</td>
+							<td class="reptd2">${list_contact[i].status}</td>
+							<td class="reptd3">${list_contact[i].category}</td>
+							<td class="reptd4">${list_contact[i].subject}</td>
+							<td class="reptd5">${list_contact[i].name} (${list_contact[i].email})</td>
+							<td class="reptd6">${list_contact[i].time}</td>
+							<td class="reptd7"><button class="btn btn-mini btn-info" onClick="setContactId(${list_contact[i].id})">查看詳情</button></td>
+						</tr>
+						#{/list}
+						#{/if}
+						<!--
+						<tr><td class="reptd1">1</td><td class="reptd2">處理中</td><td class="reptd3">錯誤回報</td><td class="reptd4">意見回報標題意見回報標題意見回報標題</td><td class="reptd5">王老爸</td><td class="reptd6">2013/05/20 13:00:00</td><td class="reptd7"><button class="btn btn-mini btn-info">查看詳情</button></td></tr>
+						-->
+					</tbody>
+				</table>
+				<!-- 
+				<div class="pagination">
+					<ul>
+						<li><a href="#">上一頁</a></li>
+						<li><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">下一頁</a></li>
+					</ul>
+				</div>
+				 -->
+		    </div>
+		</div>
+	</div>
+	<div><button class="btn btn-mini pull-right" id="gotop">△Top</button></div>
+</div>
+<div id="delgroup" class="modal hide fade">
+	<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h3>刪除群組</h3>
+	</div>
+	<div class="modal-body">
+	<p>我要刪除
+		<select id="deleteCategorySelectTagActivity" onchange="getTagCategoryOnDelete()">
+			#{list items: listTagActivity , as:'activity'}
+				<option value="${activity.id}">${activity.name}</option>
+			#{/list}
+		</select> 下的
+		<select id="deleteCategorySelectTagCategory">
+			
+		</select>
+	</p>
+	</div>
+	<div class="modal-footer">
+	<a href="#" class="btn btn-danger" onClick="deleteTagCategory()">確定刪除</a>
+	<a href="#" class="btn" data-dismiss="modal">取消</a>
+	</div>
+</div>
+<div id="deltag" class="modal hide fade">
+	<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h3>刪除標籤</h3>
+	</div>
+	<div class="modal-body">
+	<p>您是否確認刪除此標籤？</p>
+	</div>
+	<div class="modal-footer">
+	<a href="#" class="btn btn-danger" onClick="deleteTag()">確定刪除</a>
+	<a href="#" class="btn" data-dismiss="modal">取消</a>
+	</div>
+</div>
+<div id="delcate" class="modal hide fade">
+	<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h3>刪除大類別</h3>
+	</div>
+	<div class="modal-body">
+	<p>我要刪除
+		<select id="deleteSelectTagActivity">
+			#{list items: listTagActivity , as:'activity'}
+				<option value="${activity.id}">${activity.name}</option>
+			#{/list}
+		</select> 
+	</p>
+	</div>
+	<div class="modal-footer">
+	<a href="#" class="btn btn-danger" onClick="deleteActivity()">確定刪除</a>
+	<a href="#" class="btn" data-dismiss="modal">取消</a>
+	</div>
+</div>
+<div id="renamegroup" class="modal hide fade">
+	<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h3>群組重新命名</h3>
+	</div>
+	<div class="modal-body">
+	<p>我要將
+		<select id="editCategorySelectTagActivity" onchange="getTagCategoryOnEdit()">
+			#{list items: listTagActivity , as:'activity'}
+				<option value="${activity.id}">${activity.name}</option>
+			#{/list}
+		</select> 下的
+		<select id="editCategorySelectTagCategory">
+			
+		</select>
+	</p>
+	<p class="margintop20">重新命名為<input type="text" placeholder="請輸入新的群組名稱" id="editTagCategoryName"></p>
+	</div>
+	<div class="modal-footer">
+	<a href="#" class="btn btn-primary" onClick="editTagCategory()">儲存</a>
+	<a href="#" class="btn" data-dismiss="modal">取消</a>
+	</div>
+</div>
+<div id="renamecate" class="modal hide fade">
+	<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h3>大類別重新命名</h3>
+	</div>
+	<div class="modal-body">
+	<p>我要將
+		<select id="editSelectTagActivity">
+			#{list items: listTagActivity , as:'activity'}
+				<option value="${activity.id}">${activity.name}</option>
+			#{/list}
+		</select> 
+		重新命名為
+		<input type="text" placeholder="請輸入新的大類名稱" id="editTagActivityName"></p>
+	</div>
+	<div class="modal-footer">
+	<a href="#" class="btn btn-primary" onClick="editActivity()">儲存</a>
+	<a href="#" class="btn" data-dismiss="modal">取消</a>
+	</div>
+</div>
+<div id="edittag" class="modal hide fade">
+	<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h3>編輯標籤內容</h3>
+	</div>
+	<div class="modal-body">
+		<dl>
+			<dt>標籤名稱</dt><dd><input class="span2" type="text" placeholder="請輸入標籤名稱" id="editTagName"></dd>
+			<dt>自定色碼</dt><dd><input class="span2 color" type="text" placeholder="點選後挑選顏色" id="editTagColor"></dd>
+			<dt>標籤大類別</dt>
+			<dd><select class="span2" id="editTagSelectActivity" onchange="getTagCategoryOnEditTag()">
+				#{list items: listTagActivity , as:'activity'}
+					<option value="${activity.id}">${activity.name}</option>
+				#{/list}</select>
+			</dd>
+			<dt>標籤群組</dt><dd><select class="span2" id="editTagSelectCategory"></select></dd>
+			<dt>是否啟用</dt><dd><select class="span2" id="editTagEnable"><option value="1">啟用</option><option value="0">不啟用</option></select></dd>
+		</dl>
+	</div>
+	<div class="modal-footer">
+	<a href="#" class="btn btn-primary" onClick="createTag()">儲存</a>
+	<a href="#" class="btn" data-dismiss="modal">取消</a>
+	</div>
+</div>
+<div id="addgroup" class="modal hide fade">
+	<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h3>新增群組</h3>
+	</div>
+	<div class="modal-body">
+	<p>請輸入要新增的群組名稱</p>
+	<p><input class="span4" type="text" placeholder="請輸入群組名稱" id="newTagCategoryName"></p>
+	<p>此群組歸屬於
+		<select id="newCategorySelectTagActivity">
+			#{list items: listTagActivity , as:'activity'}
+				<option value="${activity.id}">${activity.name}</option>
+			#{/list}
+		</select>
+	</p>
+	</div>
+	<div class="modal-footer">
+	<a href="#" class="btn btn-primary" onClick="newTagCategory()">確定新增</a>
+	<a href="#" class="btn" data-dismiss="modal">取消</a>
+	</div>
+</div>
+<div id="addcate" class="modal hide fade">
+	<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h3>新增大類別</h3>
+	</div>
+	<div class="modal-body">
+	<p>請輸入要新增的類別名稱</p>
+	<p><input class="span5" type="text" placeholder="請輸入類別名稱" id="newActivityName"></p>
+	</div>
+	<div class="modal-footer">
+	<a class="btn btn-primary" onClick="newActivity()">確定新增</a>
+	<a href="#" class="btn" data-dismiss="modal">取消</a>
+	</div>
+</div>
+
+<script>
+$('#controlTab a').click(function (e) {
+  e.preventDefault();
+  $(this).tab('show');
+})
+$(function(){
+    $('.invite_search').slimScroll({
+        height: '150px'
+    });
+});
+</script>

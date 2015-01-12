@@ -1,0 +1,81 @@
+#{extends 'main.html' /} 
+#{set title:'展品詳細資料' /}
+
+
+<script type="text/javascript">
+	$(document).ready(function() {	
+		var msg = $("#msg").val();
+		
+		if(msg!=""&&msg!=null){
+			alert(msg);
+		}
+		
+	});
+
+
+</script>
+<div class="container" >
+		<input type="hidden" id="msg" value="${msg}" >
+#{if session.contains("email")}	
+	#{deadbolt.restrict roles:[['q_admin']]}
+		
+		<div class="span6">
+			<h2>${showpiece.showpieceName}</h2>
+			<h5><i class="icon-map-marker"></i> 目前位置：${showpiece.reciever?.schoolName}</h5>
+			<h5><i class="icon-bookmark"></i> 序號：${showpiece.serialNumber}</h5>
+			<h5><i class="icon-tag"></i> 狀態：${showpiece.status}</h5>
+			<h5><i class="icon-exclamation-sign"></i> 補充資訊：${showpiece.information}</h5>												
+		</div>
+		<div class="row">
+		<div id="content" class="span12">
+			<div class="row span12">
+		        <div class="tabbable">
+					<ul class="nav nav-tabs" id="myTab">
+					    <li class="active"><a href="#volunteer" data-toggle="tab">展品歷程清單</a></li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active" id="volunteer">
+							<table class="table table-hover">
+    							<thead>
+									<tr>
+										<th>#</th>
+										<th>帳號</th>	
+										<th>學校</th>	
+										<th>老師姓名</th>
+										<th>電話</th>		
+										<th>接收時間</th>
+										<th>接收狀態</th>
+										<th>送出時間</th>
+										<th>送出狀態</th>
+									</tr>
+    							</thead> 	    
+	   							 <tbody>
+		    						#{list items:listHistoryNodes, as:'node'}
+										<tr>						
+											<td><span class="label label-important">${node_index}</td>
+											<td>${node.member.email}</td>		
+											<td>${node?.member.schoolName}</td>								
+											<td>${node?.member.username}</span></td>
+											<td>${node?.member.phone}</td>	
+											<td>${node.recieveTime}</td>
+											<td>${node.recieveStatus}</td>
+											<td>${node.sendTime}</td>	
+											<td>${node.sendStatus}</td>		
+			      						</tr>
+		      						#{/list}
+	    						</tbody>	    
+							</table>
+						</div>
+														
+					</div><!-- end of tab-content -->						
+				</div> <!-- end of tabble -->
+			</div>
+		</div>
+	</div>
+	#{/deadbolt.restrict}		
+#{/if}
+#{else}
+	<a href="/quanta/admin" class="btn-block btn btn-danger" >請先登入</a> 
+#{/else}
+</div>
+

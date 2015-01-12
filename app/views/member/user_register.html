@@ -1,0 +1,81 @@
+﻿#{extends 'main.html' /}
+#{set title:'註冊' /}
+
+<link href="/public/stylesheets/member.css" rel="stylesheet">
+<link href="/public/stylesheets/bootstrap-timepicker.min.css" rel="stylesheet">
+<link href="/public/stylesheets/datepicker.css" rel="stylesheet">
+<script type="text/javascript" src="/public/javascripts/reg_func.js"></script>
+<script src="/public/javascripts/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="/public/javascripts/effect4.js"></script>
+<div class="span8 offset2 registerdiv divisions">
+	<h3 class="title01">會員註冊</h3>
+	<dl class="division">
+		<form name="regFM" id="regFM" action="/member/register" method="POST" enctype="multipart/form-data">
+		#{if email!=null}
+	    <dt>電子郵件 *</dt><dd><input class="span6 email" type="text" placeholder="請輸入您的註冊電子信箱" id="reg_mail" name="reg_mail" value="${email}" readonly/></dd>
+	    #{/if}
+	    #{else}
+	     <dt>電子郵件 *</dt><dd><input class="span6 email" type="text" placeholder="請輸入您的註冊電子信箱" id="reg_mail" name="reg_mail"/></dd>
+	    #{/else}
+	    #{if email==null}
+	    <dt>設定密碼 *</dt><dd><input class="span6 pwd1" type="password" placeholder="請輸入您的登入密碼" name="password" /></dd>
+	    #{/if}
+	    #{if email==null}
+	    <dt>確認密碼 *</dt><dd><input class="span6 pwd1" type="password" placeholder="請輸入您的登入密碼" /></dd>
+	    #{/if}
+	    <dt>真實姓名 *</dt><dd><input class="span6 username" type="text" placeholder="請輸入您的真實姓名" name="username"/></dd>
+	    <dt>您的性別 *</dt><dd><label><input class="gender" name="gender" type="radio" value="1">男生</label><label><input class="gender" name="gender" type="radio" value="0">女生</label></dd>
+	    <dt>出生日期 *</dt><dd><div class="input-append date" id="dp3" data-date="1970-01-01" data-date-format="yyyy-mm-dd" data-date-viewmode="years">
+            <input class="span2" size="16" type="text" value="" readonly id="birthday"><span class="add-on"><i class="icon-calendar"></i></span>
+			</div>
+		</dd>
+	    <dt>選擇身分 *</dt><dd><label><input name="title" type="radio" class="iamparent title" value="1">家長(一般使用者)</label><label><input name="title" type="radio" class="iamstudent title" value="0">學生</label><label><input name="title" type="radio" class="iamteacher title" value="2">老師</label></dd>
+	    <div class="iamstudent title" style="display:none;">
+		    <dt>就讀學校 *</dt><dd><button type="button" class="btn btn-mini chose_school">選擇就讀學校</button><input type="text" readonly="readonly" id="school_full_name" name="school_full_name"></dd>
+		    <dt>就讀班級 *</dt><dd><input class="span1" type="text" name="grade" /> 年 <input class="span1" type="text" name="className"/> 班</dd>
+		    <dt>家長郵件　</dt><dd><input class="span6 email" type="text" placeholder="請輸入家長的電子信箱" name="parentEmail" /></dd>
+		    <p class="ps">請輸入您家長的郵件，系統將協助邀請對方確認親子關係</p>
+	    </div>
+	    <div class="iamteacher title" style="display:none;">
+		    <dt>證明文件 *</dt><dd><input class="span6" type="file" name="file"/></dd>
+		    <p class="ps">您的老師資格需通過審核，請上傳相關證明文件</p>
+	    </div>
+	    <div class="iamparent title" style="display:none;">
+		    <dt>子女郵件　</dt><dd><input class="span6 email" type="text" placeholder="請輸入子女的電子信箱" name="childEmail" /></dd>
+		    <p class="ps">請輸入您子女的郵件，系統將協助邀請對方確認親子關係</p>
+	    </div>
+<hr>
+	    <dt>自我介紹　</dt><dd><textarea name="intro" class="span6"></textarea></dd>
+	    <dd class="regip"><input type="checkbox" name="agree" id="agree">我已閱讀並同意使用者規約及服務條款。</dd>
+		</form>
+	    <hr>
+	    <p><span class="pull-right"><button type="button" class="btn btn-info regInfo">確定註冊</button> <button class="btn btn-danger regCancel">清除重填</button></span><span class="clearfix"></span></p>
+	</dl>
+</div>
+<div id="school" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="myModalLabel">選擇就讀學校</h3>
+	</div>
+	<div class="modal-body">
+		<div class="city page lv1"><ul></ul></div>
+		<div class="zone page lv2" style="display:none;"><ul></ul></div>
+		<div class="school page lv3" style="display:none;"><ul class='ele'></ul><hr><ul class='jun'></ul></div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+		<button class="btn btn-primary" id="done">確定</button>
+	</div>
+</div>
+<div id="registerok" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="myModalLabel">註冊成功</h3>
+	</div>
+	<div class="modal-body">
+		<p>恭喜您，您已經成功註冊</p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary">確定</button>
+	</div>
+</div>

@@ -1,0 +1,124 @@
+#{extends 'main.html' /} 
+#{set title:'廣達游於藝展覽專區' /}
+
+<script type="text/javascript">
+$(document).ready(function() {	
+	var msg = $("#message").val();
+	//if(msg!="")
+	//	alert(msg);
+});
+
+function check(){
+
+ 	var showpieceCount = ${showpieceSize};
+	// 取ID為showpieceTable內為checkbox且checked=true的元件
+    var len = $("#showpieceTable :checkbox:checked").length;
+    if(len < showpieceCount){
+        alert("已確認的數量 = " + len + "件 \n\n請確認所有展品都被清點了！");
+        return false;
+    }
+    else{
+    	form.submit();
+    }
+    
+
+    
+}
+
+
+
+</script>
+
+<div class="container">
+	<input type="hidden" id="message" value="${message}" >
+	
+#{if session.contains("email")}	
+	#{deadbolt.restrict roles:[['q_showpiece']]}	
+
+	<div class="row">
+		<div id="content" class="span12">
+			<div class="row span12">
+			        <div class="tabbable">
+						<ul class="nav nav-tabs" id="myTab">
+						    <li class="active"><a href="#showpiece" data-toggle="tab">${role}_線上登記</a></li>
+						</ul>
+						
+						<div class="tab-content">
+							<div class="tab-pane active" id="showpiece">
+								<form name="form" action="/quanta/showpiece/webCheckShowpiece" method="POST">
+									<div class="row">
+										<div class="span7">
+										<input type="hidden" id="role" value="${role}" name="role" >
+											<div class="alert alert-block">
+	  											<button type="button" class="close" data-dismiss="alert">&times;</button>
+	  											請選取已經確認接收或送出的展品名單	
+											</div>
+											<table class="table table-hover" id="showpieceTable">
+				    							<thead>
+													<tr>
+														<th>#</th>
+														<th>展覽名稱</th>
+														<th>展品名稱</th>	
+														<th>資訊</th>	
+														<th>已確認</th>	
+														<th>狀態</th>	
+													</tr>
+				    							</thead> 	    
+					   							<tbody>
+						    					#{list items:listShowpieces, as:'showpiece'}
+													<tr>						
+														<td><span class="label label-important">${showpiece_index}</td>										
+														<td>${showpiece.show.showName}</span></td>
+														<td>${showpiece.showpieceName}</td>
+														<td>${showpiece.information}</td>	
+														<td>
+															<label class="checkbox">
+															  <input name="comfirmedCheckbox[]" type="checkbox" value="${showpiece.id}">
+															</label>
+														</td>
+														<td>
+															<select name="statuses[]" style="width:80%;">
+															#{if showpiece.status=="正常"}
+															  <option  selected="selected" >正常</option>
+															#{/if}
+															#{else}
+																<option>正常</option>
+															#{/else}
+															#{if showpiece.status=="損壞"}
+															  <option  selected="selected" >損壞</option>
+															#{/if}
+															#{else}
+																<option>損壞</option>
+															#{/else}
+															#{if showpiece.status=="遺失"}
+															  <option  selected="selected" >遺失</option>
+															#{/if}
+															#{else}
+																<option>遺失</option>
+															#{/else}
+															 </select>
+														</td>
+						      						</tr>
+						      					#{/list}
+					    						</tbody>	    
+											</table>
+											<input type="button" class="btn btn-primary" value="送出" onClick="check()">
+											<input type="reset" class="btn" value="清除(重填)" /> 
+											<!--  <a href="/quanta/volunteer/webquery/${session.get("email")}" class="btn btn-primary save submit">查詢我的志工服務紀錄</a>-->
+										</div>
+									</div>
+								</form>
+								
+							</div>
+														
+						</div><!-- end of tab-content -->						
+					</div> <!-- end of tabble -->
+			</div>
+		</div>
+	</div>
+	#{/deadbolt.restrict}		
+#{/if}
+#{else}
+<a href="/quanta/admin" class="btn-block  btn btn-danger" >請先登入</a> 
+#{/else}
+</div>

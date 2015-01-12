@@ -1,0 +1,42 @@
+#{extends 'main.html' /}
+#{set title:'評量內容編輯完成' /}
+<link href="/public/stylesheets/exam.css" rel="stylesheet">
+<div class="create create_exam_saved">
+	<h3 class="title05">編輯評量測驗完成</h3>
+	<div class="exam_finish">
+		<h4 class="center">您的評量已經儲存成功</h4>
+		<div class="exam_abstract">
+			<dl>
+				<dt>評量名稱</dt><dd>${examine?.title}</dd>
+				<dt>公開與否</dt>
+				#{if examine?.publish}
+					<dd>公開中</dd>
+				#{/if}
+				#{else}
+					<dd>不公開</dd>
+				#{/else}
+				<dt>評量狀態</dt>
+				#{if examine?.status==0}
+					<dd>尚未開始作答</dd>
+				#{/if}
+				#{elseif examine?.status==1}
+					<dd>已開始作答期間</dd>
+				#{/elseif}
+				#{else}
+					<dd>已結束作答期間</dd>
+				#{/else}
+				
+				<dt>評量考期</dt>
+				<dd>${examine?.startDate}~${examine?.endDate}</dd>
+			</dl>
+			<p class="center"><a href="/examine/create/${examine?.id}" class="btn btn-danger">返回修改</a> <a href="/examine/show/${examine?.id}" class="btn btn-info">前往查看</a>
+		</div>
+		<h4 class="center">或者您還可以......</h4>
+		<ul class="after_exam">
+			<li class="ae01" onclick="location.href='/examine/index'"><b>管理評量</b><span>管理所有評量列表</span></li>
+			<li class="ae02" onclick="location.href='/memberGroup/sendMail/0'"><b>邀請參加評量</b><span>邀請學生前來作答</span></li>
+			<li class="ae03" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),'facebook-share-dialog','width=626,height=436');return false;"><b>分享到Facebook</b><span>張貼至您的塗鴉牆</span></li>
+			<li class="ae04" onclick="location.href='/member/myHomePage'"><b>回我的首頁</b><span>回到我的首頁</span></li>
+		</ul>
+	</div>
+</div>

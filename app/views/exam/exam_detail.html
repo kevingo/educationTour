@@ -1,0 +1,120 @@
+#{extends 'main.html' /}
+#{set title:'評量詳細內容' /}
+<link href="/public/stylesheets/exam.css" rel="stylesheet">
+<script>
+	function delExamine(id, m_id, creator_id) {
+		if(m_id==creator_id) {
+			if(confirm("確定刪除此評量(亦將刪除已填答之學生答案)？")) {
+				location.replace("/examine/delete/"+id);
+			}
+		} else {
+			alert("您無權限執行本行為");
+		}
+ 		
+	}
+</script>
+<div class="exam_detail_page">
+	<h3 class="exam_review_title main_title">
+		${examine.title}
+		
+		#{if session.contains("email")}	
+		#{if member.id==examine.creator.id || member.roleList.contains('admin')}
+		<div class="dropdown">
+			<a class="dropdown-toggle btn" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
+			管理本評量
+			<b class="caret"></b>
+			</a>
+			<ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+				#{deadbolt.restrict roles:[['teachingplanner']]}
+		        <li role="presentation"><a role="menuitem" tabindex="-1" href="/examine/create/${examine.id}">編輯評量內容</a></li>
+		        <li role="presentation"><a role="menuitem" tabindex="-1" href="/examine/index">評量管理</a></li>				
+		        <li role="presentation"><a role="menuitem" tabindex="-1" onClick="delExamine(${examine.id}, ${member.id}, ${examine.creator.id})">刪除本評量</a></li>
+		        #{/deadbolt.restrict}		       
+	      </ul>
+		</div>
+		#{/if}
+		#{/if}
+	</h3>
+	<div class="exam_basic_infomation">
+		<span class="ed_title">${oa.name}</span>
+		<span class="ed_exam_title">${examine.title}</span>
+		<span class="ed_teacher">命題老師 ${examine.creator.username}</span>
+	</div>
+	<div class="exam_detail_content_wrapper">
+		<div class="exam_detail_content">
+			<h4>評量介紹</h4>
+			<table class="table">
+				<tbody>
+					<tr>
+						<td class="ed_info_td1">活動名稱</td>
+						<td class="ed_info_td2">${oa.name}</td>
+						<td class="ed_info_td1">命題老師</td>
+						<td class="ed_info_td2">${examine.creator.username}老師</td>
+					</tr>
+					<tr>
+						<td class="ed_info_td1">評量狀態</td>
+						#{if examine.status==0}
+							<td class="ed_info_td2"><b>此評量尚未開放作答</b></td>
+						#{/if}
+						#{elseif examine.status==1}
+							<td class="ed_info_td2"><b>此評量開放作答中</b></td>
+						#{/elseif}
+						#{else}
+							<td class="ed_info_td2"><b>此評量已經結束作答</b></td>
+						#{/else}
+						<td class="ed_info_td1">考試期間</td>
+						<td class="ed_info_td2">${examine.startDate} (${examine.startTime}) ~ ${examine.endDate} (${examine.endTime})</td>
+					</tr>
+					<tr>
+						<td class="ed_info_td1">評量總分</td>
+						<td class="ed_info_td2">共${examine.questions.size()} 題，總計 ${totalScore} 分</td>
+						<td class="ed_info_td1">考試人數</td>
+						<td class="ed_info_td2">${answerCount}/${listApply.size()}人</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="exam_info">
+				<p>${examine.introduction.raw()}</p>
+			</div>
+		</div>
+		#{deadbolt.restrict roles:[['student']]}
+		#{if answer!=null}
+			<div class="exam_detail_content">
+				<h4>評量結果</h4>
+				<div class="well">
+					<ul>
+						<li>${answer.apply.username}已經於${answer.responseTime}完成此評量，獲得分數${answer.score}分。</li>
+							#{if answer.do_comment}
+								<li>老師已於${answer.teacher_comment}留下新的批示。</li>
+							#{/if}
+					</ul>
+				</div>
+			</div>
+		#{/if}
+		#{/deadbolt.restrict}
+		#{deadbolt.restrict roles:[['teachingplanner']]}
+			#{if examine.creator.id==member.id}
+				<div class="exam_detail_content">
+					<h4>作答狀況</h4>
+					<div class="well">
+						<ul>
+							#{list items:listAns, as:'ans'}
+								<li>${ans.apply.username} - <a href="/examine/showResult/${ans.id}">【進行閱卷】</a></li>
+							#{/list}
+						</ul>
+					</div>
+				</div>
+			#{/if}
+		#{/deadbolt.restrict}
+		<p class="center">
+		 #{deadbolt.restrict roles:[['student']]}
+			#{if answer!=null}
+				<a class="btn btn-large">查看作答記錄</a>
+			#{/if}
+			#{elseif examine.status==1}
+				<a class="btn btn-large btn-pink" href="/examine/showExplain/${examine.id}">開始評量</a> 
+			#{/elseif}
+		 #{/deadbolt.restrict}
+		</p>
+	</div>
+</div>

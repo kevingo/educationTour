@@ -1,0 +1,40 @@
+#{extends 'main.html' /} 
+#{set title:'廣達專區' /}
+
+
+
+<div class="container">
+#{if session.contains("email")}	
+	#{deadbolt.restrict roles:[['q_admin']]}	
+	<div class="row">
+		<div id="content" class="span12">
+			<div class="row span12">
+			        <div class="tabbable">
+						<ul class="nav nav-tabs" id="myTab">
+						    <li class="active"><a href="#admin" data-toggle="tab">廣達管理者專區</a></li>
+						</ul>
+						
+						<div class="tab-content">
+							<div class="tab-pane active" id="admin">
+								<div class="row">
+									<div class="span7">
+										<span class="label label-info">1.志工服務：</span><a href="/quanta/admin/volunteer" class="btn btn-info" >廣達志工服務管理</a> <br><br>
+										<span class="label label-success">2.展品清點：</span><a href="/quanta/admin/showpiece" class="btn btn-success" >廣達游於藝展品管理</a> <br><br>
+										<span class="label label-important">3.報名服務:</span><a href="/quanta/admin/teacher" class="btn btn-danger" >廣達活動報名管理</a> <br><br>
+									</div>
+									<div class="span7">
+										
+									</div>
+								</div>
+							</div>					
+						</div><!-- end of tab-content -->						
+					</div> <!-- end of tabble -->
+			</div>
+		</div>
+	</div>	
+	#{/deadbolt.restrict}		
+#{/if}
+#{else}
+<a href="/quanta/admin" class="btn-block  btn btn-danger" >請先登入</a> 
+#{/else}
+</div>

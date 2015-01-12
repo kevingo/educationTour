@@ -1,0 +1,14 @@
+<div class="er_exams">
+	<div class="er_exam_item">
+		<div class="ere_function">
+			<span class="ere_number"></span>
+			<span class="ere_type">問答題</span>
+			<span class="ere_points">0分</span>
+			<span class="pull-right status"></span>
+		</div>
+		<div class="ere_question"></div>
+		<div class="ere_answers">
+			<textarea class="ere_answers_textarea" placeholder="請填入您的答案"></textarea>
+		</div>
+	</div>
+</div>

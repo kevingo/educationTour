@@ -1,0 +1,116 @@
+#{extends 'main.html' /}
+#{set title:'建立評量' /}
+
+<link href="/public/stylesheets/exam.css" rel="stylesheet">
+<link href="/public/stylesheets/jquery.cleditor.css" rel="stylesheet">
+<link href="/public/stylesheets/datepicker.css" rel="stylesheet">
+<link href="/public/stylesheets/jquery.timepicker.css" rel="stylesheet">
+<script src="/public/javascripts/jquery.timepicker.min.js"></script>
+<script src="/public/javascripts/bootstrap-datepicker.js"></script>
+<script src="/public/javascripts/jquery.cleditor.min.js"></script>
+<script src="/public/javascripts/effect14.js"></script>
+
+
+<div class="create_exam create">
+	<h3 class="title05">編輯評量測驗</h3>
+	<div class="create_tabs">
+		<ul class="nav nav-tabs" id="create_exam_tab">
+			<li class="active ce01"><a href="#basic">1.基本設定</a></li>
+			<li class="ce02"><a href="#examcontent">2.試題內容</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" id="basic">
+				<form name="basicFM" id="basicFM" target="basic_ifm" action="/examine/create_basicInfo" method="POST" enctype="multipart/form-data">
+					<input type="hidden" name="examID" id="examID" value="${examine?.id}">
+					<div class="row-fluid">
+						<div class="span10 offset1">
+							<div class="well topnote">
+								<ul>
+									<li>本評量的設置，可以讓參加您活動的學生們進行一場測驗或心得訪談</li>
+								</ul>
+							</div>
+							<dl class="create_inputs">
+								    <dt>附屬於 *</dt>
+								    <dd>本評量是附屬於 
+								    	<select class="span4" name="oaid">
+								    		#{list items: listMyOA , as:'oa'}
+								    		<option value="${oa.id}">${oa.name}</option>
+								    		#{/list}
+								    	</select> 活動的評量
+								    </dd>
+								    <dt>評量名稱 *</dt><dd><input class="span11 require" id="exam_title" type="text" placeholder="請輸入評量名稱" name="exam_title" /></dd>
+								    <dt>是否公開 *</dt><dd><select class="span4" name="publish"><option value="1">公開中</option><option value="0">不公開</option></select><span class="public_status note">(公開中，所有人都看的見)</span></dd>
+								    <dt>評量狀態 *</dt><dd><select class="span4" name="status"><option value="0">尚未開始作答</option><option value="1">已開放作答</option><option value="2">已結束作答</option></select><span class="exam_status note">(尚未開始與結束時，暫不受理任何人答題)</span></dd>
+								    <dt>開始時間 *</dt><dd><div class="input-prepend span4"><span class="add-on"><i class="icon-calendar"></i></span><input class="span10 datepicker require" id="dpd1" name="startDate" type="text" placeholder="開始作答日期" data-date-format="yyyy-mm-dd"></div><div class="input-prepend bootstrap-timepicker"><span class="add-on"><i class="icon-time"></i></span><input id="timepicker1" name="startTime" type="text" class="input-small require"></div><span class="clearfix"></span></dd>
+								    <dt>結束時間 *</dt><dd><div class="input-prepend span4"><span class="add-on"><i class="icon-calendar"></i></span><input class="span10 datepicker require" type="text" name="endDate" id="dpd2" placeholder="結束作答日期" data-date-format="yyyy-mm-dd"></div><div class="input-prepend bootstrap-timepicker"><span class="add-on"><i class="icon-time"></i></span><input id="timepicker2" name="endTime" type="text" class="input-small require"></div><span class="clearfix"></span></dd>
+								    <dt>評量介紹</dt><dd><textarea class="span11" name="introduction"></textarea></dd>
+							    <hr>
+							    <p><span class="pull-left"><a class="btn btn-danger cancel" href="javascript:history.back();">取消新增</a></span><span class="pull-right"> <a class="btn btn-pink next">下一步：評量內容</a></span><span class="clearfix"></span></p>
+							</dl>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="tab-pane" id="examcontent">
+				<form name="questionFM" id="questionFM" action="/examine/create_question" method="POST" enctype="multipart/form-data">
+					<div class="row-fluid">
+						<div class="span10 offset1">
+							<div class="well topnote">
+								<ul>
+									<li>您可以自由設置「選擇題」、「是非題」、「問答題」類型。（問答題必須人工閱卷給分）</li>
+								</ul>
+							</div>
+							<div class="add_toolkit">
+								<div class="basic_info">
+									<h4>答前說明</h4>
+									<p><textarea class="span12" name="questionExplain"></textarea></p>
+								</div>
+								<div class="basic_info">
+									<h4>答後說明</h4>
+									<p><textarea class="span12" name="illustration"></textarea></p>
+								</div>
+								<p><a class="addfiled btn btn-warning pull-right" type="button" data-toggle="modal" data-target="#add_exam">新增題目</a><span class="clearfix"></span></p>
+							</div>
+						    <hr>
+						    <div class="total_score">
+						    	目前總共有<span class="exam_total_count">0</span>題，總計分數為<span class="exam_score">0</span>分
+						    </div>
+						    <div class="exam_items" id='exam_items'></div>
+						    <p style='display:none'><a class="addfiled btn btn-warning pull-right" type="button" data-toggle="modal" data-target="#add_exam">新增題目</a><span class="clearfix"></span></p>
+						    <p><span class="pull-left"><a class="btn btn-pink prev">上一步：基本設定</a></span><span class="pull-right"><a class="btn btn-pink save">完成，並儲存</a></span><span class="clearfix"></span></p>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="add_exam" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+		<h3 id="myModalLabel">新增評量測驗</h3>
+	</div>
+	<div class="modal-body">
+		<p>您想新增甚麼樣的試題類型？</p>
+		<ul class="exam_type_select">
+			<li class="e01">選擇題</li>
+			<li class="e02">是非題</li>
+			<li class="e03">問答題</li>
+		</ul>
+	</div>
+	<div class="modal-footer">
+		<a class="btn" data-dismiss="modal" aria-hidden="true">取消</a>
+		<a class="btn btn-pink" id="append_exam" style='display:none'>確定新增</a>
+	</div>
+</div>
+<div id="double" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+		<h3 id="myModalLabel">刪除題目</h3>
+	</div>
+	<div class="modal-body">您確定要刪除此題目嗎？</div>
+	<div class="modal-footer">
+		<a class="btn" data-dismiss="modal" aria-hidden="true">取消</a>
+		<a class="btn btn-pink" id="deleit">刪除</a>
+	</div>
+</div>

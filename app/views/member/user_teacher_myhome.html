@@ -1,0 +1,532 @@
+#{extends 'main.html' /}
+#{set title:'我的首頁' /}
+
+<link href="/public/stylesheets/myhome.css" rel="stylesheet">
+<link href="/public/stylesheets/jquery.nailthumb.1.1.css" rel="stylesheet">
+<script type="text/javascript" src="/public/javascripts/jquery.nailthumb.1.1.js"></script>
+<script type="text/javascript" src="/public/javascripts/effect8.js"></script>
+<script type="text/javascript" src="/public/javascripts/itri_checkFavo.js"></script>
+<style>
+	.tag a {
+		color: white;
+	}
+</style>
+<div class="row-fluid myhome">
+	<div class="span2 myhome_control_panel">
+		<div class="myhome_pic_name">
+			<p class="myhome_name">${member.username} 老師</p>
+			<div class="myhome_pic">
+				<div class="nailthumb-container nc160">
+					<a href="#picupload" role="button" data-toggle="modal">
+						#{if member.photo!=null}
+							<img src="${member.photo.path}"/>
+						#{/if}
+						#{else}
+							<img src="/public/images/default/teacher_default_500.png"/>
+						#{/else}
+					</a>
+				</div>
+				<span class="change_pic">更換照片</span>
+			</div>
+		</div>
+		<div class="myhome_function">
+			<h3 class="title04">設定功能</h3>
+			<div class="myhome_div">
+				<div class="myhome_subdiv">
+					<ul>
+						<li><a href="/oa/createAgree" title="想要舉辦校外教學、教育觀光活動時使用">新建活動</a></li>
+						<li><a href="/tp/createAgree" title="想要設計一個新教案時使用">新建教案</a></li>
+						<li><a href="/examine/create" title="建立一個孩子活動後的評量表">新建評量</a></li>
+						<li><hr></li>
+						<li><a href="/member/configure#manageclass">班群管理</a></li>
+						<li><a href="/examine/index">評量管理</a></li>
+						<li><a href="/oa/apply/manage">報名管理</a></li>
+						<li><hr></li>
+						<li><a href="/member/configure#password">修改密碼</a></li>
+						<li><a href="/member/configure#setup">個人設定</a></li>
+						<li>
+						<div class="dropdown switchtype">
+							<a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
+							切換身分
+							<b class="caret"></b>
+							</a>
+							<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+								<li><a href="/member/myHomePage/parent">切換為家長身分</a></li>
+							</ul>
+						</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="myhome_info">
+			<h3 class="title04">我的資訊</h3>
+			<div class="myhome_div">
+				<div class="myhome_subdiv">
+					<h5 class="myhome_subtitle">班群管理<a class="btn btn-mini pull-right" href="/member/configure#manageclass">設定</a></h5>
+					<ul>
+						#{list items:my_groups , as:'group'}
+							<li><a href="/memberGroup/show/${group.id}">${group.groupName}</a></li>	
+						#{/list}
+						#{if my_groups.size()==0}
+							<li>無</li>
+						#{/if}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="span10 myhome_main_panel">
+		<!--
+		<div class="alert alert-error">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			您尚未完成電子郵件認證動作，請盡速完成。
+		</div>
+		-->
+		<div class="myhome_trip">
+			<h3 class="title04">我舉辦的活動</h3>
+			<div class="myhome_div">
+				<ul class="nav nav-tabs" id="myhome_tab1">
+					<li class="active"><a href="#mt1_1">正在舉辦(${my_oa_now.size})</a></li>
+					<li><a href="#mt1_2">活動已結束(${my_oa_past.size})</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="mt1_1">
+						<div class="trip_items">
+							#{list items:my_oa_now, as:'oa'}
+								<div class="trip_item">
+									<div class="trip_item_img">
+										<div class="nailthumb-container nc80">
+											<img src="${oa.photos.size()>0 ? oa.photos.toArray()[0].path : '/public/images/default/oa_default_100.png'}"/>
+										</div>
+									#{if oa.status==0}
+									<span class="trip_status ts04">未開放</span>
+									#{/if}
+									#{if oa.status==1}
+									<span class="trip_status ts01">報名中</span>
+									#{/if}
+									#{if oa.status==2}
+									<span class="trip_status ts03">已截止</span>
+									#{/if}
+										<span class="trip_teacher"><a href="/member/profile/${oa.creator.id}">${oa.creator.username}老師</a></span>
+									</div>
+									<div class="trip_item_info">
+									<p class="trip_item_title"><a href="/oa/show/${oa.id}">${oa.name}</a>
+										<a class="btn btn-info btn-mini" href="/oa/create/${oa.id}">編輯</a>
+										</p>
+										<p class="tags">
+											#{list items:oa.tags, as:'t'}
+												<span class="tag tag_c${t_index}" onclick="goToTag(${t.id}, 'oa')"><a>${t.name}</a></span>
+											#{/list}											
+										</p>
+										<p class="trip_item_note">${oa.introduction}</p>
+										
+									</div>
+								</div>
+							#{/list}
+						</div>
+						<!-- 
+						<div class="pagination">
+							<ul>
+								<li><a href="#">上一頁</a></li>
+								<li><a href="#">1</a></li>
+								<li><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+								<li><a href="#">4</a></li>
+								<li><a href="#">5</a></li>
+								<li><a href="#">下一頁</a></li>
+							</ul>
+						</div>
+						 -->
+					</div>
+					<div class="tab-pane" id="mt1_2">
+						<div class="trip_items">
+							#{list items:my_oa_past, as:'oa'}
+								<div class="trip_item">
+									<div class="trip_item_img">
+										<div class="nailthumb-container nc80">
+											<img src="${oa.photos.size()>0 ? oa.photos.toArray()[0].path : '/public/images/default/oa_default_100.png'}"/>
+										</div>
+										#{if oa.status==0}
+										<span class="trip_status ts04">未開放</span>
+										#{/if}
+										#{if oa.status==1}
+										<span class="trip_status ts01">報名中</span>
+										#{/if}
+										#{if oa.status==2}
+										<span class="trip_status ts03">已截止</span>
+										#{/if}
+										<span class="trip_teacher"><a href="/member/profile/${oa.creator.id}">${oa.creator.username}老師</a></span>
+									</div>
+									<div class="trip_item_info">
+										<p class="trip_item_title"><a href="/oa/show/${oa.id}">${oa.name}</a>
+										<a class="btn btn-info btn-mini" href="/oa/create/${oa.id}">編輯</a>
+										</p>
+										<p class="tags">
+											#{list items:oa.tags, as:'t'}
+												<span class="tag tag_c${t_index}" onclick="goToTag(${t.id}, 'oa')"><a>${t.name}</a></span>
+											#{/list}											
+										</p>
+										<p class="trip_item_note">${oa.introduction}</p>
+									</div>
+								</div>
+							#{/list}
+						</div>
+						<!-- 
+						<div class="pagination">
+							<ul>
+								<li><a href="#">上一頁</a></li>
+								<li><a href="#">1</a></li>
+								<li><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+								<li><a href="#">4</a></li>
+								<li><a href="#">5</a></li>
+								<li><a href="#">下一頁</a></li>
+							</ul>
+						</div>
+						 -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="myhome_exam">
+			<h3 class="title05">我製作的評量</h3>
+			<div class="myhome_div">
+				<ul class="nav nav-tabs" id="myhome_tab2">
+					<li class="active"><a href="#mt2_1">進行中(${my_exam_progress.size()})</a></li>
+					<li><a href="#mt2_2">尚未開始(${my_exam_unstart.size})</a></li>
+					<li><a href="#mt2_3">已結束作答(${my_exam_finish.size()})</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="mt2_1">
+						
+						<div class="exams">
+						#{list items:my_exam_progress, as:'exam'}
+							<div class="exam">
+								<p class="exam_title"><i class="icon-file-text"></i><a href="/examine/show/${exam.id}">${exam.title}</a></p>
+								<div class="nc160 nailthumb-container exam_img">
+									<img src="/public/images/default/exam_default_100.png"/>
+									<p class="exam_trip_name">${exam.title}</p>
+									<p class="exam_status">開放作答中</p>
+								</div>
+								<p class="exam_teacher"><a href="/member/profile/${exam.creator.id}">${exam.creator.username} 老師</a>
+								<!--  <span class="pull-right exam_students">18/39人作答</span>-->
+								</p>
+							</div>
+							#{/list}							
+						</div>
+						
+						<!-- 
+						<div class="pagination">
+							<ul>
+								<li><a href="#">上一頁</a></li>
+								<li><a href="#">1</a></li>
+								<li><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+								<li><a href="#">4</a></li>
+								<li><a href="#">5</a></li>
+								<li><a href="#">下一頁</a></li>
+							</ul>
+						</div>
+						 -->
+					</div>
+					<div class="tab-pane" id="mt2_2">
+						<div class="exams">
+							#{list items:my_exam_unstart, as:'exam'}
+							<div class="exam">
+								<p class="exam_title"><i class="icon-file-text"></i><a href="/examine/show/${exam.id}">${exam.title}</a></p>
+								<div class="nc160 nailthumb-container exam_img">
+									<img src="/public/images/default/exam_default_100.png"/>
+									<p class="exam_trip_name">${exam.title}</p>
+									<p class="exam_status">尚未開放作答</p>
+								</div>
+								<p class="exam_teacher"><a href="/member/profile/${exam.creator.id}">${exam.creator.username} 老師</a>
+								<!--  <span class="pull-right exam_students">18/39人作答</span>-->
+								</p>
+							</div>
+							#{/list}						
+						</div>
+						<!-- 
+						<div class="pagination">
+							<ul>
+								<li><a href="#">上一頁</a></li>
+								<li><a href="#">1</a></li>
+								<li><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+								<li><a href="#">4</a></li>
+								<li><a href="#">5</a></li>
+								<li><a href="#">下一頁</a></li>
+							</ul>
+						</div>
+						 -->
+					</div>
+					<div class="tab-pane" id="mt2_3">
+						<div class="exams">
+							#{list items:my_exam_finish, as:'exam'}
+							<div class="exam">
+								<p class="exam_title"><i class="icon-file-text"></i><a href="/examine/show/${exam.id}">${exam.title}</a></p>
+								<div class="nc160 nailthumb-container exam_img">
+									<img src="/public/images/default/exam_default_100.png"/>
+									<p class="exam_trip_name">${exam.title}</p>
+									<p class="exam_status">已結束作答</p>
+								</div>
+								<p class="exam_teacher"><a href="/member/profile/${exam.creator.id}">${exam.creator.username} 老師</a>
+								<!--  <span class="pull-right exam_students">18/39人作答</span>-->
+								</p>
+							</div>
+							#{/list}						
+						</div>
+						<!-- 
+						<div class="pagination">
+							<ul>
+								<li><a href="#">上一頁</a></li>
+								<li><a href="#">1</a></li>
+								<li><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+								<li><a href="#">4</a></li>
+								<li><a href="#">5</a></li>
+								<li><a href="#">下一頁</a></li>
+							</ul>
+						</div>
+						 -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="myhome_lesson">
+			<h3 class="title03">我設計的教案</h3>
+			<div class="myhome_div">
+				<ul class="nav nav-tabs" id="myhome_tab3">
+					<li class="active"><a href="#mt3_1">未公開(${my_tp_close.size})</a></li>
+					<li><a href="#mt3_2">已公開(${my_tp_open.size})</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="mt3_1">
+						<div class="case_item_with_text">
+							#{list items:my_tp_close, as:'tp'}
+							<div class="ciwt_item">
+								<div class="ciwt_img">
+									<div class="nailthumb-container nc80">
+										#{if tp.photo==null}
+											<img src="/public/images/default/tp_default_100.png"/>
+										#{/if}
+										#{else}
+											<img src="${tp.photo.path}"/>
+										#{/else}
+									</div>
+								</div>
+								<div class="ciwt_info">
+									<p class="ciwt_title"><a href="/tp/show/${tp.id}">${tp.name}</a>
+									<a class="btn btn-info btn-mini" href="/tp/create/${tp.id}">編輯</a>
+									</p>
+									<p class="ciwt_note">${tp.introduction}</p>
+								</div>
+							</div>
+							#{/list}
+
+						</div>
+						<!-- 
+						<div class="pagination">
+							<ul>
+								<li><a href="#">上一頁</a></li>
+								<li><a href="#">1</a></li>
+								<li><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+								<li><a href="#">4</a></li>
+								<li><a href="#">5</a></li>
+								<li><a href="#">下一頁</a></li>
+							</ul>
+						</div>
+						 -->
+					</div>
+					<div class="tab-pane" id="mt3_2">
+						<div class="case_item_with_text">
+							#{list items:my_tp_open, as:'tp'}
+								<div class="ciwt_item">
+									<div class="ciwt_img">
+										<div class="nailthumb-container nc80">
+											#{if tp.photo==null}
+												<img src="/public/images/default/tp_default_100.png"/>
+											#{/if}
+											#{else}
+												<img src="${tp.photo.path}"/>
+											#{/else}
+										</div>
+									</div>
+									<div class="ciwt_info">
+										<p class="ciwt_title"><a href="/tp/show/${tp.id}">${tp.name}</a>
+										<a class="btn btn-info btn-mini" href="/tp/create/${tp.id}">編輯</a>
+										</p>
+										<p class="ciwt_note">${tp.introduction}</p>
+									</div>
+								</div>
+							#{/list}
+
+						</div>
+						<!-- 
+						<div class="pagination">
+							<ul>
+								<li><a href="#">上一頁</a></li>
+								<li><a href="#">1</a></li>
+								<li><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+								<li><a href="#">4</a></li>
+								<li><a href="#">5</a></li>
+								<li><a href="#">下一頁</a></li>
+							</ul>
+						</div>
+						 -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="myhome_collect">
+			<h3 class="title01">我的收藏</h3>
+			<div class="myhome_div">
+				<ul class="nav nav-tabs" id="myhome_tab4">
+					<li class="active"><a href="#mt4_1">收藏的教案(${my_favo_tp.size()})</a></li>
+					<li><a href="#mt4_2">收藏的活動(${my_favo_oa.size()})</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="mt4_1">
+						<div class="case_item_with_text">
+						#{list items:my_favo_tp, as:'tp'}
+							<div class="ciwt_item">
+								<div class="ciwt_img">
+									<div class="nailthumb-container nc80">
+										#{if tp.photo==null}
+											<img src="/public/images/default/tp_default_100.png"/>
+										#{/if}
+										#{else}
+											<img src="${tp.photo.path}"/>
+										#{/else}
+									</div>
+								</div>
+								<div class="ciwt_info">
+									<p class="ciwt_title"><a href="/tp/show/${tp.id}">${tp.name}</a></p>
+									<p class="ciwt_note">${tp.introduction}</p>
+								</div>
+							</div>
+						#{/list}
+
+						</div>
+						<!-- 
+						<div class="pagination">
+							<ul>
+								<li><a href="#">上一頁</a></li>
+								<li><a href="#">1</a></li>
+								<li><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+								<li><a href="#">4</a></li>
+								<li><a href="#">5</a></li>
+								<li><a href="#">下一頁</a></li>
+							</ul>
+						</div>
+						 -->
+					</div>
+					<div class="tab-pane" id="mt4_2">
+						<div class="trip_items">
+							#{list items:my_favo_oa, as:"oa"}
+							<div class="trip_item">
+								<div class="trip_item_img">
+									<div class="nailthumb-container nc80">
+										#{if tp.photo==null}
+											<img src="/public/images/default/tp_default_100.png"/>
+										#{/if}
+										#{else}
+											<img src="${tp.photo.path}"/>
+										#{/else}
+									</div>
+									#{if oa.status==0}
+									<span class="trip_status ts04">未開放</span>
+									#{/if}
+									#{if oa.status==1}
+									<span class="trip_status ts01">報名中</span>
+									#{/if}
+									#{if oa.status==2}
+									<span class="trip_status ts03">已截止</span>
+									#{/if}
+									<span class="trip_teacher"><a href="/member/profile/${oa.creator.id}">${oa.creator.username}老師</a></span>
+								</div>
+								<div class="trip_item_info">
+									<p class="trip_item_title"><a href="/oa/show/${oa.id}">${oa.name}</a></p>
+									<p class="tags">
+									#{list oa.tags, as:'t'}
+										<span class="tag tag_c${t_index}" onclick="goToTag(${t.id}, 'oa')"><a>${t.name}</a></span>
+									#{/list}
+									</p>
+									<p class="trip_item_note">${oa.introduction}</p>
+								</div>
+							</div>
+							#{/list}
+
+						</div>
+						<!-- 
+						<div class="pagination">
+							<ul>
+								<li><a href="#">上一頁</a></li>
+								<li><a href="#">1</a></li>
+								<li><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+								<li><a href="#">4</a></li>
+								<li><a href="#">5</a></li>
+								<li><a href="#">下一頁</a></li>
+							</ul>
+						</div>
+						 -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="picupload" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="myModalLabel">更換顯示圖片</h3>
+	</div>
+	<div class="modal-body">
+		<div class="nailthumb-container nc250">
+			#{if member.photo!=null}
+				<img src="${member.photo.path}"/>
+			#{/if}
+			#{else}
+				<img src="/public/images/default/teacher_default_500.png"/>
+			#{/else}	
+		</div>
+        <p class="margintop20">
+        	<form name="myForm" id="myForm" action="/member/uploadPhoto" method="POST" enctype="multipart/form-data">
+				<input type="file" name="file" id="picfile" />
+				<input type="hidden" name="subfile" id="subfile" class="subfile">
+			</form>
+        </p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+		<button class="btn btn-primary">確定儲存</button>
+	</div>
+</div>
+<script>
+$('#myhome_tab1 a').click(function (e) {
+  e.preventDefault();
+  $(this).tab('show');
+})
+$('#myhome_tab2 a').click(function (e) {
+  e.preventDefault();
+  $(this).tab('show');
+})
+$('#myhome_tab3 a').click(function (e) {
+  e.preventDefault();
+  $(this).tab('show');
+})
+$('#myhome_tab4 a').click(function (e) {
+  e.preventDefault();
+  $(this).tab('show');
+})
+$(function(){
+    $('.nc80').nailthumb({width:80,height:80});
+    $('.nc160').nailthumb({width:160,height:160});
+    $('.nc200').nailthumb({width:200,height:200});
+    $('.nc250').nailthumb({width:250,height:250});
+});
+</script>

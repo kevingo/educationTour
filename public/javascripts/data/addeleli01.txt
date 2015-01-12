@@ -1,0 +1,19 @@
+﻿<div class="toolkit_item toolkit_reference">
+    <div class="toolkit_number"></div><input type="hidden" name="seq[]" class="seqno"/>
+    <div class="toolkit_content"><input type="hidden" name="cite_id[]" class="ele_id"/>
+        <p class="toolkit_title">
+            <span class="toolkit_type"></span>
+            <input type="text" class="span7 lesson_title" readonly name="ref_title[]"></input>
+            <span class="toolkit_function"><!--請自動帶入已經引用的教案元件名稱，並將input設定為disabled-->
+                <a class="btn btn-mini btn-warning upup"><i class="icon-chevron-sign-up"></i>上移</a><a class="btn btn-mini btn-warning downdown"><i class="icon-chevron-sign-down"></i>下移</a><a class="btn btn-mini btn-danger delete"><i class="icon-remove-circle"></i>刪除</a>
+            </span>
+        </p>
+        <div class="toolkit_detail"><!--欄位類型差異-->
+            <textarea class="span12 memo" placeholder="請輸入您的補充說明" name="ref_memo[]"></textarea>
+        </div>
+    </div>
+    <div class="toolkit_reference"><!--若有引用才顯示此div-->
+        <p>已引用<a class="lesson_creator"></a>的<a class="lesson_name_chapter"></a></p>
+    </div>
+    <input type="hidden" name="ref_style[]" class="style"/><input type="hidden" name="ref_id[]" class="id"/><input type="hidden" name="ref_tpid[]" class="tpid"/>
+</div>

@@ -1,0 +1,134 @@
+#{extends 'main.html' /} 
+#{set title:'展覽管理' /}
+
+
+
+<script type="text/javascript">
+	$(document).ready(function() {	
+		var msg = $("#message").val();
+	
+	});
+	
+	function deleteShow(id){
+		if(confirm("是否確定要刪除這筆展覽資料？(將會刪除旗下的所有展品)")) {
+			jQuery.ajax({
+				  url: '/quanta/admin/showpiece/deleteShow',
+				  type: 'POST',
+				  async: false,
+				  data: {
+				  	id:id
+				  },
+				  success: function(data) {
+						  	alert(data);		  
+				  },
+				  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+				});
+		}
+	}
+	
+	function SelectItem(id){
+		var listItems = $("#listSelectedItems").val();
+		if(listItems.indexOf(","+id+",")>-1)
+			listItems=listItems.replace(','+id+',', ',');
+		else
+			listItems=listItems+id+",";
+		
+		$("#listSelectedItems").val(listItems);
+		
+		//alert($("#listSelectedItems").val());
+			
+	}
+	
+	function deleteSelectShow(){
+		if(confirm("是否確定要刪除選取的展覽資料？(將會刪除旗下的所有展品)")) {
+			var listItems = $("#listSelectedItems").val();
+			var items = listItems.split(",");
+			var count =0;
+			for (var i = 0; i < items.length; i++) {
+				if(items[i]!="")
+					jQuery.ajax({
+						  url: '/quanta/admin/showpiece/deleteShow',
+						  type: 'POST',
+						  async: false,
+						  data: {
+						  	id:items[i]
+						  },
+						  success: function(data) {
+							  if(data=="success")
+								  	count++;  
+						  },
+						  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+						});
+				}
+			alert("刪除"+count+"項展覽完成!");
+		}
+		
+	}
+
+</script>
+
+<div class="container">
+	<input type="hidden" id="message" value="${message}" >
+	<input type="hidden" id="listSelectedItems" value="," >
+#{if session.contains("email")}	
+	#{deadbolt.restrict roles:[['q_admin']]}
+	<div class="row">
+		<div id="content" class="span12">
+			<div class="row span12">
+			        <div class="tabbable">
+						<ul class="nav nav-tabs" id="myTab">
+						    <li class="active"><a href="#show" data-toggle="tab">查詢游於藝展覽資訊</a></li>
+						</ul>
+						
+						<div class="tab-content">
+							<div class="tab-pane active" id="show">
+								<table class="table table-hover">
+	    							<thead>
+										<tr>
+											<th>選取</th>
+											<th>#</th>
+											<th>年度</th>
+											<th>展覽名稱</th>				
+											<th>序號</th>
+											<th></th>
+											<th></th>
+											<th>動作</th>
+										</tr>
+	    							</thead> 	    
+	   							 <tbody>
+		    						#{list items:listShows, as:'show'}
+										<tr>	
+											<td>
+												<label class="checkbox">
+													 <input name="selectItems" type="checkbox" value="${show.id}" id="selectItems" onClick="SelectItem(${show.id})">
+												</label>	
+											</td>			
+											<td><span class="label label-important">${show_index}</td>										
+											<td>${show.year}</span></td>
+											<td>${show.showName}</td>
+											<td>${show.serialNumber}</td>	
+											<td><a href="/public/quanta/showpiece/qrcode/show/${show.serialNumber}.jpg">下載QRCode</a></td>
+											<td><a href="/quanta/admin/showpiece/show/${show.id}">查詢展品</a></td>			
+			      							<td>
+												<!-- <a href="" class="btn btn-primary">編輯</a>	 -->
+												<a href="/quanta/admin/showpiece/listShow" class="btn btn-danger" onClick="deleteShow(${show.id})">刪除</a>
+											</td>
+			      						</tr>
+		      						#{/list}
+	    						</tbody>
+	    						<a href="/quanta/admin/showpiece/listShow" class="btn btn-danger" onClick="deleteSelectShow()">刪除所有選取的展覽</a>	    
+							</table>
+						</div>
+														
+					</div><!-- end of tab-content -->						
+				</div> <!-- end of tabble -->
+			</div>
+		</div>
+	</div>
+	
+	#{/deadbolt.restrict}		
+#{/if}
+#{else}
+<a href="/quanta/admin" class="btn-block  btn btn-danger" >請先登入</a> 
+#{/else}
+</div>

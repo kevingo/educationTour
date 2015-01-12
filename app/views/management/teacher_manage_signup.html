@@ -1,0 +1,261 @@
+#{extends 'main.html' /}
+#{set title:'報名管理' /}
+
+<link href="/public/stylesheets/control.css" rel="stylesheet">
+<link href="/public/stylesheets/admin.css" rel="stylesheet">
+
+<script>
+	
+	var pagination = 5;
+	
+	function changeTeacher() {
+		$("#applies").empty();
+		var myselect = document.getElementById("teachers");
+		var member_id = myselect.options[myselect.selectedIndex].value; 
+		if(member_id=='x') {
+			$("#oas").html("<option value='x'>請選擇老師</option>");
+			$(".pagination").empty();
+		}
+		else {
+			jQuery.ajax({
+				  url: '/ajax/getOaByCreatorId',
+				  type: 'POST',
+				  async: false,
+				  data: {
+					  creatorId:member_id
+				  },
+				  success: function(response) {
+					  if(response=="") {
+						$("#oas").html("<option value='none'>無</option>");
+						$(".pagination").empty();					  }
+					  else {
+					  	$("#oas").html(response);
+					  	changeOA();
+					  }
+				  },
+				  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+				});
+		}
+	}
+	
+	function changeOA() {
+		var teachers = document.getElementById("teachers");
+		var member_id = teachers.options[teachers.selectedIndex].value; 
+		if(member_id=='x') {
+			alert("請先選擇老師");
+			$(".pagination").empty();
+		}
+		else {
+			var myselect = document.getElementById("oas");
+			var oa_id = myselect.options[myselect.selectedIndex].value;
+			if(oa_id=='x') {
+				$("#oas").html("<option value='x'>請選擇活動</option>");
+				$(".pagination").empty();
+			}
+			else {
+				getList(oa_id, 0, pagination);
+				showPagination(oa_id, 'apply');
+			}
+		}
+
+	}
+	
+	function getList(oa_id, start, end) {
+		jQuery.ajax({
+			  url: '/ajax/getApplyByOaId',
+			  type: 'POST',
+			  async: false,
+			  data: {
+				  oaid:oa_id,
+				  start:start,
+				  end:end
+			  },
+			  success: function(response) {
+				  if(response=="") {
+					$("#applies").empty();
+					$(".pagination").empty();
+				  }
+				  else {
+				  	$("#applies").html(response);
+				  }
+			  },
+			  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+		});
+	}
+	
+	function onSearch() {
+		var myselect = document.getElementById("oas");
+		var oa_id = myselect.options[myselect.selectedIndex].value;
+		if(oa_id=='x') {
+			alert("請先選擇活動");
+		} else if(oa_id=='none') {
+			alert('目前無活動');
+		} else {
+			var kw = document.getElementById("kw").value;
+			if(kw=='')
+				alert("請輸入關鍵字");
+			else {
+				jQuery.ajax({
+					  url: '/ajax/getApplyByKw',
+					  type: 'POST',
+					  async: false,
+					  data: {
+						  oaid:oa_id,
+						  kw:kw
+					  },
+					  success: function(response) {
+						  if(response=="") {
+							$("#applies").empty();
+						  }
+						  else {
+							$(".pagination").empty();
+						  	$("#applies").html(response);
+						  	//showPagination(oa_id, 'apply_search', kw);
+						  }
+					  },
+					  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+				});
+			}
+		}
+	}
+	
+	function saveApplyStatus() {
+		var status = $('select.status').map(function(){
+            return this[this.selectedIndex].id;
+        }).get();
+		
+		jQuery.ajax({
+			  url: '/ajax/saveApplyStatus',
+			  type: 'POST',
+			  async: false,
+			  data: {
+				  status:status
+			  },
+			  success: function(response) {
+				  if(response=='ok')
+				  	alert("更新成功");
+				  else if(response=='fail')
+					alert("更新失敗，請重新嘗試");
+				  else
+					alert("異常錯誤，請洽管理員");
+			  },
+			  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+		});
+	}
+
+	function delApply(applyId, oaid) {
+		if(confirm("請問是否確認要刪除？")) {
+			jQuery.ajax({
+				  url: '/ajax/delApply',
+				  type: 'POST',
+				  async: false,
+				  data: {
+					  applyId:applyId,
+					  oaid: oaid
+				  },
+				  success: function(response) {
+					  $("#applies").html(response);
+					  showPagination(oaid, 'apply');
+				  },
+				  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+			});
+		}
+	}
+	
+	
+	jQuery(document).ready(function($) {  
+		$(".pagination").empty();		        
+	});
+	
+	function showPagination(oa_id, type, kw) {
+		jQuery.ajax({
+			  url: '/ajax/getPagination',
+			  type: 'POST',
+			  async: false,
+			  data: {
+				  id:oa_id,
+				  type:type,
+				  kw:kw
+			  },
+			  success: function(response) {
+				  if(response=="") {
+					$(".pagination").empty();
+				  }
+				  else {
+				  	$("#pagination").html(response);
+				  }
+			  },
+			  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+		});
+	}
+	
+</script>
+
+<div class="span10 offset1 control divisions">
+	<h3 class="title03">管理報名名單</h3>
+	
+	<div class="control_content division manage_signup">
+		<div class="manage_signup_function">
+			<span>老師
+				<select id="teachers" onchange="changeTeacher()">
+					#{if member.roleList.contains("admin")}
+						<option value="x" selected="selected">請選擇 </option>
+						#{list items:teachers, as:'t'}
+							<option value="${t.id}">${t.username}</option>
+						#{/list}
+					#{/if}
+					#{else}
+						<option value="x" selected="selected">請選擇 </option>
+						<option value="${member.id}">${member.username}</option>
+					#{/else}
+				</select>
+			</span>
+			<span>活動	
+				<select id="oas" onchange="changeOA()">
+					<option value="x" selected="selected">請選擇活動 </option>
+				</select>
+			</span>
+			<span class="pull-right">關鍵字
+				<input id="kw" type="text" placeholder="搜尋報名者名字" value="">
+				<button class="btn btn-mini btn-info" onclick="onSearch()">搜尋</button>
+			</span>
+		</div>
+			<table class="table">
+				<thead>
+					<tr>
+						<td class="ms_td1">#</td>
+						<td class="ms_td2">活動名稱</td>
+						<td class="ms_td3">報名者</td>
+						<td class="ms_td4">報名時間</td>
+						<td class="ms_td5">電話號碼</td>
+						<td class="ms_td6">帳號後五碼</td>
+						<td class="ms_td7">報名狀態</td>
+						<td class="ms_td8">操作功能</td>
+					</tr>
+				</thead>
+				<tbody id="applies">
+			
+				</tbody>
+
+			</table>
+											
+			<div id="pagination" class="pagination">
+				
+			</div>
+			<button class="btn btn-mini btn-info" onclick="saveApplyStatus()">儲存</button>
+			<!-- 
+			<div class="pagination">
+				<ul>
+					<li><a href="#">上一頁</a></li>
+					<li><a href="#">1</a></li>
+					<li><a href="#">2</a></li>
+					<li><a href="#">3</a></li>
+					<li><a href="#">4</a></li>
+					<li><a href="#">5</a></li>
+					<li><a href="#">下一頁</a></li>
+				</ul>
+			</div>
+			 -->
+	</div>
+</div>
+

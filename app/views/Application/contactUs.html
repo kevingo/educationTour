@@ -1,0 +1,176 @@
+#{extends 'main.html' /} 
+#{set title:'聯絡我們' /}
+
+
+<script type="text/javascript">
+
+	function sendContact(){
+		var name = $("#name").val();
+		var email = $("#email").val();
+		var phone= $("#phone").val();
+		var subject =$("#subject").val();
+		var content = $("#contactContent").val();
+		var category = $('input[name=category]:checked').val();
+
+		if(name!=""&&email!=""&&subject&&content!=""){
+			jQuery.ajax({
+				  url: '/contactUs',
+				  type: 'POST',
+				  async: false,
+				  data: {
+					  category:category,
+					  name:name,
+					  email:email,
+					  phone:phone,
+					  subject:subject,
+					  content:content
+				  },
+				  success: function(data) {
+						  	alert(data);
+						  	reloadPage();
+				  },
+				  error: function(xhr, textStatus, errorThrown) { alert(errorThrown); }
+				});	
+		}	
+		else
+			alert("加註星號欄位必須輸入!!");
+	}
+	
+	function cleanData(){
+		$("#name").val("");
+		$("#email").val("");
+		$("#phone").val("");
+		$("#subject").val("");
+		$("#contactContent").val("");
+	}
+	
+
+	function reloadPage(){
+		 location.replace("/contactUs");
+	}
+</script>
+
+<div class="container">
+
+	<div class="row">
+		<div id="content" class="span12">
+			<div class="row">
+		        <div class="tabbable">
+					<ul class="nav nav-tabs" id="myTab">
+						<li ><a href="#other" data-toggle="tab">聯絡方式</a></li>
+						<li class="active"><a href="#basic" data-toggle="tab">意見反映或詢問</a></li>							
+					</ul>
+					
+					<div class="tab-content">
+						<div class="tab-pane  active" id="basic">
+							<div class="row">
+								<div class="span5">
+								
+									<div class="control-group">
+										<span style="color:blue">歡迎與我們聯繫</span><br>
+										<span><b>為了讓您的來信能獲得即時的處理，請務必填寫下列相關資訊，我們十分樂意在能力所及的範圍內，用心且迅速地回覆您！！</b></span>
+									</div>
+
+									<div class="control-group">
+										<span style="color:blue">您需要的服務：</span><br>
+										 <input  type="radio" name="category" value="技術合作">技術合作  
+   										 <input  type="radio" name="category" value="一般諮詢" checked>一般諮詢
+   										 <input  type="radio" name="category" value="客訴">客訴
+  											 <input  type="radio" name="category" value="技術移轉">技術移轉
+  											 <input  type="radio" name="category" value="其他">其他
+									</div>	
+									<br>
+									<div class="control-group">
+										<span style="color:blue">請提供您的資料：</span><br>
+										<span><b>請提供您的資料【加*標記欄位請務必鍵入資料】：我們非常注重您的隱私，您提供的資料僅供放學趣團隊作為服務改進之參考。我們絕不會將您的任何資料，作任何有關出租或出售等商業性之行為。</b></span>
+										<hr>
+										<span class="control-label" style="width:45px;">姓名*：</span>
+										<span class="control-label" style="width:15px;"></span>
+										<div class="input-prepend input-append">
+											<span class="add-on"><i class="icon-home icon-black"></i></span>
+											<input type="text" class="input-xlarge" name="name" id="name" value="${member?.username}">														
+										</div>
+									    <br><br>
+									    
+										<span class="control-label" style="width:45px;">Email*：</span>	
+										<span class="control-label" style="width:15px;"></span>									
+										<div class="input-prepend input-append">
+											<span class="add-on"><i class="icon-home icon-black"></i></span>
+											<input type="text" class="input-xlarge" name="email" id="email" value="${member?.email}">														
+										</div>
+										 <br><br>
+										
+										<span class="control-label" style="width:45px;">電話：</span>
+										<span class="control-label" style="width:15px;"></span>
+										<div class="input-prepend input-append">
+											<span class="add-on"><i class="icon-home icon-black"></i></span>
+											<input type="text" class="input-xlarge" id="phone" name="phone" value="${member?.phone}">															
+										</div>
+										<br><br>
+										
+										<span class="control-label" style="width:45px;">主旨*：</span>
+										<span class="control-label" style="width:15px;"></span>
+										<div class="input-prepend input-append">
+											<span class="add-on"><i class="icon-home icon-black"></i></span>
+											<input type="text" class="input-xlarge" name="subject" id="subject">														
+										</div>
+										<br><br>
+										
+										<span class="control-label" style="width:45px;">內容*：</span>
+										<span class="control-label" style="width:15px;"></span>
+											<div class="input-prepend input-append">
+												<span class="add-on"><i class="icon-home icon-black"></i></span>
+												<textarea class="span4" name="content" rows="8" id="contactContent"></textarea>													
+											</div>
+										
+										<div class="form-actions">
+											<a class="btn btn-primary" onClick="sendContact()">送出</a>
+											<a class="btn delete" onClick="cleanData()">清除(重寫)</a>								
+										</div>	
+									    
+									</div>										
+								</div>
+							</div>
+						</div>
+						
+						<div class="tab-pane" id="other">							
+							<div class="row">
+								<div class="span5">
+									
+									<div class="control-group">
+										<label><b>聯絡人：</b>蔡佳侑</label>
+									</div>
+
+									<div class="control-group">
+										<label><b>E-mail：</b>kevingo75@itri.org.tw</label>
+									</div>
+									
+									<div class="control-group">
+										<label><b>聯絡電話：</b>03-5912659</label>
+									</div>
+																	
+									<hr>
+
+									<div class="control-group">
+										<label><b>聯絡人：</b>劉彥似</label>
+									</div>
+
+									<div class="control-group">
+										<label><b>E-mail：</b>pasta0806@itri.org.tw</label>
+									</div>
+									
+									<div class="control-group">
+										<label><b>聯絡電話：</b> 03-5912323</label>
+									</div>
+
+									<hr>
+
+								</div>
+							</div>
+						</div>
+					</div><!-- end of tab-content -->						
+				</div> <!-- end of tabble -->
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,19 @@
+#{extends 'main.html' /} #{set title:'test.html' /}
+
+<script type="text/javascript">
+	function saveContent() {
+
+	basicFM.submit();
+
+	}
+</script>
+<div class="create_lesson create">
+	<form name="basicFM" id="basicFM"  action="/test" method="POST" enctype="multipart/form-data">
+		<input type="hidden" value="" name="id" id="tpid1">
+		<input type="hidden" value="2" name="id" id="tpid2">
+		<input type="hidden" value="" name="id" id="tpid3">
+		<input type="hidden" value="4" name="id" id="tpid4">
+		<a class="btn btn-success save" onClick="saveContent()" >儲存</a>
+		
+	</form>
+</div>

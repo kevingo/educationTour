@@ -1,0 +1,10 @@
+<tr class="exam_detail">
+	<td colspan="8">
+		<table class="table exam_student_list">
+			<thead>
+				<tr><td class="esl_td1">姓名</td><td class="esl_td1">繳卷時間</td><td class="esl_td1">批改時間</td><td class="esl_td1">得分</td><td class="esl_td5">操作</td></tr>
+			</thead>
+			<tbody class='std_list'><tr><td colspan='5'>Loading...Please Wait</td></tr></tbody>
+		</table>
+	</td>
+</tr>

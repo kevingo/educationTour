@@ -1,0 +1,17 @@
+#{extends 'main.html' /} 
+#{set title:'廣達專區' /}
+
+<div class="container">
+	#{if !session.contains("email")}
+		<form method="post" action="/quanta/login">
+			帳號：<input type="text" name="email">
+			<br/>
+			密碼：<input type="password" name="password">
+			<br/>
+			<input class="btn btn-primary submit-button" type="submit" value="送出" />
+			<input class="btn submit-button" type="reset" value="取消" />
+		</form>
+		<h1>${failedMsg}</h1>
+		<hr/>			
+	#{/if}	
+</div>

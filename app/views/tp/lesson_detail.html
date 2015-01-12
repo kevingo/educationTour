@@ -1,0 +1,275 @@
+#{extends 'main.html' /} 
+#{set title:'教案詳細內容' /}
+<link href="/public/stylesheets/lesson.css" rel="stylesheet">
+<link href="/public/stylesheets/jquery.nailthumb.1.1.css" rel="stylesheet">
+<link href="/public/stylesheets/flexslider.css" rel="stylesheet">
+<script type="text/javascript" src="/public/javascripts/jquery.nailthumb.1.1.js"></script>
+<script type="text/javascript" src="/public/javascripts/jquery.flexslider.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script src="/public/javascripts/one_point.js"></script>
+<script src="/public/javascripts/effect6.js"></script>
+<script src="/public/javascripts/itri_checkFavo.js"></script>
+<div id="fb-root"></div>
+<script>
+(function(d, s, id) {var js, fjs = d.getElementsByTagName(s)[0];if (d.getElementById(id)) return;js = d.createElement(s); js.id = id;js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1";fjs.parentNode.insertBefore(js, fjs);}(document, 'script', 'facebook-jssdk'));
+</script>
+
+<style>
+	.tag a {
+		color: white;
+	}
+</style>
+
+<h3 class="main_title">
+	<i class="icon-book"></i>${tp.name}
+	<!--以下div.dropdown為管理者才會顯示的功能-->
+	#{if session.contains("email")}
+		#{if m.id==tp.creator.id || m.roleList.contains('admin')}
+			<div class="dropdown">
+				<a class="dropdown-toggle btn" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
+					管理本教案
+					<b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+					#{if m.id==tp.creator.id}
+			        <li role="presentation"><a role="menuitem" tabindex="-1" href="/tp/create/${tp.id}">編輯教案內容</a></li>
+			        <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript: void(0)" onclick="del('tp', '${tp.id}')">刪除本教案</a></li>
+			        #{/if}	        
+			         #{deadbolt.restrict roles:[['admin']]}
+			        	<li role="presentation" class="divider"></li>
+				        #{if tp.enable}
+				        	<li role="presentation"><a role="menuitem" tabindex="-1" href="javascript: void(0)" onclick="enableHandler('disable', 'tp', ${tp.id})">強制下架</a></li>
+				        #{/if}
+				        #{else}
+				        	<li role="presentation"><a role="menuitem" tabindex="-1" href="javascript: void(0)" onclick="enableHandler('enable', 'tp', ${tp.id})">開放上架</a></li>
+						#{/else}	        
+			        #{/deadbolt.restrict}
+		      </ul>
+			</div>
+		#{/if}
+	#{/if}
+</h3>
+<div class="lesson_detail">
+	<div id="gallery" class="ad-gallery">
+      <section class="slider">
+        <div id="slider" class="flexslider">
+          <ul class="slides">
+			${photo_nail_500.raw()}
+          </ul>
+        </div>
+        <div id="carousel" class="flexslider">
+          <ul class="slides">
+			${photo_nail_100.raw()}
+          </ul>
+        </div>
+      </section>
+	</div>
+	<div class="lesson_info">
+		<h3 class="title03">教案資訊</h3>
+		<dl>
+			<dt>教案性質</dt>
+				<dd class="tags">
+					#{list tp.tags, as:'t'}
+						<span class="tag tag_c${t_index}" style="background:${t.color};" onclick="goToTag(${t.id}, 'tp')"><a>${t.name}</a></span>
+					#{/list}
+					<!-- <span class="tag tag_c1">台北市</span><span class="tag tag_c2">語言發展</span><span class="tag tag_c3">自然體驗</span> -->
+				</dd>
+			#{if tp.subject != ''}
+				<dt>融入領域</dt><dd>${tp.subject}</dd>
+			#{/if}
+			#{if tp.unit != ''}
+				<dt>對應課綱</dt><dd>${tp.unit}</dd>
+			#{/if}
+			<dt>教案設計</dt><dd><a href="/member/profile/${tp.creator.id}">${tp.creator.username} </a></dd>
+			<dt>建立時間</dt><dd>${tp.createDate}</dd>
+			#{if tp.introduction != ''}
+			<dt>教案說明</dt><dd><p class="lesson_info_text">${tp.introduction}</p></dd>
+			#{/if}
+		</dl>
+		<div class="share_btns pull-left">
+			<a class="btn btn-warning" target="_blank" href="/tp/slide/${tp.id}"><i class="icon-play"></i>全螢幕播放</a>
+			<button class="btn btn-fb" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),'facebook-share-dialog','width=626,height=436');return false;"><i class="icon-facebook-sign"></i>Facebook分享</button>			
+			<button class="btn btn-danger" onclick="window.open('https://plus.google.com/share?url=http://www.funnytrip.net')"><i class="icon-google-plus-sign"></i>Google+分享</button>
+			#{if session.contains("email")}
+				#{if add=="no"}
+					<button class="btn btn-twitter" onClick="addFavo('${session.get('email')}', ${tp.id}, 'tp')"><i class="icon-star"></i>加入收藏</button>
+				#{/if}
+				
+				#{if add=="yes"}
+					<button class="btn btn-twitter" onClick="removeFavo('${session.get('email')}', ${tp.id}, 'tp')")><i class="icon-star"></i>已收藏</button>
+				#{/if}
+			#{/if}
+			<!-- <button class="btn btn-danger disabled"><i class="icon-star"></i>已收藏</button> -->
+		</div>
+	</div>
+	<div class="clearfix"></div>
+</div>
+<div class="lesson_detail_content row-fluid">
+	<div class="lesson_detail_tabs span8">
+		<ul class="nav nav-tabs" id="lesson_tab">
+			<li class="ldt01 active"><a href="#lt01">詳細內容</a></li>
+			<li class="ldt02"><a href="#lt02">引用教案</a></li>
+			<li class="ldt03"><a href="#lt03">行程景點</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" id="lt01">
+				${tpb_content.raw()}
+			</div>
+			<div class="tab-pane" id="lt02">
+				${tpn_content.raw()}
+			</div>
+			<div class="tab-pane" id="lt03">
+				${tpa_content.raw()}
+			</div>
+		</div>
+	</div>
+	<div class="lesson_other span4">
+		<div class="ps_div">
+			<h3>教案圖片</h3>
+				<ul class="thumbs upload_list">
+					${photo_content.raw()}					
+				</ul>
+		</div>
+		<div class="ps_div">
+			<h3>教案附件</h3>
+				<div class="files">
+					<!-- doc, pdf, xls, rar, zip, jpg, png, gif, pps, txt 其他（沒有給class就是其他）-->
+					${attatch_content.raw()}
+				</div>
+		</div>
+		<div class="ps_div">
+			<h3>教案連結</h3>
+				<div class="files">					
+					${link_content.raw()}					
+				</div>
+		</div>
+		<!-- 
+		<div class="ps_div">
+			<h3>教案統計資料</h3>
+			<dl class="star">
+				<dt title="1-10人一顆星，11~20人兩顆星…依此類推">已閱讀人數</dt>
+				<dd><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-empty"></i></dd>
+				<dt title="1-10人一顆星，11~20人兩顆星…依此類推">被收藏次數</dt>
+				<dd><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-empty"></i></dd>
+				<dt title="1-10人一顆星，11~20人兩顆星…依此類推">被引用次數</dt>
+				<dd><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-empty"></i></dd>
+			</dl>
+		</div>
+		 -->
+		 <!-- 
+		<div class="ps_div">
+			<h3>誰引用了此教案</h3>
+			<ul>
+				<li><span class="tag tag_c4">教案</span><a href="">遠古神龍水的傳說</a></li>
+				<li><span class="tag tag_c4">教案</span><a href="">草原上的奇幻生物</a></li>
+				<li><span class="tag tag_c4">教案</span><a href="">永恆英靈的故事</a></li>
+				<li><span class="tag tag_c1">活動</span><a href="">學習如何開發iOS遊戲</a></li>
+				<li><span class="tag tag_c1">活動</span><a href="">apple工廠參觀</a></li>
+			</ul>
+		</div>
+		 -->
+		 <!-- 
+		<div class="ps_div">
+			<h3>裡麥克老師的其他教案</h3>
+			<div class="case_item_with_text">
+				<div class="ciwt_item">
+					<div class="ciwt_img">
+						<div class="nailthumb-container nc80">
+							<img src="/public/images/lesson/l01.jpg"/>
+						</div>
+					</div>
+					<div class="ciwt_info">
+						<p class="ciwt_title"><a href="#">教案名稱教案名稱</a></p>
+						<p class="ciwt_note">老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明… 純文字框</p>
+					</div>
+				</div>
+				<div class="ciwt_item">
+					<div class="ciwt_img">
+						<div class="nailthumb-container nc80">
+							<img src="/public/images/lesson/l07.jpg"/>
+						</div>
+					</div>
+					<div class="ciwt_info">
+						<p class="ciwt_title"><a href="#">教案名稱教案名稱</a></p>
+						<p class="ciwt_note">老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明… 純文字框</p>
+					</div>
+				</div>
+				<div class="ciwt_item">
+					<div class="ciwt_img">
+						<div class="nailthumb-container nc80">
+							<img src="/public/images/lesson/l04.jpg"/>
+						</div>
+					</div>
+					<div class="ciwt_info">
+						<p class="ciwt_title"><a href="#">教案名稱教案名稱</a></p>
+						<p class="ciwt_note">老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明… 純文字框</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		 -->
+		 <!-- 
+		<div class="ps_div">
+			<h3>更多相似的教案</h3>
+			<div class="case_item_with_text">
+				<div class="ciwt_item">
+					<div class="ciwt_img">
+						<div class="nailthumb-container nc80">
+							<img src="/public/images/lesson/l05.jpg"/>
+						</div>
+					</div>
+					<div class="ciwt_info">
+						<p class="ciwt_title"><a href="#">教案名稱教案名稱</a></p>
+						<p class="ciwt_note">老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明… 純文字框</p>
+					</div>
+				</div>
+				<div class="ciwt_item">
+					<div class="ciwt_img">
+						<div class="nailthumb-container nc80">
+							<img src="/public/images/lesson/l01.jpg"/>
+						</div>
+					</div>
+					<div class="ciwt_info">
+						<p class="ciwt_title"><a href="#">教案名稱教案名稱</a></p>
+						<p class="ciwt_note">老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明… 純文字框</p>
+					</div>
+				</div>
+				<div class="ciwt_item">
+					<div class="ciwt_img">
+						<div class="nailthumb-container nc80">
+							<img src="/public/images/lesson/l09.jpg"/>
+						</div>
+					</div>
+					<div class="ciwt_info">
+						<p class="ciwt_title"><a href="#">教案名稱教案名稱</a></p>
+						<p class="ciwt_note">老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明老師對於本教案的補充說明… 純文字框</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		 
+		<div class="ps_div">
+			<div class="fb-comments" data-href="http://example.com" data-width="350"></div>
+		</div>
+		-->
+	</div>
+</div>
+<div id="msg" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<a href="#" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</a>
+		<h3>系統訊息</h3>
+	</div>
+	<div class="modal-body"></div>
+	<div class="modal-footer"><a href="#" class="btn" data-dismiss="modal" aria-hidden="true">確認</a></div>
+</div>
+<div id="showimage" class="modal hide fade" tabindex="-1" role="dialog" aria-titleledby="myModaltitle" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3></h3>
+	</div>
+	<div class="modal-body">
+		<img src=""/>
+		<p class="showimage_info"></p>
+	</div>
+</div>
+<div id="showimage1" class="modal hide fade" tabindex="-1" role="dialog" aria-titleledby="myModaltitle" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3>圖片集</h3></div><div class="modal-body"><img src=""/></div></div>

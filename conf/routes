@@ -1,0 +1,265 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Test API
+GET		/redTest								AjaxManager.redirectToTest
+POST	/test									AjaxManager.test
+GET		/parent/login							MemberManager.ParentLogin
+GET		/student/login							MemberManager.StudentLogin
+GET		/teacher/login							MemberManager.TeacherLogin
+GET		/admin/login							MemberManager..AdminLogin
+
+# App API
+POST	/app/login								AppApiManager.login
+POST	/app/myoa								AppApiManager.listMyOA
+POST	/app/mytp								AppApiManager.listMyTP
+POST	/app/myFavoriteTP						AppApiManager.listMyFavoriteTP
+POST	/app/searchtp							AppApiManager.searchTeachingPlan
+POST	/app/searchoa							AppApiManager.searchOutdoorActivity
+POST	/app/todayOA							AppApiManager.listMyTodayOA
+POST	/app/oa/show							AppApiManager.showOA
+POST	/app/tp/show							AppApiManager.showTP
+POST	/app/singleComponentJson				AppApiManager.showSingleComponentJson
+POST	/app/uploadCheckinFile					AppApiManager.uploadCheckinFile
+
+# Front-End AJAX Data
+GET		/ajax/getUnreplyMail					AjaxManager.getUnreplyMail
+GET		/ajax/tagCategory						AjaxManager.getTagCategoryJson
+POST	/ajax/getListTPByTag					AjaxManager.getListTPByTag
+POST	/ajax/getTag							AjaxManager.getTagByCategory
+POST	/ajax/getTagInfo						AjaxManager.getTagInfo
+POST	/ajax/getTagCategory					AjaxManager.getTagCategoryByTagActivity
+POST	/ajax/getContactInfo					AjaxManager.getContactInfo
+POST	/ajax/getTeachingPlanInfo				AjaxManager.getTeachingPlanInfo
+POST	/ajax/getOutdoorActivityInfo			AjaxManager.getOutdoorActivityInfo
+POST	/ajax/getNFCTagInfo						AjaxManager.getNFCTagInfo
+PUT		/ajax/addToFavorite						AjaxManager.addToFavorite
+PUT		/ajax/removeToFavorite					AjaxManager.removeToFavorite
+POST	/ajax/getMemberGroupByTeacher			AjaxManager.getMemberGroupByTeacher
+POST	/ajax/getMemberListByMemberGroup		AjaxManager.getMemberListByMemberGroup
+POST	/ajax/getMemberListByKeyword			AjaxManager.getMemberListByKeyword
+POST	/ajax/getOaByCreatorId					AjaxManager.getOaByCreatorId
+POST	/ajax/getApplyByOaId					AjaxManager.getApplyByOaId	
+POST	/ajax/getApplyByKw						AjaxManager.getApplyByKw
+POST	/ajax/saveApplyStatus					AjaxManager.saveApplyStatus
+POST	/ajax/delApply							AjaxManager.delApply
+POST	/ajax/getPagination						AjaxManager.getPagination
+POST	/ajax/getOaByAttendId					AjaxManager.getOaByAttendId
+POST	/ajax/getExamByAttendId					AjaxManager.getExamByAttendId
+POST	/ajax/getExamineInfo					AjaxManager.getExamineInfo
+POST	/ajax/getExamineAnswerInfo				AjaxManager.getExamineAnswerInfo
+
+# Home page
+GET     /                                       Application.index							
+GET		/quanta									Application.quanta
+GET		/login									Application.toLogin
+POST	/login									Application.login
+GET		/facebook/login							Application.auth
+GET		/google/login							Application.googleAuth
+GET		/logout									Application.logout
+GET		/about									Application.about
+GET		/searchOA/{tagId}						Application.searchOA
+GET		/searchTP/{tagId}						Application.searchTP
+GET		/searchTeacher/{tagId}					Application.searchTeacher
+GET		/create_content_license					Application.createLicense
+GET		/document								Application.document
+GET		/resetPwd								Application.resetPwd
+GET
+
+# Admin 
+GET		/admin/index							Admin.index
+POST	/admin/replyContact						Admin.replyContact
+GET		/contactUs								Admin.contactUs
+POST	/contactUs								Admin.recieveContactUs
+
+# Tag manager
+POST	/tag/createTagActivity					TagManager.createTagActivity
+POST	/tag/deleteTagActivity					TagManager.deleteTagActivity
+POST	/tag/createTagCategory					TagManager.createTagCategory
+POST	/tag/deleteTagCategory					TagManager.deleteTagCateogry
+POST	/tag/createTag							TagManager.createTag
+POST	/tag/deleteTag							TagManager.deleteTag
+
+# Examine Manager
+GET		/examine/index							ExamineManager.index
+GET		/examine/createAgree					ExamineManager.createAgree
+GET		/examine/create							ExamineManager.create(id:'0')
+GET		/examine/create/{id}					ExamineManager.create
+POST	/examine/create_basicInfo				ExamineManager.create_basicInfo
+POST	/examine/create_question				ExamineManager.create_Question
+GET		/examine/savedInfo/{id}					ExamineManager.savedInfo
+GET		/examine/show/{id}						ExamineManager.show
+GET		/examine/showExplain/{id}				ExamineManager.showExplain
+GET		/examine/showQuestion/{id}				ExamineManager.showQuestion
+POST	/examine/fillExamine					ExamineManager.fillExamine
+GET		/examine/showResult/{id}				ExamineManager.showResult
+POST	/examine/getExamineByOaId				ExamineManager.getExamineByOaId
+POST	/examine/getExamineByKw					ExamineManager.getExamineByKw
+POST	/examine/delExamine						ExamineManager.delExamine
+GET		/examine/delete/{eid}					ExamineManager.deleteExamine
+POST	/examine/comment						ExamineManager.commentExamine
+POST	/examine/finish							ExamineManager.finishExamine
+
+# Member manager
+GET		/member/register						MemberManager.linkRegister
+POST	/member/register						MemberManager.register
+GET		/member/register/validate				MemberManager.registerValidate
+POST	/member/forgotPassword					MemberManager.forgotPassword
+GET		/member/configure						MemberManager.configure
+GET		/member/myHomePage						MemberManager.myHomePage
+GET		/member/myHomePage/parent				MemberManager.teacherSwitchToParent
+POST	/member/updateProfile					MemberManager.updateProfile
+POST	/member/updatePassword					MemberManager.updatePassword
+POST	/member/updateBankAccount				MemberManager.updateBankAccount
+POST	/member/uploadPhoto						MemberManager.uploadPhoto
+GET		/member/validateTeacher					MemberManager.validateTeacher
+PUT     /member/verify/ok						MemberManager.ok
+PUT		/member/verify/reject					MemberManager.reject
+POST	/member/addRelation						MemberManager.addRelation
+POST	/member/deleteRelation					MemberManager.deleteRelation
+POST	/member/acceptRelation					MemberManager.acceptRelation
+POST	/member/acceptGroupByGuest				MemberManager.acceptGroupByGuest
+POST	/member/rejectQueue						MemberManager.rejectQueue
+POST	/member/deleteGroupByMember				MemberManager.deleteGroupByMember
+GET		/member/profile/{userId}				MemberManager.userProfile
+POST	/member/enableAccount					MemberManager.enableAccount
+POST	/member/disableAccount					MemberManager.disableAccount
+POST	/teacher/search							MemberManager.searchTeacherWithKw
+
+# Member Group manager
+GET		/memberGroup/show/{id}					MemberGroupManager.show
+POST	/memberGroup/addGroup					MemberGroupManager.addGroup
+POST	/memberGroup/editGroupName				MemberGroupManager.editGroupName
+POST	/memberGroup/InviteMemberJoinGroup		MemberGroupManager.inviteMemberJoinGroup
+POST	/memberGroup/joinGroupByMember			MemberGroupManager.MemberJoinGroup
+POST	/memberGroup/AcceptGroupInvite			MemberGroupManager.acceptGroupInvite
+POST	/memberGroup/deleteMemberFromGroup		MemberGroupManager.deleteMemberFromGroup
+POST	/memberGroup/deleteGroupByCreator		MemberGroupManager.deleteGroupByCreator
+GET		/memberGroup/sendMail/{gid}				MemberGroupManager.gotoSendMail
+POST	/memberGroup/sendMail					MemberGroupManager.sendMail
+POST	/memberGroup/uploadRelationFile			MemberGroupManager.uploadRelationFile
+
+
+# Quanta_admin
+GET		/quanta/admin/volunteer					QuantaActivityManager.admin_volunteer
+GET		/quanta/admin/showpiece					QuantaActivityManager.admin_showpiece
+GET		/quanta/admin/teacher					QuantaActivityManager.admin_teacher
+POST	/quanta/login							QuantaActivityManager.login
+GET		/quanta/admin							QuantaActivityManager.admin_login
+
+# Quanta_admin showpiece
+GET		/quanta/admin/showpiece/listShow		QuantaActivityManager.admin_listShow
+GET		/quanta/admin/showpiece/show/{show_id}	QuantaActivityManager.admin_listShowpiece
+GET		/quanta/admin/showpiece/listSchool		QuantaActivityManager.admin_listSchool	
+POST	/quanta/admin/showpiece/deleteSchool	QuantaActivityManager.admin_deleteSchool
+POST	/quanta/admin/showpiece/disableSchool	QuantaActivityManager.admin_disableSchool
+POST	/quanta/admin/showpiece/enableSchool	QuantaActivityManager.admin_enableSchool
+GET		/quanta/admin/showpiece/newSchool		QuantaActivityManager.admin_newSchool
+POST	/quanta/admin/showpiece/newSchool		QuantaActivityManager.admin_saveSchool
+POST	/quanta/admin/showpiece/checkSchool		QuantaActivityManager.admin_checkSchool
+GET		/quanta/admin/showpiece/{id}  			QuantaActivityManager.admin_queryShowpiece
+POST	/quanta/admin/showpiece/deleteShowpiece QuantaActivityManager.admin_deleteShowpiece
+POST	/quanta/admin/showpiece/deleteShow		QuantaActivityManager.admin_deleteShow
+GET		/quanta/admin/showpiece/getShowpiece/{id} QuantaActivityManager.admin_getShowpiece
+POST	/quanta/admin/showpiece/editShowpiece	QuantaActivityManager.admin_editShowpiece
+POST    /quanta/showpiece/uploadAccount			QuantaActivityManager.showpiece_uploadAccount
+POST    /quanta/showpiece/uploadShow			QuantaActivityManager.showpiece_uploadShow
+
+# Quanta_admin volunteer
+GET		/quanta/admin/volunteer/listSession		QuantaActivityManager.admin_listVolunteerSession
+GET		/quanta/admin/volunteer/listVolunteer	QuantaActivityManager.admin_listVolunteer	
+POST	/quanta/admin/volunteer/deleteVolunteer	QuantaActivityManager.admin_deleteVolunteer
+GET		/quanta/admin/volunteer/newVolunteer	QuantaActivityManager.admin_newVolunteer
+POST	/quanta/admin/volunteer/checkVolunteer	QuantaActivityManager.admin_checkVolunteer
+POST	/quanta/admin/volunteer/newVolunteer	QuantaActivityManager.admin_saveVolunteer
+GET		/quanta/admin/volunteer/showSession/{s_id}	QuantaActivityManager.volunteer_show
+POST    /quanta/volunteer/uploadAccount			QuantaActivityManager.volunteer_uploadAccount
+POST    /quanta/volunteer/uploadSession			QuantaActivityManager.volunteer_uploadSession
+POST	/quanta/volunteer/uploadApply			QuantaActivityManager.volunteer_uploadApply
+GET		/quanta/volunteer/exportCSV/{s_id}		QuantaActivityManager.volunteer_exportCSV
+
+# Quanta_admin teacher
+POST	/quanta/teacher/uploadAccount			QuantaActivityManager.teacher_uploadAccount
+POST    /quanta/teacher/uploadSession			QuantaActivityManager.teacher_uploadSession
+POST	/quanta/teacher/uploadApply				QuantaActivityManager.teacher_uploadApply
+POST	/quanta/teacher/uploadAttatch			QuantaActivityManager.teacher_uploadAttatch
+GET		/quanta/admin/teacher/listTeacher		QuantaActivityManager.admin_listTeacher
+POST	/quanta/admin/teacher/deleteTeacher		QuantaActivityManager.admin_deleteTeacher
+GET		/quanta/admin/teacher/newTeacher		QuantaActivityManager.admin_newTeacher
+POST	/quanta/admin/teacher/newTeacher		QuantaActivityManager.admin_saveTeacher
+GET		/quanta/admin/teacher/listSession		QuantaActivityManager.admin_listTeacherSession
+POST	/quanta/admin/teacher/deleteSession		QuantaActivityManager.admin_deleteTeacherSession
+GET		/quanta/admin/teacher/showSession/{s_id} 	QuantaActivityManager.admin_showTeacherSession
+POST	/quanta/admin/teacher/checkinAndOut		QuantaActivityManager.admin_teacherCheckinAndOut
+GET		/quanta/teacher/exportCSV/{s_id}		QuantaActivityManager.teacher_exportCSV
+
+
+
+# Quanta_volunteer
+POST	/quanta/volunteer/login					QuantaActivityManager.volunteer_login
+POST	/quanta/volunteer/check					QuantaActivityManager.volunteer_check
+GET		/quanta/volunteer/webcheckin			QuantaActivityManager.volunteer_webcheckin
+GET		/quanta/volunteer/webcheckout			QuantaActivityManager.volunteer_webcheckout
+GET     /quanta/volunteer/webquery/{email}		QuantaActivityManager.volunteer_webquery
+POST	/quanta/volunteer/webcheckin			QuantaActivityManager.volunteer_checkin
+POST	/quanta/volunteer/webcheckout			QuantaActivityManager.volunteer_checkout
+
+
+# Quanta_showpiece
+POST	/quanta/showpiece/sync					QuantaActivityManager.showpiece_sync
+POST	/quanta/showpiece/login					QuantaActivityManager.showpiece_login
+POST	/quanta/showpiece/upload				QuantaActivityManager.showpiece_upload
+POST	/quanta/showpiece/webListShowpiece		QuantaActivityManager.showpiece_webListShowpiece
+POST	/quanta/showpiece/webCheckShowpiece		QuantaActivityManager.showpiece_webCheckShowpiece
+	
+# Quanta_teacher		
+POST	/quanta/teacher/upload					QuantaActivityManager.teacher_uploadCheckFile
+
+
+# TeachingPlan
+GET		/tp/createAgree							TeachingPlanManager.createAgree
+GET		/tp/create								TeachingPlanManager.index(id:'0')
+POST	/tp/create_basicInfo					TeachingPlanManager.create_basicInfo
+POST	/tp/create_Before						TeachingPlanManager.create_Before
+POST	/tp/create_Now							TeachingPlanManager.create_Now
+POST	/tp/create_After						TeachingPlanManager.create_After
+GET     /tp/create/{id}							TeachingPlanManager.index
+PUT		/tp/disable								TeachingPlanManager.disable
+PUT		/tp/enable								TeachingPlanManager.enable
+PUT		/tp/delete								TeachingPlanManager.delete
+GET		/tp/show/{id}							TeachingPlanManager.show
+POST	/tp/search								TeachingPlanManager.search
+GET		/tp/slide/{tpid}						TeachingPlanManager.getSlide
+
+# OutdoorActivity
+GET		/oa/createAgree							OutdoorActivityManager.createAgree
+GET		/oa/create								OutdoorActivityManager.index(id:'0')
+POST	/oa/create_basicInfo					OutdoorActivityManager.create_basicInfo
+POST	/oa/create_detail						OutdoorActivityManager.create_detail
+GET		/oa/create/{id}							OutdoorActivityManager.index
+GET		/oa/apply/manage						OutdoorActivityManager.gotoApplyMamangement
+GET		/oa/show/{id}							OutdoorActivityManager.show
+GET		/oa/showApply/{oaid}					OutdoorActivityManager.showApply
+GET		/oa/nfc/{oaid}							OutdoorActivityManager.gotoNFCPage
+POST	/oa/nfc/{oaid}							OutdoorActivityManager.setNFC
+POST	/oa/apply/{oaid}						OutdoorActivityManager.apply
+POST	/oa/apply/child							OutdoorActivityManager.applyChild
+GET		/oa/checkApply							OutdoorActivityManager.checkApply
+POST	/oa/replyATM							OutdoorActivityManager.replyATM
+PUT		/oa/disable								OutdoorActivityManager.disable
+PUT		/oa/enable								OutdoorActivityManager.enable
+PUT		/oa/delete								OutdoorActivityManager.delete
+POST	/oa/search								OutdoorActivityManager.search
+GET		/oa/slide/{oaid}						OutdoorActivityManager.getSlide
+
+GET		/license								Application.license
+
+# Ignore favicon requests
+GET     /favicon.ico                            404
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/                                staticDir:public
+
+# Catch all
+*       /{controller}/{action}                  {controller}.{action}
